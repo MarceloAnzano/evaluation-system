@@ -1,0 +1,6 @@
+Order deny,allow
+Deny from all
+
+<Files "static/*.js">
+    Allow from all
+</Files>

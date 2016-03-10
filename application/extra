@@ -1,0 +1,69 @@
+			/** THE OTHER SYSTEM **/
+			//~ $grade_level1 = '';
+			//~ $grade_level2 = '';
+			//~ $grade_level3 = '';
+			//~ $grade_level4 = 'none';
+			//~ switch ($level_leader[1])
+			//~ {
+				//~ case 'preschool':
+					//~ break;
+				//~ case 'primary':
+					//~ $grade_level1 = '1';
+					//~ $grade_level2 = '2';
+					//~ $grade_level3 = '3';
+					//~ break;
+				//~ case 'intermediate':
+					//~ $grade_level1 = '4';
+					//~ $grade_level2 = '5';
+					//~ $grade_level3 = '6';
+					//~ break;
+				//~ case 'high school':
+					//~ $grade_level1 = '7';
+					//~ $grade_level2 = '8';
+					//~ $grade_level3 = '9';
+					//~ $grade_level4 = '10';
+					//~ break;
+				//~ default:
+					//~ continue;
+			//~ }
+			//~ 
+			//~ // get all non-principal faculty
+			//~ $sql = "SELECT teacherId
+					//~ FROM subjects
+					//~ WHERE gradelevel IN ('grade $grade_level1', 'grade $grade_level2', 'grade $grade_level3','grade $grade_level4');";
+			//~ $query_staff = mysqli_query($con, $sql);
+
+			/** THE OTHER SYSTEM **/
+			
+			//~ $grade_level1 = '';
+			//~ $grade_level2 = '';
+			//~ switch ($coordinator[1])
+			//~ {
+				//~ case '2':
+					//~ $grade_level1 = '1';
+					//~ $grade_level2 = '2';
+					//~ break;
+				//~ case '3':
+					//~ $grade_level1 = '3';
+					//~ $grade_level2 = '4';
+					//~ break;
+				//~ case '4':
+					//~ $grade_level1 = '5';
+					//~ $grade_level2 = '6';
+					//~ break;
+				//~ case '5':
+					//~ $grade_level1 = '7';
+					//~ $grade_level2 = '8';
+					//~ break;
+				//~ case '6':
+					//~ $grade_level1 = '9';
+					//~ $grade_level2 = '10';
+					//~ break;
+				//~ default:
+					//~ continue;
+			//~ }
+			//~ 
+			//~ // get all non-principal faculty
+			//~ $sql = "SELECT teacherId
+					//~ FROM subjects
+					//~ WHERE gradelevel IN ('grade $grade_level1', 'grade $grade_level2');";
