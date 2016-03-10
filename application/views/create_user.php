@@ -8,8 +8,9 @@
 			<option value='admin'>Admin</option>
 		</select>
 		<hr>
-		<br>Subject Area<br><input id='sat' name='sat' type='text' placeholder='Science, Math...'readonly>
-		<br>Grade & Section<br><input id='section' name='section' type='text' placeholder='Grade # Section #' readonly>
+		<br>Subject Area<br><input id='sat' name='sat' type='text' placeholder='subject'readonly>
+		<br>Grade & Section<br><input id='gradelevel' name='gradelevel' type='text' placeholder='grade level' readonly>
+		<input id='section' name='section' type='text' placeholder='section' readonly>
 		<br>If Supervisor:<br><select id='position' name='position' disabled>
 			<option value='none'>None</option>
 			<option value='principal'>Principal</option>
@@ -18,8 +19,8 @@
 			<option value='ll'>LL</option>
 			<option value='satl'>SATL</option>
 		</select>
-		<br>Level<br><input id='level' name='level' type='text' placeholder='for Level Leader'readonly>
-		<br>Cluster<br><input id='cluster' name='cluster' type='text' placeholder='for Cluster Coordinator'readonly>
+		<br>Level<br><input id='level' name='level' type='text' placeholder='level'readonly>
+		<br>Cluster<br><input id='cluster' name='cluster' type='text' placeholder='cluster number'readonly>
 		
 		<br><input type='submit' name='submit' value='Submit'>
 	</form>

@@ -4,8 +4,9 @@
 		<br>Password<br><input id='adminpassword' name='password' type='password' <?php if ( ! $this->logged_as_admin())echo "readonly"?>>
 		<br>User Type<br><input id='usertype' name='usertype' <?php if ( ! $this->logged_as_admin())echo "readonly"?>>
 		<hr>
-		<br>Subject Area<br><input id='sat' name='sat' type='text' placeholder='Science, Math...'>
-		<br>Grade & Section<br><input id='section' name='section' type='text' placeholder='Grade # Section #' >
+		<br>Subject Area<br><input id='sat' name='sat' type='text' placeholder='subject'>
+		<br>Grade & Section<br><input id='gradelevel' name='gradelevel' type='text' placeholder='grade level'>
+		<input id='section' name='section' type='text' placeholder='section'>
 		<br>If Supervisor:<br><select id='position' name='position' >
 			<option value='none'>None</option>
 			<option value='principal'>Principal</option>
@@ -14,8 +15,8 @@
 			<option value='ll'>LL</option>
 			<option value='satl'>SATL</option>
 		</select>
-		<br>Level<br><input id='level' name='level' type='text' placeholder='for Level Leader'>
-		<br>Cluster<br><input id='cluster' name='cluster' type='text' placeholder='for Cluster Coordinator'>
+		<br>Level<br><input id='level' name='level' type='text' placeholder='level'>
+		<br>Cluster<br><input id='cluster' name='cluster' type='text' placeholder='cluster number'>
 		<?php echo "<input type='hidden' id='targetid' name='targetid' value='".$data."'><br>"; ?>
 		<br><input type='submit' name='submit' value='Submit'>
 	</form>

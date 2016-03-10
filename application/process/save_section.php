@@ -14,12 +14,8 @@ class Save_section
 		}
 		
 		// collect post variables
-		$section = strtolower(mysqli_real_escape_string($con, $_POST['section']));
-		
-		// for write-protection
-		$section = explode(' ', $section);
-		$grade_level = $section[0].' '.$section[1];
-		$section_entry = $section[2].' '.$section[3];
+		$grade_level = strtolower(mysqli_real_escape_string($con, $_POST['gradelevel']));
+		$section_entry = strtolower(mysqli_real_escape_string($con, $_POST['section']));
 		
 		$setting = array();
 		foreach ($_POST['setting'] as $per)

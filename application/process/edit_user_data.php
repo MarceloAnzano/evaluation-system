@@ -51,8 +51,10 @@ class Edit_user_data
 		{
 			case 'student':
 				$section = strtolower(mysqli_real_escape_string($con, $_POST['section']));
-				$this->drop_if_missing($section, 'Please provide the student\'s grade and section');
-				$this->save_student_item($con, $section);
+				$gradelevel = strtolower(mysqli_real_escape_string($con, $_POST['gradelevel']));
+				$this->drop_if_missing($gradelevel, 'Please provide the student\'s grade level');
+				$this->drop_if_missing($section, 'Please provide the student\'s section');
+				$this->save_student_item($con, $gradelevel, $section);
 				break;
 			case 'faculty':
 				$subject = strtolower(mysqli_real_escape_string($con, $_POST['sat']));
@@ -88,22 +90,14 @@ class Edit_user_data
 		}
 	}
 	
-	private function save_student_item($con, $section)
+	private function save_student_item($con, $gradelevel, $section)
 	{
-		// filtering bad input
-		$section = explode(' ', $section);
-		$grade_level = $section[0].' '.$section[1];
-		$section_entry = $section[2].' '.$section[3];
-		
-		if ($section[0] != 'grade' && $section[0] != 'kinder') exit ('Invalid section');
-		if ($section[2] != 'section') exit ('Invalid section');
-		
 		// record into db
 		$sql = "UPDATE users
 				SET uname=?, password=?, utype=?, gradelevel=?, section=?
 				WHERE hashid=?";
 		$stmt = mysqli_prepare($con, $sql);
-		mysqli_stmt_bind_param($stmt, 'ssssss', $this->uname, $this->password, $usertype, $grade_level, $section_entry, $this->target_id);
+		mysqli_stmt_bind_param($stmt, 'ssssss', $this->uname, $this->password, $usertype, $gradelevel, $section, $this->target_id);
 		
 		$usertype = 'student';
 		

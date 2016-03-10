@@ -7,6 +7,7 @@ class Evaluation_archive
 	 *  The function below will clear the records
 	 *  > in table, results
 	 * 	> in table, final_ratings
+	 * 	> in table, subjects
 	 *  Bear this in mind
 	 * ------------------------------------------
 	 * **/
@@ -23,8 +24,12 @@ class Evaluation_archive
 		$sql = "DELETE FROM results";
 		$query = mysqli_query($con, $sql);
 		
+		// erases all (not truncate)
+		$sql = "TRUNCATE subjects";
+		$query = mysqli_query($con, $sql);
+		
 		//~ // remove all final ratings
-		$sql = "TRUNCATE final_ratings"
+		$sql = "TRUNCATE final_ratings";
 		$query = mysqli_query($con, $sql);
 	}
 	

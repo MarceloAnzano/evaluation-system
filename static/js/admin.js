@@ -1,9 +1,11 @@
 	// change input enables according to type of user selected
-	$('select #usertype').on('change', function(evt){
+	$('select#usertype').on('change', function(evt){
 		var selected = $("#usertype").val();
+		console.log(selected);
 		if (selected === 'student')
 		{
 			$('#section').removeAttr('readonly');
+			$('#gradelevel').removeAttr('readonly');
 			$('#level').attr('readonly', 'readonly');
 			$('#cluster').attr('readonly', 'readonly');
 			$('#sat').attr('readonly', 'readonly');
@@ -26,12 +28,17 @@
 				$('#position').attr('disabled', 'disabled');
 			}
 			$('#section').attr('readonly', 'readonly');
+			$('#gradelevel').attr('readonly', 'readonly');
 		}
 	});
 
 	// because students are default
 	$(document).ready(function (){
-		if ($("#usertype").val() === 'student')	$('#section').removeAttr('readonly');
+		if ($("#usertype").val() === 'student')
+		{
+			$('#section').removeAttr('readonly');
+			$('#gradelevel').removeAttr('readonly');
+		}
 	});
 
 	// creates a new user in the db
@@ -42,13 +49,14 @@
 		var password = $('#adminpassword').val();
 		var usertype = $('#usertype').val();
 		var sat = $('#sat').val();
+		var gradelevel = $('#gradelevel').val();
 		var section = $('#section').val();
 		var position = $('#position').val();
 		var level = $('#level').val();
 		var cluster = $('#cluster').val();
 				
 		var dataString = 'uname='+ uname + '&logid='+ logid + '&password='+ password
-			+ '&usertype=' + usertype + '&sat=' + sat + '&section=' + section + '&position=' + position
+			+ '&usertype=' + usertype + '&sat=' + sat + '&gradelevel=' + gradelevel + '&section=' + section + '&position=' + position
 			+ '&level=' + level + '&cluster=' + cluster;
 			
 		$.ajax({
@@ -61,7 +69,7 @@
 				var result=trim(result);
 				if(result=='correct')
 				{
-					window.location='/admin/create';
+					window.location='/admin/create_users';
 				} 
 				else $("#status").html(result);
 			}
@@ -102,7 +110,7 @@
 			var link = "/admin/get_faculty";
 			
 			$.get(link,{},function(response){
-				response.forEach(function(teacher){
+				response.faculty.forEach(function(teacher){
 					
 					$('select[id=user-photo]').append($('<option>', { 
 						value: teacher.id,
@@ -117,7 +125,7 @@
 	function searchUser()
 	{
 		// remove previous search results
-		$('#linkspace').find('li').remove();
+		$('#linkspace').find('tr').remove();
 		var searchType = '';
 		var searchString = $('#searchstring').val();
 		var $input = $('form').find(':input[type=radio]');
@@ -138,9 +146,31 @@
 			cache: false,
 			success: function(response)
 			{
+				if (response.type === 'student')
+				{
+					$('#linkspace').append("<tr><th>Name</th><th>Grade Level</th><th>Section</th></tr>");
+				}
+				else if (response.type === 'faculty')
+				{
+					$('#linkspace').append("<tr><th>Name</th><th>Subject</th><th>Level</th><th>Cluster</th><th>Position</th></tr>");
+				}
+				else $('#linkspace').append("<tr><th>Name</th></tr>");
+				
 				response.results.forEach(function(user)
 				{
-					$('#linkspace').append("<li><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></li>");
+					if (response.type === 'student')
+					{
+						$('#linkspace').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+						<td>" + user.gradelevel + "</td><td>" + user.section + "</td><td><a href='/admin/delete_user/" + user.id + "'>Delete User</a></td>/tr>");
+					}
+					else if (response.type === 'faculty')
+					{	
+						$('#linkspace').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+						<td>" + user.subject + "</td><td>" + user.level + "</td><td>" + user.cluster + "</td><td>"
+						 + user.supervisor + "</td><td><a href='/admin/delete_user/" + user.id + "'>Delete User</a></td>/tr>");
+					}
+					else $('#linkspace').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td><td><a href='/admin/delete_user/" 
+						+ user.id + "'>Delete User</a></td>/tr>");
 				});
 			}
 		});
@@ -161,7 +191,8 @@
 				
 				if (response.info.gradelevel !== '' && response.info.section !== '')
 				{
-					$('#section').val(response.info.gradelevel + ' ' + response.info.section);
+					$('#gradelevel').val(response.info.gradelevel);
+					$('#section').val(response.info.section);
 				}
 				
 				if (response.info.subject !== '' && response.info.cluster !== '' && response.info.level !== '' )
@@ -185,6 +216,7 @@
 		var password = $('#adminpassword').val();
 		var usertype = $('#usertype').val();
 		var sat = $('#sat').val();
+		var gradelevel = $('#gradelevel').val();
 		var section = $('#section').val();
 		var position = $('#position').val();
 		var level = $('#level').val();
@@ -192,7 +224,7 @@
 		var targetid = $('#targetid').val();
 				
 		var dataString = 'uname='+ uname + '&targetid='+ targetid + '&password='+ password
-			+ '&usertype=' + usertype + '&sat=' + sat + '&section=' + section + '&position=' + position
+			+ '&usertype=' + usertype + '&sat=' + sat + '&gradelevel=' + gradelevel + '&section=' + section + '&position=' + position
 			+ '&level=' + level + '&cluster=' + cluster;
 		console.log(dataString);
 		$.ajax({
@@ -209,6 +241,43 @@
 				}
 				else $("#status").html(result);
 			}
+		});
+		return false;
+	}
+	
+	// NOT DONE YET
+	displaySubjects();
+	function displaySubjects()
+	{
+		if ( !! document.getElementById('sectiontable'))
+		{
+			var link = "/admin/get_section_subjects";
+			
+			$.get(link,{},function(response){
+				response.faculty.forEach(function(teacher){
+					$('select[id^='+ 'teachers').append($('<option>', { 
+						value: teacher.id,
+						text : teacher.name + ' - ' + teacher.subject 
+					}));
+				});
+				
+			});
+			
+		}
+		
+	}
+	
+	function editPercentages()
+	{
+		console.log('okay');
+		// post resquest
+		$.post( "/admin/edit_percentages", $("#percentageTable").serialize() )
+			.done(function( result ) {
+				if (result === 'correct')
+				{
+					location.reload();
+				}
+				else $('#status').html(result);
 		});
 		return false;
 	}

@@ -9,7 +9,7 @@
 			</thead>
 			<tbody>
 				<?php 
-					for ($i = 0; $i < 10; $i++)
+					for ($i = 0; $i < 15; $i++)
 					{
 						echo "<tr>";
 						echo "<td><input name='subjects[]' placeholder='Subject' autofocus></td>";
@@ -21,8 +21,9 @@
 		</table>
 		<br>*leave subject field blank if not needed
 		<br>
-		Section:<br>
-		<input id="section-id" name='section'><br>
+		Grade & Section:<br>
+		<input id="gradelevel-id" name='gradelevel' placeholder='grade level'>
+		<input id="section-id" name='section' placeholder='section'><br>
 		School Year and Semester:<br>
 		<select name='setting[]'>
 			<?php for ($i = 15; $i < 25; $i++) echo "<option value=20$i>20$i</option>"; ?>

@@ -2,9 +2,10 @@
 
 class Users_and_sections
 {
-	
 	function delete_user_method($con, $id)
 	{
+		$id = mysqli_real_escape_string($con, $id);
+		
 		// quick delete, no questions asked
 		$sql = "DELETE FROM
 				users
@@ -21,6 +22,7 @@ class Users_and_sections
 	
 	function get_user_info($con, $id)
 	{
+		$id = mysqli_real_escape_string($con, $id);
 		$sql = "SELECT uname, logid, utype, gradelevel, section, subject, cluster, level, supervisor
 				FROM users
 				WHERE hashid='$id' LIMIT 1";
@@ -57,23 +59,37 @@ class Users_and_sections
 		{
 			case 'username':
 				$statement = "AND uname='$search'";
+				$type = 'all';
 				break;
 			case 'section':
 				$section = explode(' ', $search);
 				$grade_level = $section[0].' '.$section[1];
 				$section_entry = $section[2].' '.$section[3];
 				$statement = "AND gradelevel='$grade_level' AND section='$section_entry'";
+				$type = 'student';
 				break;
 			case 'cluster':
 				$statement = "AND cluster='$search'";
+				$type = 'faculty';
 				break;
 			case 'level':
 				$statement = "AND level='$search'";
+				$type = 'faculty';
 				break;
 			case 'sat':
 				$statement = "AND subject='$search'";
+				$type = 'faculty';
+				break;
+			case 'faculty':
+				$statement = "AND utype='faculty' ORDER BY level, cluster, subject";
+				$type = 'faculty';
+				break;
+			case 'students':
+				$statement = "AND utype='student' ORDER BY gradelevel, section";
+				$type = 'student';
 				break;
 			case 'all':
+				$type = 'all';
 				break;
 			default:
 				exit ('Invalid input');
@@ -88,24 +104,28 @@ class Users_and_sections
 
 		while ($row = mysqli_fetch_array($query))
 		{
-			if (strlen($row[7]) > 3)
+			
+			if (strlen($row[7]) > 4 OR $row[7] == 'none')
+			{
 				$position = ucfirst($row[7]);
+			}
 			else $position = strtoupper($row[7]);
 			
 			$results[] = array(
 				'id' => $row[0],
 				'name' => ucwords($row[1]),
-				'gradelevel' => $row[2],
-				'section' => $row[3],
-				'subject' => $row[4],
+				'gradelevel' => ucwords($row[2]),
+				'section' => ucwords($row[3]),
+				'subject' => ucwords($row[4]),
 				'cluster' => $row[5],
-				'level' => $row[6],
+				'level' => ucwords($row[6]),
 				'supervisor' => $position,
 				'type' => $row[8]
 			);
 		}
 		$data = array(
-			'results' => $results
+			'results' => $results,
+			'type' => $type
 		);
 		
 		return $data;

@@ -4,11 +4,12 @@
 	function createEvaluations()
 	{
 		// create evaluations
-		$.post( "/admin/create_evaluation", $( "#semestral-create" ).serialize() )
+		$.post( "/admin/create_evaluation", $("#semestral-create").serialize() )
 			.done(function( result ) {
 				var result=trim(result);
 				$("#status").html(result);
 		});
+		evaluationStatus();
 		return false;
 	}
 
@@ -25,6 +26,7 @@
 				else if (link === 3)
 					$("#student-status").html(result);
 		});
+		evaluationStatus();
 		return false;
 	}
 	
@@ -39,9 +41,19 @@
 		});
 	}
 	
+	// take all the records and put Student Status: openthem into the archives
 	function archiveEvaluation()
 	{
 		var ref = "/admin/archive_results";
 		$.post(ref, {});
+		evaluationStatus();
+		return false;
+	}
+	
+	function deleteEvaluation(link)
+	{
+		var ref = "/admin/delete_evaluation/";
+		$.post(ref + link, {});
+		evaluationStatus();
 		return false;
 	}

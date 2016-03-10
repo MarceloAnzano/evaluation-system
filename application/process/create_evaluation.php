@@ -84,7 +84,6 @@ class Create_evaluation
 			$students[] = $row;
 		}
 		
-		// NOT DONE YET
 		foreach ($students as $student)
 		{
 			$sql = "SELECT teacherId
@@ -112,13 +111,13 @@ class Create_evaluation
 			
 			$query = mysqli_query($con, $sql);
 		}
-		$this->messages[] = 'Subject area evaluations have been created.';
+		$this->messages[] = 'Student to teacher evaluations have been created.';
 		
 		// create rating container
-		$this->create_ratings_container($con);
+		//~ $this->create_ratings_container($con);
 	}
 	
-	function create_self_evaluation($con)
+	private function create_self_evaluation($con)
 	{
 		// select all faculty
 		$sql = "SELECT hashid
@@ -147,7 +146,7 @@ class Create_evaluation
 		$this->messages[] = 'Self evaluations have been created.';
 	}
 	
-	function create_principal_evaluation($con)
+	private function create_principal_evaluation($con)
 	{
 		// get all non-principal faculty
 		$sql = "SELECT hashid
@@ -188,7 +187,7 @@ class Create_evaluation
 		$this->messages[] = 'API and Principal evaluations have been created.';
 	}
 	
-	function create_supervisor_and_staff($con)
+	private function create_supervisor_and_staff($con)
 	{
 		$this->subject_area($con);
 		$this->cluster($con);
@@ -339,7 +338,7 @@ class Create_evaluation
 		$this->messages[] = 'Level evaluations have been created.';
 	}
 	
-	private function create_ratings_container($con, $type)
+	private function create_ratings_container($con)
 	{
 		$year = $this->setting[0].$this->setting[1];
 		$semester = $this->setting[2];

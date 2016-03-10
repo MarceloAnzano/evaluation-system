@@ -23,11 +23,16 @@
 </form>
 <br>
 <p id='faculty-1st-status'>Not available</p>
-<button id='evaluation-control-button' type='button' onclick='<?php echo "return openEvaluation(1)";?>'>Toggle</button>
+<button id='' type='button' onclick='<?php echo "return openEvaluation(1)";?>'>Toggle</button>
+<button id='' type='button' onclick='<?php echo "return deleteEvaluation(1)";?>'>Delete</button>
+
 <p id='faculty-2nd-status'>Not available</p>
-<button id='evaluation-control-button' type='button' onclick='<?php echo "return openEvaluation(2)";?>'>Toggle</button>
+<button id='' type='button' onclick='<?php echo "return openEvaluation(2)";?>'>Toggle</button>
+<button id='' type='button' onclick='<?php echo "return deleteEvaluation(2)";?>'>Delete</button>
+
 <p id='student-status'>Not available</p>
-<button id='evaluation-control-button' type='button' onclick='<?php echo "return openEvaluation(3)";?>'>Toggle</button>
+<button id='' type='button' onclick='<?php echo "return openEvaluation(3)";?>'>Toggle</button>
+<button id='' type='button' onclick='<?php echo "return deleteEvaluation(3)";?>'>Delete</button>
 
 <p>Archive all results</p>
-<button id='archive-evaluation_button' type='button' onclick='<?php echo "return archiveEvaluation();";?>'>Archive</button>
+<button id='' type='button' onclick='<?php echo "return archiveEvaluation();";?>'>Archive</button>

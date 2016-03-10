@@ -25,8 +25,9 @@ class Admin extends Common
 		else exit('Access Denied');
 	}
 	
+	// find users
 	// update user info
-	function update_users()
+	function users()
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
 		{
@@ -86,7 +87,7 @@ class Admin extends Common
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
 		{
-			$this->this_view('views/question_settings.php');
+			$this->this_view('views/upload_csv.php');
 		}
 		else exit('Access Denied');
 	}
@@ -95,7 +96,7 @@ class Admin extends Common
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
 		{
-			$this->this_view('views/other.php');
+			$this->this_view('views/edit_percentages.php');
 		}
 		else exit('Access Denied');
 	}
@@ -114,10 +115,13 @@ class Admin extends Common
 		if ($type == 'student')
 		{
 			$create->create_student_teacher($this->get_connection());
+			foreach ($create->messages as &$message)
+				echo $message;
 		}
 		else $create->create_evaluation_entries($this->get_connection());
 		
 	}
+
 	
 	function get_faculty()
 	{
@@ -166,10 +170,8 @@ class Admin extends Common
 		$save->save_section_entry($this->get_connection());
 		
 		// cause not ajax (-_-)
-		header('Location: '.base_url.'admin/sections');
+		header('Location: '.base_url.'admin/create_sections');
 	}
-	
-
 	
 	function open($type)
 	{
@@ -180,6 +182,15 @@ class Admin extends Common
 		$control->evaluation_control($this->get_connection(), $type);
 		
 		echo $control->get_current_status();
+	}
+	
+	function delete_evaluation($type)
+	{
+		if ( ! $this->logged_as_admin()) exit('Not authorized!');
+		
+		include BASEPATH.'process/delete_evaluation.php';
+		$control = new Delete_evaluation();
+		$control->delete_evaluation_entries($this->get_connection(), $type);		
 	}
 	
 	function evaluation_status()
@@ -211,6 +222,9 @@ class Admin extends Common
 		$image = new File_upload_parser();
 		$image->image_upload();
 		$image->store_image_reference($this->get_connection());
+		
+		// cause not ajax (-_-)
+		header('Location: '.base_url.'admin/upload');
 	}
 	
 	function search_for()
@@ -245,6 +259,7 @@ class Admin extends Common
 		else exit('Not authorized!');
 	}
 	
+	// if you select archive on evaluation administrator's page
 	function archive_results()
 	{
 		if ( ! $this->logged_as_admin()) exit('Not authorized!');
@@ -253,5 +268,46 @@ class Admin extends Common
 		$archive = new Evaluation_archive();
 		$archive->create_archive($this->get_connection());
 	}
+	
+	function delete_user($id)
+	{
+		if ( ! $this->logged_as_admin()) exit('Not authorized!');
+		
+		include BASEPATH.'process/users_and_sections.php';
+		$archive = new Users_and_sections();
+		$archive->delete_user_method($this->get_connection(), $id);
+	}
+	
+	function process_csv()
+	{
+		if ($this->logged_as_admin() OR $this->logged_as_principal())
+		{
+			include BASEPATH.'process/file_upload_parser.php';
+			$file = new File_upload_parser();
+			if ($file->csv_upload())
+			{
+				include BASEPATH.'process/configuration.php';
+				$question = new Configuration_admin();
+				$data = $file->csv_get_reference_path($this->get_connection());
+				$question->edit_questionnaire($this->get_connection(), $data['name'], $data['path']);
+				
+				// cause not ajax (-_-)
+				header('Location: '.base_url.'admin/questions');
+			}
+			else exit ('Invalid file. File was not uploaded.');
+		}
+		else exit('Not authorized!');
+	}
+	
+	function edit_percentages()
+	{
+		if ($this->logged_as_admin() OR $this->logged_as_principal())
+		{
+			include BASEPATH.'process/configuration.php';
+			$percent = new Configuration_admin();
+			$percent->configure_rating_percentages($this->get_connection());
+		}
+		else exit('Not authorized!');
+	}	
 }
 /* End of File */
