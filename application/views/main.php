@@ -1,3 +1,9 @@
+	<div class="nav-wrapper subNav">
+		<span class="brand-logo">List of Teachers</span>
+	</div>
+
+	<div class="pageContent valign-wrapper">
+		<div class="valign" style="width:100%">
 <?php // because i don't like working with javascript :(
 	$entries = $data;
 	
@@ -34,13 +40,45 @@
 				$closed = '';
 			}
 			
-			echo "<br><br>";
-			
+			echo '
+			<div class="row">
+				<div class="col l3 m3 offset-m2 s8 push-s1" id="teacher1">';
+			if ($closed == '')
+				echo "
+					<div class='card hoverable'>
+					<a class='waves-effect card-content' href=".$link.">";
+			else
+				echo "
+					<div class='card disabledCard'>
+					<a class='card-content' href=".$link.">";
+					
+			echo "
+				<div class='row' style='margin-bottom: 0px !important'>
+					<div class='col m4 avatar'>
+						<img src='.\static\images\avatar-01.svg'>
+					</div>
+					<div class='col m8'>";
 			if ($entry['type'] == 'self')
-			{
-				echo "<a href=".$link.">".$link_text." Self evaluation</a> ".$closed;
-			}
-			else echo "<a href=".$link.">".$link_text.$entry['full_name']."</a> ".$closed;
+				echo "
+						<h6 class='flow-text name'>Self Evaluation</h6>";
+			else
+				echo "
+						<h6 class='flow-text name'>".$entry['full_name']."</h6>";
+			echo "
+						<p class='bodyText flow-text'>".$link_text."</p>
+					</div>
+				</div>
+				</a>
+				</div>
+			</div>
+		</div>";
+
+
+			// if ($entry['type'] == 'self')
+			// {
+			// 	echo "<a href=".$link.">".$link_text." Self evaluation</a> ".$closed;
+			// }
+			// else echo "<a href=".$link.">".$link_text.$entry['full_name']."</a> ".$closed;
 		}
 	}
 	
@@ -72,3 +110,6 @@
 			else echo "<a href=".$link.">".$link_text.' '.$archive['full_name']."</a> ";
 		}
 	}
+?>
+		</div>
+	</div>
