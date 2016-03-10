@@ -41,7 +41,7 @@
 		});
 	}
 	
-	// take all the records and put Student Status: openthem into the archives
+	// take all the records and put Student Status: open them into the archives
 	function archiveEvaluation()
 	{
 		var ref = "/admin/archive_results";

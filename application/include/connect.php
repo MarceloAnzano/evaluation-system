@@ -10,5 +10,13 @@
 	
 	// select the database to be used
 	mysqli_select_db($con, $mysql_db_database) or die("Could not select database");
+	
+	if ( ! $con)
+	{
+		$error = mysqli_connect_error();
+		$errno = mysqli_connect_errno();
+		print "$errno: $error\n";
+		exit();
+	}
 
 /* End of File */
