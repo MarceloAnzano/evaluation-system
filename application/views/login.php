@@ -1,11 +1,34 @@
-	<form onsubmit="return validLogin();">
-		<div>User ID:</div>
-		<input type="text" id="logid" name='logid' onfocus="emptyElement()" maxlength="88" autofocus>
-		<div>Password:</div>
-		<input id="password" name='password' type="password" onfocus="emptyElement()" maxlength="100">
-		<br/><br/>
-		<input id="loginbtn" type="submit" name='submit' value="Log In"></input>
-	</form>
-	<p id='status'></p>
 
-	<a href="/app/register">Click here to set your password.</a>
+	<div class="pageContent valign-wrapper">
+		<div class="valign">
+			<center class="contentWidth">
+				<div class="cardContainer loginCard">
+					<form class="card" onsubmit="return validLogin();">
+						<center class="card-content">
+							<center class="card-title loginTitle">FACULTY EVALUATION SYSTEM</center>
+							<center class="row">
+								<center class="input-field">
+									<input type="text" id="logid" name='logid' onfocus="emptyElement()" maxlength="88" autofocus>
+									<label for="logid">Username</label>
+								</center>
+							</center>
+							<center class="row">
+								<center class="input-field">
+									<input id="password" name='password' type="password" onfocus="emptyElement()" maxlength="100">
+									<label for="password">Password</label>
+								</center>
+							</center>
+							<center class="row">
+								<button id="loginbtn" class="btn waves-effect waves-light right" type="submit" name='submit'>LOGIN</button>
+							</center>
+							<center id="status">
+							</center>
+							<center class="row forgot">
+								<a href="/app/register">Click here to set your password</a>
+							</center>
+						</center>
+					</form>
+				</div>
+			</center>
+		</div>
+	</div>

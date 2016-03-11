@@ -1,0 +1,246 @@
+header{
+	position: fixed;
+	width:100%;
+	height: 100px;
+	background-color: #18487d;
+}
+header img{
+	height: 90%;
+}
+.card{
+	margin: 0px;
+}
+.navImg{
+	position: fixed;
+	width:100%;
+	height: 50px;
+}
+label.active{
+	padding-bottom: 5px;
+}
+nav{
+	/*height: 60px !important;*/
+	top:100px;
+	height: 50px;
+	line-height: 50px;
+}
+nav div.nav-wrapper{
+	height: inherit;
+	line-height: inherit;
+	background-color: #161616 !important;
+}
+
+footer.page-footer{
+	margin-top: 0px !important;
+	height: 30px;
+	line-height: 30px;
+	background-color: #161616 !important;
+}
+body{
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	background: url(/static/images/bg.png) repeat;
+}
+
+main{
+	flex: 1 0 auto;
+}
+
+.cardContainer{
+	width:400px;
+}
+
+.loginCard{
+	width:400px;
+}
+
+.consentCard{
+	min-width:400px;
+	width: 50%;
+}
+.pageContent{
+	width: 100%;
+	min-height: 400px;
+}
+
+center.card-content{
+	width: 90%;
+	margin: 0 auto;
+}
+
+button.btn, i.btn{
+	background-color: #18487d !important;	
+}
+
+.contentWidth{
+	width: 100%;
+}
+
+.loginTitle{
+	font-family: Roboto;
+	font-weight: bolder !important;
+	color: #18487d;
+	line-height: 30px !important;
+	margin-top: 0px !important;
+	margin-bottom: 30px !important;
+}
+
+.forgot{
+	margin-top: 30px !important;
+	margin-bottom: 0px !important;
+}
+
+.bodyText{
+	font-size: 1.15rem;
+	color: #000 !important;
+}
+
+.subNav{
+	background-color: #009688 !important;
+	height: 50px;
+	color: #fff;
+	font-weight: 400;
+	line-height: 50px;
+	font-size: 1.5rem;
+}
+
+.name{
+	text-align: left !important;
+	margin-top: 0px;
+	font-weight: 500;
+	color: #000;
+	text-transform:capitalize;
+}
+
+.avatar{
+	padding-right: 0px !important;
+}
+
+.brand-logo{
+	display: block;
+	margin-left: 10px;
+	text-transform:capitalize;
+}
+
+.subBrand{
+	display: block;
+	margin-left: 10px;
+	text-transform:capitalize;
+	font-size: 1.3rem;
+	font-weight: 200;
+	line-height: 0px;
+}
+
+.waves-effect{
+	display: inherit;
+}
+
+.loading{
+	display: block;
+	position: fixed;
+	z-index: 1000;
+	background-color: #18487d;
+	height: 100%;
+	width: 100%;
+}
+.loadPos{
+	position: fixed;
+	top: 40%;
+	right: 50%;
+}
+.spinner-layer{
+	color:#161616 !important;
+}
+
+.back{
+	font-size: 2rem;
+}
+.avatarHead{
+	margin: 5px;
+	height: 65px;
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+}
+
+table tr{
+	height: 10px !important;
+}
+td input{
+	padding: 0px !important;
+	margin: 0px !important;
+}
+td {
+	padding: 0px !important;
+}
+thead{
+	font-weight: bold !important;
+}
+.rating{
+	width: 20%;
+}
+.rating2{
+	width: 40%;
+}
+#status{
+	line-height: 100%;
+	color: red;
+	font-size: 0.8rem;
+}
+
+
+.custom-btn.waves-effect.waves-light .waves-ripple {
+     /* The alpha value allows the text and background color
+     of the button to still show through. */
+     background-color: rgba(24, 72, 125, 0.95);
+ }
+
+.disabledCard, .disabledCard h5.name.flow-text, .disabledCard p.bodyText.flow-text{
+	background-color: #dfdfdf !important;
+	box-shadow: none;
+	color: #9f9f9f !important;
+	cursor: default;
+}
+
+div.card.disabledCard a.waves-effect.card-content{
+	-webkit-tap-highlight-color:none;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+	-ms-transition: none;
+	transition: none;
+}
+div.card.disabledCard a.waves-effect.card-content .waves-ripple{
+	display: none;
+}
+
+a.waves-effect.card-content{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.subNav div.row{
+	margin: 0px;
+}
+
+.subj{
+	text-transform:capitalize;
+}
+
+.scores{
+	font-size: 1.2rem;
+	padding-left:20px;
+}
+.card-action a{
+	color:#18487d !important;
+}
+td{
+	padding-right: 10px;
+	padding-left: 10px;
+}

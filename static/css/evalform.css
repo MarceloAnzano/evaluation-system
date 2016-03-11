@@ -1,0 +1,13 @@
+.card{
+	margin: 20px 0px;
+}
+.hiddenRow{
+	display: none;
+	background-color: rgba(0,0,0,0) !important;
+}
+.question{
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+}
+#remarks{ 
+}
