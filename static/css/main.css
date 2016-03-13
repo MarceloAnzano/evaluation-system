@@ -8,7 +8,9 @@ header img{
 	height: 90%;
 }
 .card{
-	margin: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .navImg{
 	position: fixed;
@@ -46,7 +48,14 @@ body{
 main{
 	flex: 1 0 auto;
 }
-
+.container-div {
+	height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
 .cardContainer{
 	width:400px;
 }

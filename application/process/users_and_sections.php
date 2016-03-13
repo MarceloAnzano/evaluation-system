@@ -35,6 +35,7 @@ class Users_and_sections
 		else $position = strtoupper($row[7]);
 		
 		$results['info'] = array(
+				'userid' => $id,
 				'name' => ucwords($row[0]),
 				'logid' => $row[1],
 				'type' => ucwords($row[2]),

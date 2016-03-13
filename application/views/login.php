@@ -1,8 +1,6 @@
 
-	<div class="pageContent valign-wrapper">
-		<div class="valign">
-			<center class="contentWidth">
-				<div class="cardContainer loginCard">
+<main>
+		<div class="container-div">
 					<form class="card" onsubmit="return validLogin();">
 						<center class="card-content">
 							<center class="card-title loginTitle">FACULTY EVALUATION SYSTEM</center>
@@ -29,6 +27,4 @@
 						</center>
 					</form>
 				</div>
-			</center>
-		</div>
-	</div>
+</main>

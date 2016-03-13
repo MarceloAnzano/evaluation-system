@@ -52,10 +52,16 @@
 					<div class='card disabledCard'>
 					<a class='card-content' href=".$link.">";
 					
+			// echo "
+			// 	<div class='row' style='margin-bottom: 0px !important'>
+			// 		<div class='col m4 avatar'>
+			// 			<img src='.\static\images\avatar-01.svg'>
+			// 		</div>
+			// 		<div class='col m8'>";
 			echo "
 				<div class='row' style='margin-bottom: 0px !important'>
 					<div class='col m4 avatar'>
-						<img src='.\static\images\avatar-01.svg'>
+						<img src=".$this->get_photo($entry['userid']).">
 					</div>
 					<div class='col m8'>";
 			if ($entry['type'] == 'self')
