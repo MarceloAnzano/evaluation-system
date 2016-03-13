@@ -47,10 +47,11 @@ body{
 
 main{
 	flex: 1 0 auto;
+	display: flex;
 }
 .container-div {
-	height: inherit;
-    display: flex;
+	display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
     margin-top: auto;
@@ -112,6 +113,12 @@ button.btn, i.btn{
 	font-weight: 400;
 	line-height: 50px;
 	font-size: 1.5rem;
+	width: 100%;
+}
+
+.container{
+	margin: 0px;
+	width: 100%;
 }
 
 .name{

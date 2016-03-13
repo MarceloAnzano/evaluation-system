@@ -2,7 +2,7 @@
 	// credentials and database name
 	$mysql_db_hostname = "localhost";
 	$mysql_db_user = "root";
-	$mysql_db_password = "root";
+	$mysql_db_password = "";
 	$mysql_db_database = "myapp";
 	
 	// create connection variable

@@ -1,9 +1,8 @@
+<main>
+	<div class="container">
 	<div class="nav-wrapper subNav">
 		<span class="brand-logo">List of Teachers</span>
 	</div>
-
-	<div class="pageContent valign-wrapper">
-		<div class="valign" style="width:100%">
 <?php // because i don't like working with javascript :(
 	$entries = $data;
 	
@@ -117,5 +116,6 @@
 		}
 	}
 ?>
-		</div>
 	</div>
+
+</main>
