@@ -70,7 +70,8 @@ class App extends Common
 		if($this->check_user_login())
 		{
 			$data = $this->questions($id);
-			$this->this_view('views/evaluation.php', $data, $id, $semester);
+			$details = $this->get_user_details($id);
+			$this->this_view('views/evaluation.php', $data, $details, $semester);
 		}
 		else header('Location: '.base_url);
 	}
@@ -252,6 +253,16 @@ class App extends Common
 		include BASEPATH.'process/file_upload_parser.php';
 		$photo = new File_upload_parser();
 		return $photo->get_image_reference($this->get_connection(), $id);
+	}
+	
+	
+	function get_user_details($id)
+	{
+		if ( ! $this->check_user_login()) exit ('Not logged in');
+		
+		include BASEPATH.'process/users_and_sections.php';
+		$details = new Users_and_sections();
+		return $details->get_user_info($this->get_connection(), $id);
 	}
 	
 	// logout user

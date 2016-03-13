@@ -2,7 +2,7 @@
 	<form action='/app/post_result' method='post'>
 		<table>
 			<?php
-				// target id
+				// target details
 				$person = $data2;
 				
 				// target semester
@@ -10,6 +10,8 @@
 				
 				$title_index = 0;
 				
+				// example
+				echo $person['info']['name'];
 				foreach ($data['questions'] as &$set)
 				{
 					$num = 0;
@@ -48,7 +50,7 @@
 					echo "<input name='".$question."Per[]' type='hidden' value='".$count."'/>";
 				}
 				
-				echo "<input name='person' type='hidden' value='".$person."'/>";
+				echo "<input name='person' type='hidden' value='".$person['info']['userid']."'/>";
 				echo "<input name='semester' type='hidden' value='".$semester."'/>";
 			?>
 			<tr><td><input type='submit' name='submit' value='Submit'></td></tr>
