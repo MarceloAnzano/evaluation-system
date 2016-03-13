@@ -23,24 +23,25 @@ NOTE FOR MARCI:
 - para sa storage ng application images store mo sa images/app
 - yung files folder, naka-reserve para sa mga pdf, csv etc
 - yung ibang features na depende sa kung sino ang naka-login use: 
-    $this->logged_as_admin() to check if app administrator 
-    $this->logged_as_principal() to check if principal or asst. principal for inst. (api) 
-    $this->allow_supervisor(string) 
-      string values can be satl, ll, cc, api or principal 
-    $this->get_session_info(string) 
-      string values can be uname for full name, logid for login id utype for type of user, supervisor for user's position if           meron, at userid for the identifier.
-    
+	- $this->logged_as_admin() to check if app administrator 
+    	- $this->logged_as_principal() to check if principal or asst. principal for inst. (api) 
+	- $this->allow_supervisor()
+		- allows only CC, LL, SATL, API, Principal
+    	- $this->get_session_info(string)
+      		- string values can be uname for full name, logid for login id utype for type of user, supervisor for user's position if           meron, at userid for the identifier.
+    	- sa evaluation.php, kay person['info'][string]
+		- string values can be userid, name, logid, user type, gradelevel, section, subject, cluster, level, position (if supervisor)
 - para sa pictures i-call mo si $this->get_photo(id) pwede mong makuha si id sa main.php entry['userid']. note ni-rereturn ni    entry ang list ng lahat ng tao so bale list of IDs yun.
-    speaking of which eto yung ibang data: 
-        'userid'
-        'full_name'
-        'type' (kung student, admin o faculty)
-        'position' lowercase lahat to (dun sa iba hindi kasi dito ako tinamad)
-        'open' (used for [closed] na tag)
-        'year'
-        'semester'
-        'is_answered' (kung complete na)
-pag naguluhan dito makikita yan: application/process/evaluation_entries.php
-sa archives naman dito: application/process/evaluation_archives.php
+- speaking of which eto yung ibang data: 
+    	- 'userid'
+        - 'full_name'
+        - 'type' (kung student, admin o faculty)
+        - 'position' lowercase lahat to (dun sa iba hindi kasi dito ako tinamad)
+        - 'open' (used for [closed] na tag)
+        - 'year'
+        - 'semester'
+        - 'is_answered' (kung complete na)
+- pag naguluhan dito makikita yan: application/process/evaluation_entries.php
+- sa archives naman dito: application/process/evaluation_archives.php
 
 Version 2.1.0

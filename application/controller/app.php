@@ -250,7 +250,10 @@ class App extends Common
 	{
 		if ( ! $this->check_user_login()) exit ('Not logged in');
 		
-		include BASEPATH.'process/file_upload_parser.php';
+		// put link of standard photo
+		$no_photo_ref = '';
+		
+		include_once BASEPATH.'process/file_upload_parser.php';
 		$photo = new File_upload_parser();
 		return $photo->get_image_reference($this->get_connection(), $id);
 	}
@@ -260,7 +263,7 @@ class App extends Common
 	{
 		if ( ! $this->check_user_login()) exit ('Not logged in');
 		
-		include BASEPATH.'process/users_and_sections.php';
+		include_once BASEPATH.'process/users_and_sections.php';
 		$details = new Users_and_sections();
 		return $details->get_user_info($this->get_connection(), $id);
 	}
