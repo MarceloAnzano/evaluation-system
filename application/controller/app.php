@@ -70,9 +70,14 @@ class App extends Common
 		if($this->check_user_login())
 		{
 			$data = $this->questions($id);
+<<<<<<< HEAD
 			//$this->this_view('views/evaluation.php', $data, $id, $semester);
 			$details = $this->get_user_details($id);
  			$this->this_view('views/evaluation.php', $data, $details, $semester);
+=======
+			$details = $this->get_user_details($id);
+			$this->this_view('views/evaluation.php', $data, $details, $semester);
+>>>>>>> refs/heads/pr/1
 		}
 		else header('Location: '.base_url);
 	}
@@ -252,10 +257,17 @@ class App extends Common
 		if ( ! $this->check_user_login()) exit ('Not logged in');
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		include_once BASEPATH.'process/file_upload_parser.php';
 =======
 		include BASEPATH.'process/file_upload_parser.php';
 >>>>>>> parent of d582e7c... fixed redeclaration
+=======
+		// put link of standard photo
+		$no_photo_ref = '';
+		
+		include_once BASEPATH.'process/file_upload_parser.php';
+>>>>>>> refs/heads/pr/1
 		$photo = new File_upload_parser();
 		return $photo->get_image_reference($this->get_connection(), $id);
 	}
@@ -276,7 +288,20 @@ class App extends Common
 		return $details->get_user_info($this->get_connection(), $id);
 	}
 	
+<<<<<<< HEAD
 >>>>>>> parent of d582e7c... fixed redeclaration
+=======
+	
+	function get_user_details($id)
+	{
+		if ( ! $this->check_user_login()) exit ('Not logged in');
+		
+		include_once BASEPATH.'process/users_and_sections.php';
+		$details = new Users_and_sections();
+		return $details->get_user_info($this->get_connection(), $id);
+	}
+	
+>>>>>>> refs/heads/pr/1
 	// logout user
 	function logout()
 	{

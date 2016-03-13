@@ -38,7 +38,7 @@ class File_upload_parser
 		mysqli_stmt_execute($stmt);
 	}
 	
-	function get_image_reference($con, $id)
+	function get_image_reference($con, $id, $no_photo_ref)
 	{
 		$sql = "SELECT img_reference
 				FROM img_uploads
@@ -49,8 +49,12 @@ class File_upload_parser
 		mysqli_stmt_execute($stmt);
 		$query = mysqli_stmt_get_result($stmt);
 		$row = mysqli_fetch_array($query);
-		
-		return $row[0];
+		$numrows = mysqli_num_rows($query);
+		if ($numrows == 0)
+		{
+			return $no_photo_ref;
+		}
+		else return $row[0];
 	}
 	
 	function csv_upload()
