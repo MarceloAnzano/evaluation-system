@@ -1,3 +1,14 @@
+<div class="nav-wrapper subNav">
+	<div class="row">
+		<div class="col l3 avatarHead">
+			<img src=".\static\images\avatar-02.svg">
+		</div>
+		<div class="col l9">
+			<span class="brand-logo">NAME</span>
+			<span class="subBrand"></span>
+		</div>
+	</div>
+</div>
 <div style='margin:auto;width:70%'>
 	<form action='/app/post_result' method='post'>
 		<table>
@@ -11,7 +22,7 @@
 				$title_index = 0;
 				
 				// example
-				echo $person['info']['name'];
+ 				echo $person['info']['name'];
 				foreach ($data['questions'] as &$set)
 				{
 					$num = 0;

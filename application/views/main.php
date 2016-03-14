@@ -1,9 +1,8 @@
+<main>
+	<div class="container">
 	<div class="nav-wrapper subNav">
 		<span class="brand-logo">List of Teachers</span>
 	</div>
-
-	<div class="pageContent valign-wrapper">
-		<div class="valign" style="width:100%">
 <?php // because i don't like working with javascript :(
 	$entries = $data;
 	
@@ -52,10 +51,16 @@
 					<div class='card disabledCard'>
 					<a class='card-content' href=".$link.">";
 					
+			// echo "
+			// 	<div class='row' style='margin-bottom: 0px !important'>
+			// 		<div class='col m4 avatar'>
+			// 			<img src='.\static\images\avatar-01.svg'>
+			// 		</div>
+			// 		<div class='col m8'>";
 			echo "
 				<div class='row' style='margin-bottom: 0px !important'>
 					<div class='col m4 avatar'>
-						<img src='.\static\images\avatar-01.svg'>
+						<img src=".$this->get_photo($entry['userid']).">
 					</div>
 					<div class='col m8'>";
 			if ($entry['type'] == 'self')
@@ -111,5 +116,6 @@
 		}
 	}
 ?>
-		</div>
 	</div>
+
+</main>

@@ -14,7 +14,7 @@
 			<header class="nav-wrapper z-depth-3">
 				<center class="navImg">
 					<img src="/static/images/badge.png"/>
-					<img src="/static/images/Logo.png"/>
+					<img src="<?php echo htmlspecialchars(STATICPATH."images/Logo.png");?>"/>
 				</center>
 			</header>
 			<nav>
