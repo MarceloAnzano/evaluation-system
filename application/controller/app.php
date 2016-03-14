@@ -78,12 +78,12 @@ class App extends Common
 	}
 	
 	// displays past scores for current evaluation period
-	function score($id)
+	function score($id, $semester)
 	{
 		if($this->check_user_login())
 		{
-			$this->target_id = $id;
-			$this->this_view('views/past_rating.php');
+			$data = $this->get_past_ratings($id, $semester);
+			$this->this_view('views/past_rating.php', $data);
 		}
 		else header('Location: '.base_url);
 	}
@@ -197,14 +197,14 @@ class App extends Common
 		header ('Location: '.base_url);
 	}
 	
-	function get_past_ratings($id, $year, $semester)
+	function get_past_ratings($id, $semester)
 	{
 		if ( ! $this->check_user_login()) exit ('Not logged in');
 		
 		include BASEPATH.'process/evaluation_entries.php';
 		$entries = new Evaluation_entries();
-			
-		$list = $entries->get_rating_for_person($this->get_connection(), $this->get_session_info('userid'), $this->get_session_info('utype'), $id, $year, $semester);
+		
+		$list = $entries->get_rating_for_person($this->get_connection(), $this->get_session_info('userid'), $this->get_session_info('utype'), $id, $semester);
 		//~ header('Content-Type: application/json');
 		//~ echo json_encode($list);
 		//~ return;

@@ -49,7 +49,7 @@ class Evaluation_entries
 		return $persons;
 	}
 	
-	function get_rating_for_person($con, $userid, $utype, $id, $year, $semester)
+	function get_rating_for_person($con, $userid, $utype, $id, $semester)
 	{
 		switch ($utype)
 		{
@@ -57,10 +57,10 @@ class Evaluation_entries
 				$sql = "SELECT users.uname, student
 						FROM results
 						INNER JOIN users ON users.hashid =results.to_evaluate
-						WHERE year=? AND evaluator=? AND to_evaluate=?";
+						WHERE evaluator=? AND to_evaluate=?";
 				$stmt = mysqli_prepare($con, $sql);
 				
-				mysqli_stmt_bind_param($stmt, 'iss', $year, $userid, $id);	
+				mysqli_stmt_bind_param($stmt, 'is', $userid, $id);	
 					
 				mysqli_stmt_execute($stmt);
 				$query = mysqli_stmt_get_result($stmt);
@@ -78,11 +78,11 @@ class Evaluation_entries
 				$sql = "SELECT users.uname, tc, ea, ap
 						FROM results
 						INNER JOIN users ON users.hashid =results.to_evaluate
-						WHERE year=? AND semester=? AND evaluator=? AND to_evaluate=?";
+						WHERE semester=? AND evaluator=? AND to_evaluate=?";
 						
 				$stmt = mysqli_prepare($con, $sql);
 				
-				mysqli_stmt_bind_param($stmt, 'iiss', $year, $semester, $userid, $id);	
+				mysqli_stmt_bind_param($stmt, 'iss', $semester, $userid, $id);	
 				
 				mysqli_stmt_execute($stmt);
 				$query = mysqli_stmt_get_result($stmt);
