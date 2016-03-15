@@ -1,8 +1,11 @@
-
-	<div class="pageContent valign-wrapper">
+<main>
+	<div class="container-div">
+	<!-- div class="pageContent valign-wrapper">
 		<div class="valign">
 			<center class="contentWidth">
-				<div class="cardContainer loginCard">
+				<div class="cardContainer loginCard"> -->
+				<div class="row">
+					<div class="col s12 m6 l6 offset-l3 offset-m3">
 					<form class="card" onsubmit="return validRegister();">
 						<center class="card-content">
 							<center class="card-title loginTitle">SET NEW PASSWORD</center>
@@ -36,11 +39,15 @@
 							<center id="status">
 							</center>
 							<center class="row forgot">
-								<a href="/">Proceed to Login page</a>
+								<a href="/"><h6>Proceed to Login page</h6></a>
 							</center>
 						</center>
 					</form>
-				</div>
+				<!-- </div>
 			</center>
 		</div>
+	</div> -->
 	</div>
+	</div>
+	</div>
+</main>

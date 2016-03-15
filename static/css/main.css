@@ -1,3 +1,51 @@
+.row{
+	margin: 0px;
+	width: 100%;
+}
+label{
+	color: #7c7c7c !important;
+}
+label.active{
+	color: #26a69a !important;
+}
+li {list-style-type: none;}
+
+.eval-division{
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+.eval-division> .col.l12.m12.s12 > h4{
+	color: #EA4A4F;
+}
+.eval-division>.col.l12.m12.s12>.row{
+	border-left: 3px solid #009688;
+	margin-left:20px;
+}
+/*.eval-division>.col.l12.m12.s12>h4{
+	border-left: 8px solid blue;
+	padding-left:10px;
+}*/
+/*#maincontent{
+	flex: 1 0;
+	position: absolute;
+	height: 100%;
+}*/
+#sidebar{
+	padding-top: 200px;
+	position: absolute;
+}
+.error-message{
+	line-height: 100%;
+	color: red;
+	font-size: 1.2em;
+}
+#createSectionForm th, #linkSpace th{
+	padding-top: 15px;
+}
+#linkSpace td{
+	height: 1.8rem;
+	line-height: 100%;
+}
 header{
 	/*position: fixed;*/
 	width:100%;
@@ -7,6 +55,10 @@ header{
 .fixed{
 	position: fixed !important;
 	top: 0px;
+}
+.fixedSidebar{
+	position: fixed !important;
+	top: 48px;
 }
 /*.subNav.fixed{
 	top:50px !important;
@@ -97,11 +149,12 @@ main{
     justify-content: center;
     margin-top: auto;
     margin-bottom: auto;
+    position: relative;
 }
-.row{
+/*.row{
 	margin-top:20px;
 	margin-bottom: 0px;
-}
+}*/
 .cardContainer{
 	width:400px;
 }
@@ -192,6 +245,12 @@ button.btn, i.btn1{
 	width: 100%;
 	max-width: none;
 }
+.container-admin{
+	margin: 0px;
+	width: 100%;
+	max-width: none;
+	background: #fff;
+}
 
 .name{
 	text-align: left !important;
@@ -257,32 +316,36 @@ table tr{
 table{
 	margin-bottom: 1.75rem;
 }
-#evalform{
-	width: 95%;
-	margin: auto;
-	margin-bottom: 1.75rem;
-}
 td input{
 	padding: 0px !important;
 	margin: 0px !important;
 }
 td {
-	padding: 0px !important;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	font-size: 1.2rem;
 }
 thead th{
+	font-size: 1.22rem;
 	font-weight: bold !important;
 	padding-top:2.75rem;
+}
+#evalform{
+	width: 95%;
+	margin: auto;
+	margin-bottom: 1.75rem;
+}
+#evalform th{
+	font-size: 1.4rem;
+}
+#evalform thead{
+	margin-left:-20px;
 }
 .rating{
 	width: 15%;
 }
 .rating2{
 	width: 40%;
-}
-#status{
-	line-height: 100%;
-	color: red;
-	font-size: 0.8rem;
 }
 
 
