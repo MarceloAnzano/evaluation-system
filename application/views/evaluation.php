@@ -1,73 +1,84 @@
+
 <div class="nav-wrapper subNav">
 	<div class="row">
-		<div class="col l3 avatarHead">
-			<img src=".\static\images\avatar-02.svg">
+		<div class="col s2 m2 l1">
+			<div class="imgholder1x1">
+				<?php $person = $data2; echo '<img src="'.$this->get_photo($person['info']['userid']).'">'; ?>
+			</div>
 		</div>
 		<div class="col l9">
-			<span class="brand-logo">NAME</span>
+			<span class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
 			<span class="subBrand"></span>
 		</div>
 	</div>
 </div>
-<div style='margin:auto;width:70%'>
-	<form action='/app/post_result' method='post'>
-		<table>
-			<?php
-				// target details
-				$person = $data2;
-				
-				// target semester
-				$semester = $data3;
-				
-				$title_index = 0;
-				
-				// example
- 				echo $person['info']['name'];
-				foreach ($data['questions'] as &$set)
-				{
-					$num = 0;
-					$percent = 0;
-					$category = "";
-					$question = $data['title'][$title_index];
-					$title_index++;
-					
-					// start of table output
-					foreach ($set as &$row)
-					{
-						if ($row[0] > 0)
-						{
-							if ($row[1] != $category)
+<main>
+<div class="row">
+	<div class="col s8 m8 l8 push-s2 push-m2 push-l2">
+		<div class="card">
+			<div class="card-content">
+				<form id="evalform" action='/app/post_result' method='post'>
+					<table class="striped">
+						<?php
+							// target details
+							$person = $data2;
+							
+							// target semester
+							$semester = $data3;
+							
+							$title_index = 0;
+							
+							// example
+							foreach ($data['questions'] as &$set)
 							{
-								if ($category != "")
+								$num = 0;
+								$percent = 0;
+								$category = "";
+								$question = $data['title'][$title_index];
+								$title_index++;
+								
+								// start of table output
+								foreach ($set as &$row)
 								{
-									echo "<input name='".$question."Num[]' type='hidden' value='".$num."'/>";
-									echo "<input name='".$question."Per[]' type='hidden' value='".$count."'/>";
+									if ($row[0] > 0)
+									{
+										if ($row[1] != $category)
+										{
+											if ($category != "")
+											{
+												echo "<input name='".$question."Num[]' type='hidden' value='".$num."'/>";
+												echo "<input name='".$question."Per[]' type='hidden' value='".$count."'/>";
+											}
+											
+											$count = $row[0];
+											$category = $row[1];
+											$num = 0;
+											echo "<thead><tr><th>$category</th>
+											<th class='rating'></th></tr></thead>";
+											continue;
+										}
+									}
+									
+									$num++;
+									echo "<tr><td>".$row[1]."</td>";
+									echo "<td><input class='center-align' type='number' name='".$question."[]' min='0' max='4' step='0.5' value=4 required><br></td></tr>";
 								}
 								
-								$count = $row[0];
-								$category = $row[1];
-								$num = 0;
-								echo "<tr><td><b>$category</b></td></tr>";
-								continue;
+								echo "<input name='".$question."Num[]' type='hidden' value='".$num."'/>";
+								echo "<input name='".$question."Per[]' type='hidden' value='".$count."'/>";
 							}
-						}
-						
-						$num++;
-						echo "<tr><td>".$row[1]."</td>";
-						echo "<td><input type='number' name='".$question."[]' min='0' max='4' step='0.5' value=4 required><br></td></tr>";
-					}
-					
-					echo "<input name='".$question."Num[]' type='hidden' value='".$num."'/>";
-					echo "<input name='".$question."Per[]' type='hidden' value='".$count."'/>";
-				}
-				
-				echo "<input name='person' type='hidden' value='".$person['info']['userid']."'/>";
-				echo "<input name='semester' type='hidden' value='".$semester."'/>";
-			?>
-			<tr><td><input type='submit' name='submit' value='Submit'></td></tr>
-		</table>
-	</form>
-	<p id="status"></p>
+							
+							echo "<input name='person' type='hidden' value='".$person['info']['userid']."'/>";
+							echo "<input name='semester' type='hidden' value='".$semester."'/>";
+						?>
+					</table>
+					<button  class="btn waves-effect waves-light right" type='submit' name='submit' value='Submit'>Submit</button>
+				</form>
+				<p id="status"></p>
+			</div>
+		</div>
+	</div>
 </div>
+</main>
 
 
