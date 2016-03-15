@@ -7,4 +7,7 @@ $(window).on('scroll', function(){
 $(document).ready(function(){
 	// $('.scrollHeight').css('heach()eight',$('main').height()-$('subNav').height()+'px');
 	$("#eval-card").each(function(){});
+	if($('#password').text()!=""){
+		$('password-label').addClass('active');
+	}
 });

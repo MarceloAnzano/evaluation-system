@@ -6,7 +6,7 @@
 				</div>
 			</div>
 			<div class="col l9">
-				<span class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
+				<span class="brand-logo"><?php $scores = $data; echo $scores['target']['name']; ?></span>
 				<span class="subBrand"></span>
 			</div>
 		</div>
@@ -19,7 +19,6 @@
 				<center class="row">
 					<center class="input-field">
 						<?php
-						$scores = $data;
 						foreach ($scores['target'] as $score)
 						{
 							echo '<br>'.$score;

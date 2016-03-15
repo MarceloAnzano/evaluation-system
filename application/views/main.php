@@ -44,8 +44,9 @@
 				<div class="col l4 m4 s8 offset-l4 offset-m4 offset-s2" id="teacher1">';
 			if ($closed == '')
 				echo "
-					<div class='card hoverable' id='eval-card'>
-					<a class='waves-effect card-content' href=".$link.">";
+
+					<div class='card waves-effect hoverable' id='eval-card'>
+					<a class=' card-content' href=".$link.">";
 			else
 				echo "
 					<div class='card disabledCard'>
@@ -109,7 +110,6 @@
 			$date = substr($archive['year'], 0, strlen($archive['year']) / 2).' '.substr($archive['year'], strlen($archive['year']) / 2);
 			
 			$link_text = 'Archived '.$date.' '.$semester;
-			
 			// if ($archive['type'] == 'self')
 			// {
 			// 	echo "<a href=".$link.">".$link_text." Self evaluation</a> ";

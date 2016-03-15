@@ -1,7 +1,7 @@
 
 <main>
 	<div class="container-div">
-		<form class="card" onsubmit="return validLogin();">
+		<form id="login" method="post" class="card" onsubmit="return validLogin();">
 			<center class="card-content">
 				<center class="card-title loginTitle">FACULTY EVALUATION SYSTEM</center>
 					<center class="row">
@@ -13,7 +13,7 @@
 					<center class="row">
 						<center class="input-field">
 							<input id="password" name='password' type="password" onfocus="emptyElement()" maxlength="100">
-							<label for="password">Password</label>
+							<label for="password" id="password-label">Password</label>
 						</center>
 					</center>
 					<center class="row">
