@@ -72,7 +72,7 @@ class App extends Common
 			$data = $this->questions($id);
 
 			$details = $this->get_user_details($id);
-			$this->this_view('views/evaluation.php', $data, $details, $semester);
+ 			$this->this_view('views/evaluation.php', $data, $details, $semester);
 		}
 		else header('Location: '.base_url);
 	}
@@ -122,11 +122,11 @@ class App extends Common
 		else exit ('Access Denied');
 	}
 	
-	function success()
+	function success($data)
 	{
 		if($this->check_user_login())
 		{
-			$this->this_view('views/success.php');
+			$this->this_view('views/success.php', $data);
 		}
 		else header('Location: '.base_url);
 	}
@@ -240,7 +240,6 @@ class App extends Common
 		include BASEPATH.'process/calculate.php';
 		$calculate = new Calculate();
 		$data = $calculate->display_subordinate_ratings($this->get_connection(), $this->get_session_info('userid'), $this->get_session_info('supervisor'));
-		
 		header('Content-Type: application/json');
 		echo json_encode($data);
 		return;
@@ -250,13 +249,13 @@ class App extends Common
 	function get_photo($id)
 	{
 		if ( ! $this->check_user_login()) exit ('Not logged in');
-		
+
 		// put link of standard photo
-		$no_photo_ref = '';
+		$no_photo_ref = base_url.'/images/defaultavatar.jpg';
 		
 		include_once BASEPATH.'process/file_upload_parser.php';
 		$photo = new File_upload_parser();
-		return $photo->get_image_reference($this->get_connection(), $id);
+		return $photo->get_image_reference($this->get_connection(), $id, $no_photo_ref);
 	}
 	
 	function get_user_details($id)
@@ -280,4 +279,3 @@ class App extends Common
 }
 	
 
-/* End of File */

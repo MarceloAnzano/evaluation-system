@@ -13,11 +13,19 @@ class Users_and_sections
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 's', $id);		
 		mysqli_stmt_execute($stmt);
+		
+		// delete photo too
+		$sql = "DELETE FROM
+				img_uploads
+				WHERE userId=?";
+		$stmt = mysqli_prepare($con, $sql);
+		mysqli_stmt_bind_param($stmt, 's', $id);		
+		mysqli_stmt_execute($stmt);
 	}
 	
-	function edit_section_method($con)
+	function get_section_method($con)
 	{
-		// move to another file
+		// get sections
 	}
 	
 	function get_user_info($con, $id)

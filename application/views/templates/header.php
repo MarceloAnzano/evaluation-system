@@ -8,17 +8,14 @@
 	<link rel="stylesheet" href="<?php echo htmlspecialchars(STATICPATH."css/main.css");?>">
 </head>
 <body>
-	<div class="navbar-fixed">
-		<div class="navbar-wrapper">
-			<!-- <header class="nav-wrapper"> -->
-			<header class="nav-wrapper z-depth-3">
+	<header class="navbar-fixed">
+			<div id="headImageHolder">
 				<center class="navImg">
 					<img src="/static/images/badge.png"/>
 					<img src="<?php echo htmlspecialchars(STATICPATH."images/Logo.png");?>"/>
 				</center>
-			</header>
-			<nav>
-				<div class="nav-wrapper">
+			</div>
+				<nav class="z-depth-1" id="navHolder">
 					<?php if ($this->check_user_login()) echo'
 					<a href="#" class="brand-logo">FACULTY EVALUATION SYSTEM</a>';
 					?>
@@ -29,7 +26,5 @@
 						<?php if ($this->check_user_login()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."app/user_settings'>SETTINGS</a></li>";?>
 						<?php if ($this->check_user_login()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."app/logout'>LOGOUT</a></li>";?>
 					</ul>
-				</div>
-			</nav>
-		</div>
-	</div>
+				</nav>
+	</header>

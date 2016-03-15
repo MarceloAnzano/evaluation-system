@@ -1,8 +1,8 @@
 <main>
 	<div class="container">
-	<div class="nav-wrapper subNav">
-		<span class="brand-logo">List of Teachers</span>
-	</div>
+		<div class="nav-wrapper subNav">
+			<span class="brand-logo" style="text-transform: none !important;">List of Teachers</span>
+		</div>
 <?php // because i don't like working with javascript :(
 	$entries = $data;
 	
@@ -41,10 +41,10 @@
 			
 			echo '
 			<div class="row">
-				<div class="col l3 m3 offset-m2 s8 push-s1" id="teacher1">';
+				<div class="col l4 m4 s8 offset-l4 offset-m4 offset-s2" id="teacher1">';
 			if ($closed == '')
 				echo "
-					<div class='card hoverable'>
+					<div class='card hoverable' id='eval-card'>
 					<a class='waves-effect card-content' href=".$link.">";
 			else
 				echo "
@@ -58,11 +58,13 @@
 			// 		</div>
 			// 		<div class='col m8'>";
 			echo "
-				<div class='row' style='margin-bottom: 0px !important'>
-					<div class='col m4 avatar'>
-						<img src=".$this->get_photo($entry['userid']).">
+				<div class='row'>
+					<div class='col s4 m4'>
+						<div class='imgholder1x1'>
+							<img src=".$this->get_photo($entry['userid']).">
+						</div>
 					</div>
-					<div class='col m8'>";
+					<div class='col s8 m8'>";
 			if ($entry['type'] == 'self')
 				echo "
 						<h6 class='flow-text name'>Self Evaluation</h6>";
@@ -107,12 +109,41 @@
 			$date = substr($archive['year'], 0, strlen($archive['year']) / 2).' '.substr($archive['year'], strlen($archive['year']) / 2);
 			
 			$link_text = 'Archived '.$date.' '.$semester;
-			echo "<br><br>";
-			if ($archive['type'] == 'self')
-			{
-				echo "<a href=".$link.">".$link_text." Self evaluation</a> ";
-			}
-			else echo "<a href=".$link.">".$link_text.' '.$archive['full_name']."</a> ";
+			
+			// if ($archive['type'] == 'self')
+			// {
+			// 	echo "<a href=".$link.">".$link_text." Self evaluation</a> ";
+			// }
+			// else echo "<a href=".$link.">".$link_text.' '.$archive['full_name']."</a> ";
+
+			echo '
+			<div class="row">
+				<div class="col l4 m4 s8 offset-l4 offset-m4 offset-s2" id="teacher1">';
+			echo "
+				<div class='card disabledCard'>
+					<a class='card-content' href=".$link.">";
+			echo "
+				<div class='row'>
+					<div class='col s4 m4'>
+						<div class='imgholder1x1'>
+							<img src=".$this->get_photo($entry['userid']).">
+						</div>
+					</div>
+					<div class='col s8 m8'>";
+			if ($entry['type'] == 'self')
+				echo "
+						<h6 class='flow-text name'>Self Evaluation</h6>";
+			else
+				echo "
+						<h6 class='flow-text name'>".$entry['full_name']."</h6>";
+			echo "
+						<p class='bodyText flow-text'>".$link_text."</p>
+					</div>
+				</div>
+				</a>
+				</div>
+			</div>
+		</div>";
 		}
 	}
 ?>

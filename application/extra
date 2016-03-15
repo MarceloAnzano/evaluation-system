@@ -67,3 +67,88 @@
 			//~ $sql = "SELECT teacherId
 					//~ FROM subjects
 					//~ WHERE gradelevel IN ('grade $grade_level1', 'grade $grade_level2');";
+
+
+
+
+<!--
+<div class="nav-wrapper subNav">	
+	<span class="brand-logo">Administrative Tasks Page</span>	
+</div>
+<main>
+	<div class="container">
+		<div class="row" style="margin: 0px">
+			<div class="col l3 m10 s8 offset-l1 offset-m2 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/evaluation";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Evaluation</span></div>
+					</a>
+				</div>
+			</div>
+			<div class="col l3 m10 s8 offset-l2 offset-m2 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/users";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Users</span></div>
+					</a>
+				</div>
+			</div>
+			<div class="col l3 m10 s8 offset-l1 offset-m2 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/create_sections";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Section</span></div>
+					</a>
+				</div>
+			</div>
+			<div class="col l3 m10 s8 offset-l1 offset-m2 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/create_users";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Create Users</span></div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="margin: 0px">
+			<div class="col l3 m10 s8 offset-l1 offset-m1 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/update_sections";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Manage Sections</span></div>
+					</a>
+				</div>
+			</div>
+			<div class="col l3 m10 s8 offset-l1 offset-m1 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/upload";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Upload Pictures</span></div>
+					</a>
+				</div>
+			</div>
+			<div class="col l3 m10 s10 offset-l1 offset-m1 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/questions";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Manage Questionnaire</span></div>
+					</a>
+				</div>
+			</div>
+			<div class="col l3 m10 s offset-l1 offset-m1 offset-s2">
+				<div class='card hoverable'>
+					<a id='admin-card' class='waves-effect card-content'<?php echo "href=".base_url."admin/percentages";?>>
+						<div class="card-title adminTitle center-align" style="width: 100%"><span>Manage Percentages</span></div>
+					</a>
+				</div>
+			</div>									
+		</div>
+	</div>
+-->
+<!-- <br><?php echo "<a href='".base_url."admin/evaluation'>Evaluation</a>";?>
+<br><?php echo "<a href='".base_url."admin/users'>Users</a>";?> 
+<br><?php echo "<a href='".base_url."admin/create_sections'>Sections</a>";?>
+<br><br>
+<br><?php echo "<a href='".base_url."admin/create_users'>Create Users</a>";?>
+<br><?php echo "<a href='".base_url."admin/update_sections'>Manage Sections</a>";?> 
+<br><?php echo "<a href='".base_url."admin/upload'>Upload Pictures</a>";?>
+<br><?php echo "<a href='".base_url."admin/questions'>Manage Questionnaire</a></a>";?>
+<br><?php echo "<a href='".base_url."admin/percentages'>Manage Percentages</a>";?> -->
+<!--
+</main>
+-->

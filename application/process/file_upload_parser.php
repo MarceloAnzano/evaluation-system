@@ -3,11 +3,13 @@
 class File_upload_parser
 {
 	var $upload_path = '';
+	var $folder = '';
 	
 	function image_upload()
 	{
 		// initialize upload path
-		$this->upload_path = 'images';
+		$this->folder = 'images';
+		$this->upload_path = $folder;
 		
 		if (realpath($this->upload_path) !== FALSE)
 		{
@@ -15,9 +17,10 @@ class File_upload_parser
 		}
 		
 		$this->upload_path = rtrim($this->upload_path, '/').'/';
+		$this->folder = rtrim($this->folder, '/').'/';
 		
 		// move file from temporary location to desired path
-		if (move_uploaded_file($_FILES['userfile']['tmp_name'], $this->upload_path.basename($_FILES['userfile']['name']))) 
+		if (move_uploaded_file($_FILES['facultyPhoto']['tmp_name'], $this->upload_path.basename($_FILES['facultyPhoto']['name']))) 
 		{
 			return TRUE;
 		}
@@ -26,14 +29,35 @@ class File_upload_parser
 	
 	function store_image_reference($con)
 	{
-		$sql = "INSERT INTO img_uploads 
-				(userId, img_reference) VALUES (?, ?)";
-				
+		$sql = "SELECT id
+				FROM img_uploads 
+				WHERE userId=?";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 'ss', $userkey, $img_reference);
 		
-		$userkey = mysqli_real_escape_string($con, $_POST['user-photo-id']);
-		$img_reference = base_url.$this->upload_path.basename($_FILES['userfile']['name']);
+		$userkey = mysqli_real_escape_string($con, $_POST['userPhotoId']);
+		
+		mysqli_stmt_execute($stmt);
+		$query = mysqli_stmt_get_result($stmt);
+		
+		$query = mysqli_query($con, $sql);
+		$numrows = mysqli_num_rows($query);
+		
+		// update if already exists or create new entry otherwise
+		if ($numrows > 0)
+		{
+			$sql = "UPDATE img_uploads 
+					SET userId=?, img_reference=?";
+		}
+		else
+		{
+			$sql = "INSERT INTO img_uploads 
+					(userId, img_reference) VALUES (?, ?)";
+		}
+		$stmt = mysqli_prepare($con, $sql);
+		mysqli_stmt_bind_param($stmt, 'ss', $userkey, $img_reference);
+		
+		$img_reference = $this->folder.basename($_FILES['facultyPhoto']['name']);
 		
 		mysqli_stmt_execute($stmt);
 	}
@@ -54,7 +78,7 @@ class File_upload_parser
 		{
 			return $no_photo_ref;
 		}
-		else return $row[0];
+		else return base_url.$row[0];
 	}
 	
 	function csv_upload()
@@ -70,7 +94,7 @@ class File_upload_parser
 		$this->upload_path = rtrim($this->upload_path, '/').'/';
 		
 		// move file from temporary location to desired path
-		if (move_uploaded_file($_FILES['userfile']['tmp_name'], $this->upload_path.basename($_FILES['userfile']['name']))) 
+		if (move_uploaded_file($_FILES['questionFile']['tmp_name'], $this->upload_path.basename($_FILES['questionFile']['name']))) 
 		{
 			return TRUE;
 		}
@@ -81,7 +105,7 @@ class File_upload_parser
 	function csv_get_reference_path($con)
 	{
 		$name = mysqli_real_escape_string($con, $_POST['questionnaire']);
-		$csv_path = $this->upload_path.basename($_FILES['userfile']['name']);
+		$csv_path = $this->upload_path.basename($_FILES['questionFile']['name']);
 		
 		// hack
 		switch($name)

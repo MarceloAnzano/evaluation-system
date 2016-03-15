@@ -10,7 +10,8 @@ class Admin extends Common
 	{
 		if ($this->logged_as_admin())
 		{
-			$this->this_view('views/admin_index.php');
+			//~ $this->this_view('views/admin_index.php');
+			include BASEPATH.'views/admin_index.php';
 		}
 		else exit('Access Denied');
 	}
@@ -170,7 +171,7 @@ class Admin extends Common
 		$save->save_section_entry($this->get_connection());
 		
 		// cause not ajax (-_-)
-		header('Location: '.base_url.'admin/create_sections');
+		//~ header('Location: '.base_url.'admin');
 	}
 	
 	function open($type)
@@ -224,7 +225,7 @@ class Admin extends Common
 		$image->store_image_reference($this->get_connection());
 		
 		// cause not ajax (-_-)
-		header('Location: '.base_url.'admin/upload');
+		header('Location: '.base_url.'admin');
 	}
 	
 	function search_for()
@@ -276,6 +277,8 @@ class Admin extends Common
 		include BASEPATH.'process/users_and_sections.php';
 		$archive = new Users_and_sections();
 		$archive->delete_user_method($this->get_connection(), $id);
+		
+		echo 'User deleted.';
 	}
 	
 	function process_csv()
@@ -292,7 +295,7 @@ class Admin extends Common
 				$question->edit_questionnaire($this->get_connection(), $data['name'], $data['path']);
 				
 				// cause not ajax (-_-)
-				header('Location: '.base_url.'admin/questions');
+				header('Location: '.base_url.'admin');
 			}
 			else exit ('Invalid file. File was not uploaded.');
 		}

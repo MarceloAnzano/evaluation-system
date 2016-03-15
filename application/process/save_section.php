@@ -5,64 +5,81 @@ class Save_section
 	function save_section_entry($con)
 	{
 		// no post request so exit
-		if ( ! isset($_POST['section']) OR empty($_POST['section'])
-			OR ! isset($_POST['subjects']) OR empty($_POST['subjects'])
-			OR ! isset($_POST['teachers']) OR empty($_POST['teachers'])
-			OR ! isset($_POST['setting']) OR empty($_POST['setting']))
+		if ( ! isset($_POST['createSubjects']) OR empty($_POST['createSubjects'])
+			OR ! isset($_POST['createAssignTeachers']) OR empty($_POST['createAssignTeachers'])
+			OR ! isset($_POST['createSectionGradelevel']) OR empty($_POST['createSectionGradelevel'])
+			OR ! isset($_POST['createSectionSection']) OR empty($_POST['createSectionSection']))
 		{
 			exit('Invalid input');
 		}
 		
 		// collect post variables
-		$grade_level = strtolower(mysqli_real_escape_string($con, $_POST['gradelevel']));
-		$section_entry = strtolower(mysqli_real_escape_string($con, $_POST['section']));
-		
-		$setting = array();
-		foreach ($_POST['setting'] as $per)
-		{
-			$setting[] = mysqli_real_escape_string($con, $per);
-		}
+		$grade_level = strtolower(mysqli_real_escape_string($con, $_POST['createSectionGradelevel']));
+		$section_entry = strtolower(mysqli_real_escape_string($con, $_POST['createSectionSection']));
 		
 		// check if the section's subjects have been uploaded already
-		$sql = "SELECT * 
+		$is_uploaded = FALSE;
+		$sql = "SELECT id 
 				FROM subjects
-				WHERE gradelevel='$grade_level' AND section='$section_entry' AND year='".$setting[0].$setting[1]."' AND semester='".$setting[2]."';";
+				WHERE gradelevel='$grade_level' AND section='$section_entry'";
 		$query = mysqli_query($con, $sql);
 		$numrows = mysqli_num_rows($query);
-
+		
+		$ids = array();
 		if ($numrows > 0)
 		{
-			exit ('Subjects for that class has already been set!');
+			$is_uploaded = TRUE;
+			while ($row = mysqli_fetch_array($query))
+			{
+				$ids[] = $row;
+			}
+			echo ('Section\'s subjects have been set. Changing settings... ');
 		}
 		
+		// get subjects
 		$subjects = array();
-		foreach ($_POST['subjects'] as $subject)
+		foreach ($_POST['createSubjects'] as $subject)
 		{
 			$subjects[] = strtolower(mysqli_real_escape_string($con, $subject));
 		}
 		
+		// get teachers
 		$teachers = array();
-		foreach ($_POST['teachers'] as $teacher)
+		foreach ($_POST['createAssignTeachers'] as $teacher)
 		{
 			$teachers[] = mysqli_real_escape_string($con, $teacher);
 		}
 		
-		/** ADD IF NOT EXISTS **/
+		// get rid of the previous entries
+		if ($is_uploaded)
+		{
+			foreach ($ids as $id)
+			{
+				$sql = "DELETE FROM subjects
+						WHERE id='".$id[0]."'";
+				$query = mysqli_query($con, $sql);
+			}
+		}
 		
+		// set new entries
 		if ($subjects[0] != '')
 		{
 			$sql = "INSERT INTO subjects
-					(year, semester, gradelevel, section, subject, teacherId)
-					VALUES ('".$setting[0].$setting[1]."','".$setting[2]."','".$grade_level."','".$section_entry."','".$subjects[0]."','".$teachers[0]."')";
+					(gradelevel, section, subject, teacherId)
+					VALUES ('".$grade_level."','".$section_entry."','".$subjects[0]."','".$teachers[0]."')";
 		}
-		for ($a = 1; $a < 10; $a++)
+		
+		// repeat queries
+		for ($a = 1; $a < 15; $a++)
 		{
 			if ($subjects[$a] != '')
 			{
-				$sql .= ", ('".$setting[0].$setting[1]."','".$setting[2]."','".$grade_level."','".$section_entry."','".$subjects[$a]."','".$teachers[$a]."')";
+				$sql .= ", ('".$grade_level."','".$section_entry."','".$subjects[$a]."','".$teachers[$a]."')";
 			}
 		}
 		$query = mysqli_query($con, $sql);
+		
+		exit ('Section Saved!');
 	}
 }
 
