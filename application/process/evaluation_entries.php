@@ -60,7 +60,7 @@ class Evaluation_entries
 						WHERE evaluator=? AND to_evaluate=?";
 				$stmt = mysqli_prepare($con, $sql);
 				
-				mysqli_stmt_bind_param($stmt, 'is', $userid, $id);	
+				mysqli_stmt_bind_param($stmt, 'ss', $userid, $id);	
 					
 				mysqli_stmt_execute($stmt);
 				$query = mysqli_stmt_get_result($stmt);
