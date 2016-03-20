@@ -19,7 +19,7 @@
 					<center class="row">
 						<button id="loginbtn" class="btn waves-effect waves-light right" type="submit" name='submit'>LOGIN</button>
 					</center>
-					<center id="status">
+					<center class='error-message' id="status">
 					</center>
 					<center class="row forgot">
 						<a href="/app/register">Click here to set your password</a>

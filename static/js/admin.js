@@ -3,31 +3,38 @@
 		var selected = $("#createUserForm select[name=createUsertype]").val();
 		if (selected === 'student')
 		{
-			$("#createUserForm input[name=createUserSection]").removeAttr('readonly');
-			$("#createUserForm input[name=createUserGradelevel]").removeAttr('readonly');
-			$("#createUserForm input[name=createUserLevel]").attr('readonly', 'readonly');
-			$("#createUserForm input[name=createUserCluster]").attr('readonly', 'readonly');
-			$("#createUserForm input[name=createUserSubject]").attr('readonly', 'readonly');
+			$("#createUserForm input[name=createUserSection]").removeAttr('disabled');
+			$("#createUserForm input[name=createUserGradelevel]").removeAttr('disabled');
+			$("#createUserForm input[name=createUserLevel]").attr('disabled', 'disabled');
+			$("#createUserForm input[name=createUserCluster]").attr('disabled', 'disabled');
+			$("#createUserForm input[name=createUserSubject]").attr('disabled', 'disabled');
 			$("#createUserForm select[name=createPosition]").attr('disabled', 'disabled');
+			$("#supervisor-position-div input").attr('disabled','disabled');
+			$("#supervisor-position-div span").attr('readonly','true');
+			$("#supervisor-position-div span").addClass('disabled');
 		}
 		else 
 		{
 			if (selected === 'faculty')
 			{
-				$("#createUserForm input[name=createUserLevel]").removeAttr('readonly');
-				$("#createUserForm input[name=createUserCluster]").removeAttr('readonly');
-				$("#createUserForm input[name=createUserSubject]").removeAttr('readonly');
+				$("#createUserForm input[name=createUserLevel]").removeAttr('disabled');
+				$("#createUserForm input[name=createUserCluster]").removeAttr('disabled');
+				$("#createUserForm input[name=createUserSubject]").removeAttr('disabled');
 				$("#createUserForm select[name=createPosition]").removeAttr('disabled');
+				$("#supervisor-position-div select").material_select();
 			}
 			else
 			{
-				$("#createUserForm input[name=createUserLevel]").attr('readonly', 'readonly');
-				$("#createUserForm input[name=createUserCluster]").attr('readonly', 'readonly');
-				$("#createUserForm input[name=createUserSubject]").attr('readonly', 'readonly');
+				$("#createUserForm input[name=createUserLevel]").attr('disabled', 'disabled');
+				$("#createUserForm input[name=createUserCluster]").attr('disabled', 'disabled');
+				$("#createUserForm input[name=createUserSubject]").attr('disabled', 'disabled');
 				$("#createUserForm select[name=createPosition]").attr('disabled', 'disabled');
+				$("#supervisor-position-div input").attr('disabled','disabled');
+				$("#supervisor-position-div span").attr('readonly','true');
+				$("#supervisor-position-div span").addClass('disabled');
 			}
-			$("#createUserForm input[name=createUserSection]").attr('readonly', 'readonly');
-			$("#createUserForm input[name=createUserGradelevel]").attr('readonly', 'readonly');
+			$("#createUserForm input[name=createUserSection]").attr('disabled', 'disabled');
+			$("#createUserForm input[name=createUserGradelevel]").attr('disabled', 'disabled');
 		}
 	});
 
@@ -35,8 +42,8 @@
 	$(document).ready(function (){
 		if ($("#createUserForm select[name=createUsertype]").val() === 'student')
 		{
-			$("#createUserForm input[name=createUserSection]").removeAttr('readonly');
-			$("#createUserForm input[name=createUserGradelevel]").removeAttr('readonly');
+			$("#createUserForm input[name=createUserSection]").removeAttr('disabled');
+			$("#createUserForm input[name=createUserGradelevel]").removeAttr('disabled');
 		}
 	});
 
@@ -102,13 +109,14 @@
 			var link = "/admin/get_faculty";
 			
 			$.get(link,{},function(response){
+				$('.load-select').material_select('destroy');
 				response.faculty.forEach(function(teacher){
 					$('select[name^='+ 'createAssignTeachers').append($('<option>', { 
 						value: teacher.id,
 						text : teacher.name + ' - ' + teacher.subject 
 					}));
 				});
-				
+				$('.load-select').material_select();
 			});
 		}
 	}
@@ -120,6 +128,7 @@
 			var link = "/admin/get_faculty";
 			
 			$.get(link,{},function(response){
+				$('select[name=userPhotoId]').material_select('destroy');
 				response.faculty.forEach(function(teacher){
 					
 					$('select[name=userPhotoId]').append($('<option>', { 
@@ -127,6 +136,7 @@
 						text : teacher.name 
 					}));
 				});
+				$('select[name=userPhotoId]').material_select();
 			});
 		}
 	}
@@ -157,33 +167,39 @@
 			{
 				if (response.type === 'student')
 				{
-					$('#linkSpace').append("<tr><th>Name</th><th>Grade Level</th><th>Section</th></tr>");
+					$('#linkSpace thead').append("<tr><th>Name</th><th>Grade Level</th><th>Section</th></tr>");
 				}
 				else if (response.type === 'faculty')
 				{
-					$('#linkSpace').append("<tr><th>Name</th><th>Subject</th><th>Level</th><th>Cluster</th><th>Position</th></tr>");
+					$('#linkSpace thead').append("<tr><th>Name</th><th>Subject</th><th>Level</th><th>Cluster</th><th>Position</th></tr>");
 				}
-				else $('#linksSace').append("<tr><th>Name</th></tr>");
+				else $('#linksSace thead').append("<tr><th>Name</th></tr>");
 				
 				response.results.forEach(function(user)
 				{
 					if (response.type === 'student')
 					{
-						$('#linkSpace').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+						$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
 						<td>" + user.gradelevel + "</td><td>" + user.section + "</td><td><a href='/admin/delete_user/" + user.id + "'\
 						onclick='return deleteUser(this.href);'>Delete User</a></td>/tr>");
 					}
 					else if (response.type === 'faculty')
 					{	
-						$('#linkSpace').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+						$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
 						<td>" + user.subject + "</td><td>" + user.level + "</td><td>" + user.cluster + "</td><td>"
 						 + user.supervisor + "</td><td><a href='/admin/delete_user/" + user.id + "' onclick='return deleteUser(this.href);'>Delete User</a></td>/tr>");
 					}
-					else $('#linkSpace').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td><td><a href='/admin/delete_user/" 
+					else $('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td><td><a href='/admin/delete_user/" 
 						+ user.id + "' onclick='return deleteUser(this.href, this);'>Delete User</a></td>/tr>");
 				});
+				if(response.results.length == 0){
+					console.log('Hello');
+			    	$('#linkSpace>tbody').append('<tr><td>None</td></tr>');
+			    	$('#linkSpace>thead>tr').remove();
+			    }
 			}
-		});
+
+		});		
 		return false;
 	}
 	
@@ -194,6 +210,8 @@
 			ev.removeAttribute('href');
 			ev.removeAttribute('onclick');
 		});
+		$('#modal1').openModal();
+		searchUser();
 		return false;
 	}
 
