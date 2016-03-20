@@ -29,7 +29,7 @@ class Validate
 		}
 		else
 		{
-			$sql = "SELECT * 
+			$sql = "SELECT hashid, uname, password, utype, supervisor 
 					FROM users 
 					WHERE logid='$logid' AND activation=1";
 			$query = mysqli_query($con, $sql);
@@ -41,14 +41,14 @@ class Validate
 				$crypt = new Bcrypt();
 				while ($row = mysqli_fetch_row($query))
 				{
-					if ($crypt->verify($password, $row[4]))
+					if ($crypt->verify($password, $row[2]))
 					{
-						$_SESSION['userid'] = $row[1];
+						$_SESSION['userid'] = $row[0];
 						$_SESSION['logid'] = $logid;
-						$_SESSION['uname'] = $row[3];
-						$_SESSION['password'] = $row[4];
-						$_SESSION['utype'] = $row[5];
-						$_SESSION['supervisor'] = $row[12];
+						$_SESSION['uname'] = $row[1];
+						$_SESSION['password'] = $row[2];
+						$_SESSION['utype'] = $row[3];
+						$_SESSION['supervisor'] = $row[4];
 						echo 'correct';
 						exit();
 					}

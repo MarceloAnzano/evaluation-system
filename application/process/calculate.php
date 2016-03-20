@@ -137,7 +137,6 @@ class Calculate
 			$rating = 0;
 			switch ($identity[0])
 			{
-				// for supervisors, the percentage of their position
 				// will be given to the other supervisor that will rate them
 				case 'api':
 				case 'principal':
@@ -157,7 +156,6 @@ class Calculate
 					
 					if (count($students) > 0)
 					{
-						
 						$partial = 0;
 						foreach ($students as &$student)
 						{
@@ -274,7 +272,7 @@ class Calculate
 	{
 		$sql = "SELECT tc, ea, ap
 				FROM results
-				WHERE to_evaluate='$id' AND evtype='cc-teacher' AND year='$year' AND semester='$semester' LIMIT 1";
+				WHERE to_evaluate='$id' AND evtype='cc-teacher' AND year='$year' AND semester='$semester'";
 		$query = mysqli_query($con, $sql);	
 		$row = mysqli_fetch_array($query);
 		return $row;

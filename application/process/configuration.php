@@ -72,7 +72,7 @@ class Configuration_admin
 		);
 		$this->check_if_one_hundred_percent($percentages);
 		
-		$sql = "UPDATE bak
+		$sql = "UPDATE percentages
 				SET percent=?
 				WHERE item=?";
 		$stmt = mysqli_prepare($con, $sql);
@@ -82,8 +82,11 @@ class Configuration_admin
 		$i = 0;
 		foreach ($items as $item)
 		{
-			$percent = $percentages[$i];
-			mysqli_stmt_execute($stmt);
+			if ($percentages[$i] != '')
+			{
+				$percent = $percentages[$i];
+				mysqli_stmt_execute($stmt);
+			}
 			$i++;
 		}
 		echo 'correct';
@@ -92,15 +95,20 @@ class Configuration_admin
 	function check_if_one_hundred_percent($percentages)
 	{
 		// based on the table
-		if (($percentages[0] + $percentages[1] + $percentages[2] + $percentages[3] + $percentages[4]) != 100)
+		if (($percentages[0] + $percentages[1] + $percentages[2] + $percentages[3] + $percentages[4]) != 100 
+			&& ( ! empty($percentages[0]) && ! empty($percentages[1]) && ! empty($percentages[2]) && ! empty($percentages[3])  && ! empty($percentages[4])))
 			exit ('Teaching Competencies percentages do not equal 100');
-		if (($percentages[5] + $percentages[6] + $percentages[7] + $percentages[8] + $percentages[9]) != 100)
+		if (($percentages[5] + $percentages[6] + $percentages[7] + $percentages[8] + $percentages[9]) != 100
+			&& ( ! empty($percentages[5]) && ! empty($percentages[6]) && ! empty($percentages[7]) && ! empty($percentages[8])  && ! empty($percentages[9])))
 			exit ('Efficiency and Attitude percentages do not equal 100');
-		if (($percentages[10] + $percentages[11] + $percentages[12] + $percentages[13] + $percentages[14]) != 100)
+		if (($percentages[10] + $percentages[11] + $percentages[12] + $percentages[13] + $percentages[14]) != 100
+			&& ( ! empty($percentages[10]) && ! empty($percentages[11]) && ! empty($percentages[12]) && ! empty($percentages[13])  && ! empty($percentages[14])))
 			exit ('Attendance and Punctuality percentages do not equal 100');
-		if (($percentages[15] + $percentages[16] + $percentages[17]) != 100)
+		if (($percentages[15] + $percentages[16] + $percentages[17]) != 100
+			&& ( ! empty($percentages[15]) && ! empty($percentages[16]) && ! empty($percentages[17])))
 			exit ('Category percentages do not equal 100');
 		if (($percentages[18] + $percentages[19]) != 100)
+			&& ( ! empty($percentages[18]) && ! empty($percentages[19])))
 			exit ('Instrument percentages do not equal 100');
 	}
 	

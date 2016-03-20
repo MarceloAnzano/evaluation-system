@@ -14,6 +14,10 @@ class Delete_evaluation
 				WHERE ".$statement;
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_execute($stmt);
+		
+		$sql = "DELETE FROM final_ratings";
+		$stmt = mysqli_prepare($con, $sql);
+		mysqli_stmt_execute($stmt);
 	}
 	
 	private function get_statement($con, $type)

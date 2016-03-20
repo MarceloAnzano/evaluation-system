@@ -29,22 +29,12 @@ class Create_evaluation
 		{
 			case 'student':
 				$statement = " AND evtype='student-teacher'";
-				
-				// student surveys are annual therefore no need to set a semester
-				$semester = 0;
 				break;
-			case 'principal':
-				$statement = " AND evtype IN ('principal-teacher', 'api-teacher')";
+			case 'faculty':
+				$statement = " AND evtype != 'student-teacher'";
 				break;
-			case 'satl':
-				$statement = " AND evtype IN ('satl-teacher','teacher-satl')";
-				break;
-			case 'cluster':
-				$statement = " AND evtype IN ('cc-teacher','teacher-cc')";
-				break;
-			case 'level':
-				$statement = " AND evtype IN ('level-teacher','teacher-level')";
-				break;
+			default:
+				exit ('Invalid');
 		}
 		$sql = "SELECT *
 				FROM results
@@ -94,8 +84,8 @@ class Create_evaluation
 			if (mysqli_num_rows($query_teachers) == 0) continue;
 			
 			$sql = "INSERT INTO results
-					(year, evaluator, to_evaluate, evtype)
-					VALUES ('".$this->setting[0].$this->setting[1]."','";
+					(year, semester, evaluator, to_evaluate, evtype)
+					VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
 				
 			$a = 0;
 			while ($row = mysqli_fetch_array($query_teachers))
@@ -106,7 +96,7 @@ class Create_evaluation
 					$a++;
 					continue;
 				}
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$student[0]."','".$row[0]."','student-teacher')";
+				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$student[0]."','".$row[0]."','student-teacher')";
 			}
 			
 			$query = mysqli_query($con, $sql);
@@ -183,6 +173,7 @@ class Create_evaluation
 			$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$principals[0][0]."','".$row[0]."','".$principals[0][1]."-teacher')";
 			$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$principals[1][0]."','".$row[0]."','".$principals[1][1]."-teacher')";
 		}
+		
 		$query = mysqli_query($con, $sql);
 		$this->messages[] = 'API and Principal evaluations have been created.';
 	}
@@ -214,7 +205,7 @@ class Create_evaluation
 			// get all non-principal faculty
 			$sql = "SELECT hashid, subject
 					FROM users
-					WHERE utype='faculty' AND subject='".$subject[1]."' AND supervisor NOT IN ('principal','api','satl');";
+					WHERE utype='faculty' AND subject='".$subject[1]."' AND hashid !='".$subject[0]."' AND supervisor NOT IN ('principal','api','satl')";
 			$query_staff = mysqli_query($con, $sql);
 			
 			// in case SATL has no staff in record
@@ -230,12 +221,10 @@ class Create_evaluation
 				if ($a == 0)
 				{
 					$sql .= $subject[0]."','".$row[0]."','satl-teacher')";
-					$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."','".$subject[0]."','teacher-satl')";
 					$a++;
 					continue;
 				}
 				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$subject[0]."','".$row[0]."','satl-teacher')";
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."','".$subject[0]."','teacher-satl')";
 			}
 			$query = mysqli_query($con, $sql);
 		}
@@ -247,7 +236,7 @@ class Create_evaluation
 		// get CCs
 		$sql = "SELECT hashid, cluster
 				FROM users
-				WHERE utype='faculty' AND supervisor='cc';";
+				WHERE utype='faculty' AND supervisor='cc' ";
 		$query_coordinator = mysqli_query($con, $sql);
 		
 		$coordinators = array();
@@ -261,7 +250,7 @@ class Create_evaluation
 			// get all non-principal faculty
 			$sql = "SELECT hashid
 					FROM users
-					WHERE cluster='".$coordinator[1]."'";
+					WHERE cluster='".$coordinator[1]."' AND hashid != '".$coordinator[0]."' AND supervisor NOT IN ('principal','api','satl')";
 			
 			$query_staff = mysqli_query($con, $sql);
 			
@@ -278,12 +267,10 @@ class Create_evaluation
 				if ($a == 0)
 				{
 					$sql .= $coordinator[0]."','".$row[0]."','cc-teacher')";
-					$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."','".$coordinator[0]."','teacher-cc')";
 					$a++;
 					continue;
 				}
 				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$coordinator[0]."','".$row[0]."','cc-teacher')";
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."','".$coordinator[0]."','teacher-cc')";
 			}
 			$query = mysqli_query($con, $sql);
 		}
@@ -310,7 +297,7 @@ class Create_evaluation
 			// get all non-principal faculty
 			$sql = "SELECT hashid
 					FROM users
-					WHERE level='".$level_leader[1]."'";
+					WHERE level='".$level_leader[1]."' AND hashid != '".$level_leader[0]."' AND supervisor NOT IN ('principal','api','satl')";
 			$query_staff = mysqli_query($con, $sql);
 			
 			// in case CC has no staff on record; should never happen
@@ -326,12 +313,10 @@ class Create_evaluation
 				if ($a == 0)
 				{
 					$sql .= $level_leader[0]."','".$row[0]."','ll-teacher')";
-					$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."','".$level_leader[0]."','teacher-ll')";
 					$a++;
 					continue;
 				}
 				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$level_leader[0]."','".$row[0]."','ll-teacher')";
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."','".$level_leader[0]."','teacher-ll')";
 			}
 			$query = mysqli_query($con, $sql);
 		}

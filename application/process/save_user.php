@@ -65,6 +65,7 @@ class Save_user
 						$this->save_faculty_item($con, $subject, $level, $cluster);
 						break;
 					case 'api':
+					case 'apsd':
 					case 'principal':
 					case 'cc':
 					case 'll':
@@ -119,8 +120,8 @@ class Save_user
 	{
 		// record into db
 		$sql = "INSERT INTO users 
-				(logid, uname, password, utype, gradelevel, section) 
-				VALUES (?, ?, ?, ?, ?, ?)";
+				(logid, uname, password, utype, gradelevel, section, supervisor) 
+				VALUES (?, ?, ?, ?, ?, ?, 'none')";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 'ssssss', $this->logid, $this->uname, $this->password, $usertype, $gradelevel, $section);
 		
@@ -153,8 +154,8 @@ class Save_user
 	function save_admin_item($con)
 	{
 		$sql = "INSERT INTO users 
-				(logid, uname, password, utype) 
-				VALUES (?, ?, ?, ?)";
+				(logid, uname, password, utype, supervisor) 
+				VALUES (?, ?, ?, ?, 'none')";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 'ssss', $this->logid, $this->uname, $this->password, $usertype);
 		

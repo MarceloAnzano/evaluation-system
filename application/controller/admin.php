@@ -119,7 +119,7 @@ class Admin extends Common
 			foreach ($create->messages as &$message)
 				echo $message;
 		}
-		else $create->create_evaluation_entries($this->get_connection());
+		else $create->create_evaluation_entries($this->get_connection(), 'faculty');
 		
 	}
 
