@@ -5,11 +5,6 @@
 class Check_login
 {			
 	var $login_status = FALSE;
-	//~ var $log_logid = "";
-	//~ var $log_userid = "";
-	//~ var $log_password = "";
-	//~ var $log_utype = "";
-	//~ var $log_supervisor = "";
 	
 	function get_status()
 	{
@@ -36,7 +31,7 @@ class Check_login
 	{	
 		$sql = "SELECT * 
 				FROM users 
-				WHERE hashid=? AND logid=? AND password=? AND utype=? AND supervisor=?";
+				WHERE hashid=? AND logid=? AND password=? AND utype=? AND supervisor=? AND activation=1 AND is_deleted=0";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 'sssss', $userid, $logid, $password, $utype, $supervisor);	
 			

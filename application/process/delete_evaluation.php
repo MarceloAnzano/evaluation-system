@@ -27,13 +27,10 @@ class Delete_evaluation
 		switch ($type)
 		{
 			case 1:
-				$statement = "semester='1' AND evtype != 'student-teacher';";
+				$statement = "semester='1'";
 				break;
 			case 2:
-				$statement = "semester='2' AND evtype != 'student-teacher';";
-				break;
-			case 3:
-				$statement = "evtype='student-teacher';";
+				$statement = "semester='2'";
 				break;
 			default:
 				exit ('Invalid input');

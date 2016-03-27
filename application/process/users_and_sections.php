@@ -6,21 +6,21 @@ class Users_and_sections
 	{
 		$id = mysqli_real_escape_string($con, $id);
 		
-		// quick delete, no questions asked
-		$sql = "DELETE FROM
-				users
+		// not actually deleted
+		$sql = "UPDATE users
+				SET is_deleted = 1
 				WHERE hashid=?";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 's', $id);		
 		mysqli_stmt_execute($stmt);
 		
-		// delete photo too
-		$sql = "DELETE FROM
-				img_uploads
-				WHERE userId=?";
-		$stmt = mysqli_prepare($con, $sql);
-		mysqli_stmt_bind_param($stmt, 's', $id);		
-		mysqli_stmt_execute($stmt);
+		//~ // delete photo too
+		//~ $sql = "DELETE FROM
+				//~ img_uploads
+				//~ WHERE userId=?";
+		//~ $stmt = mysqli_prepare($con, $sql);
+		//~ mysqli_stmt_bind_param($stmt, 's', $id);		
+		//~ mysqli_stmt_execute($stmt);
 	}
 	
 	function get_section_method($con)
@@ -33,7 +33,7 @@ class Users_and_sections
 		$id = mysqli_real_escape_string($con, $id);
 		$sql = "SELECT uname, logid, utype, gradelevel, section, subject, cluster, level, supervisor
 				FROM users
-				WHERE hashid='$id' LIMIT 1";
+				WHERE hashid='$id' AND is_deleted=0";
 		$query = mysqli_query($con, $sql);
 		$row = mysqli_fetch_array($query);
 		if (strlen($row[7]) > 3)
@@ -106,7 +106,7 @@ class Users_and_sections
 		
 		$sql = "SELECT hashid, uname, gradelevel, section, subject, cluster, level, supervisor, utype
 				FROM users
-				WHERE utype != 'admin' ".$statement;
+				WHERE utype != 'admin' AND is_deleted=0 ".$statement;
 		
 		$query = mysqli_query($con, $sql);
 		$results = array();
@@ -144,7 +144,7 @@ class Users_and_sections
 	{
 		$sql = "SELECT DISTINCT hashid, uname, subject
 				FROM users
-				WHERE utype='faculty';";
+				WHERE utype='faculty' AND is_deleted=0";
 		$query = mysqli_query($con, $sql);
 		
 		$faculty = array();

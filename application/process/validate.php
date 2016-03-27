@@ -31,7 +31,7 @@ class Validate
 		{
 			$sql = "SELECT hashid, uname, password, utype, supervisor 
 					FROM users 
-					WHERE logid='$logid' AND activation=1";
+					WHERE logid='$logid' AND activation=1 AND is_deleted=0";
 			$query = mysqli_query($con, $sql);
 			$check_user = mysqli_num_rows($query);
 			

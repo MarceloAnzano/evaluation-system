@@ -75,13 +75,10 @@ class Open_evaluation
 		switch ($type)
 		{
 			case 1:
-				$statement = "semester='1' AND evtype != 'student-teacher';";
+				$statement = "semester='1'";
 				break;
 			case 2:
-				$statement = "semester='2' AND evtype != 'student-teacher';";
-				break;
-			case 3:
-				$statement = "evtype='student-teacher';";
+				$statement = "semester='2'";
 				break;
 			default:
 				exit ('Invalid input');
@@ -107,13 +104,10 @@ class Open_evaluation
 		switch ($type)
 		{
 			case 1:
-				$statement = "Faculty 1st Semester: ";
+				$statement = "1st Semester Evaluation: ";
 				break;
 			case 2:
-				$statement = "Faculty 2nd Semester: ";
-				break;
-			case 3:
-				$statement = "Student Status: ";
+				$statement = "2nd Semester Evaluation: ";
 				break;
 			default:
 				exit ('Invalid input');

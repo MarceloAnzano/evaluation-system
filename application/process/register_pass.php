@@ -34,7 +34,7 @@ class Register_pass
 		}
 
 		// check to see if the log id and default password are correct
-		$sql = "SELECT password FROM users WHERE logid='$logid';";
+		$sql = "SELECT password FROM users WHERE logid='$logid' AND is_deleted = 0";
 		$query = mysqli_query($con, $sql);
 		$numrows = mysqli_num_rows($query);
 		if ($numrows == 0)

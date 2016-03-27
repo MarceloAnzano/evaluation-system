@@ -4,35 +4,14 @@
 
 class Admin extends Common
 {
-	var $target_id = '';
+	var $link = '';
 	
 	function index()
 	{
-		if ($this->logged_as_admin())
+		if ($this->logged_as_admin() OR $this->logged_as_principal())
 		{
 			//~ $this->this_view('views/admin_index.php');
 			include BASEPATH.'views/admin_index.php';
-		}
-		else exit('Access Denied');
-	}
-	
-	// create new users
-	function create_users()
-	{
-		if ($this->logged_as_admin())
-		{
-			$this->this_view('views/create_user.php');
-		}
-		else exit('Access Denied');
-	}
-	
-	// find users
-	// update user info
-	function users()
-	{
-		if ($this->logged_as_admin() OR $this->logged_as_principal())
-		{
-			$this->this_view('views/search_user.php');
 		}
 		else exit('Access Denied');
 	}
@@ -41,63 +20,13 @@ class Admin extends Common
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
 		{
-			$this->this_view('views/change_user_settings.php', $id);
-		}
-		else exit('Access Denied');
-	}
-	
-	function create_sections()
-	{
-		if ($this->logged_as_admin() OR $this->logged_as_principal())
-		{
-			$this->this_view('views/sections.php');
-		}
-		else exit('Access Denied');
-	}
-	
-	function update_sections()
-	{
-		if ($this->logged_as_admin() OR $this->logged_as_principal())
-		{
-			$this->this_view('views/sections.php');
-		}
-		else exit('Access Denied');
-	}
-	
-	function upload()
-	{
-		if ($this->logged_as_admin())
-		{
-			$this->this_view('views/upload_photo.php');
-		}
-		else exit('Access Denied');
-	}
-	
-	// start or end of evaluation
-	function evaluation()
-	{
-		if ($this->logged_as_admin())
-		{
-			// annual student-teacher evaluation
-			$this->this_view('views/evaluation_settings.php');
-		}
-		else exit('Access Denied');
-	}
-
-	function questions()
-	{
-		if ($this->logged_as_admin() OR $this->logged_as_principal())
-		{
-			$this->this_view('views/upload_csv.php');
-		}
-		else exit('Access Denied');
-	}
-	
-	function percentages()
-	{
-		if ($this->logged_as_admin() OR $this->logged_as_principal())
-		{
-			$this->this_view('views/edit_percentages.php');
+			include BASEPATH.'process/edit_user_data.php';
+			$user = new Edit_user_data();
+			if ($user->does_user_exist($this->get_connection(), $id))
+			{
+				$this->this_view('views/change_user_settings.php', $id);
+			}
+			else exit ('User does not exist!');
 		}
 		else exit('Access Denied');
 	}
@@ -109,18 +38,15 @@ class Admin extends Common
 	{
 		if ( ! $this->logged_as_admin()) exit('Not authorized!');
 		
-		$type = mysqli_real_escape_string($this->get_connection(), $_POST['create-type']);
+		//~ $type = mysqli_real_escape_string($this->get_connection(), $_POST['create-type']);
 		
 		include BASEPATH.'process/create_evaluation.php';
 		$create = new Create_evaluation();
-		if ($type == 'student')
+		$create->create_evaluation_entries($this->get_connection());
+		foreach ($create->messages as &$message)
 		{
-			$create->create_student_teacher($this->get_connection());
-			foreach ($create->messages as &$message)
-				echo $message;
+			echo $message;
 		}
-		else $create->create_evaluation_entries($this->get_connection(), 'faculty');
-		
 	}
 
 	
@@ -169,9 +95,6 @@ class Admin extends Common
 		include BASEPATH.'process/save_section.php';
 		$save = new Save_section();
 		$save->save_section_entry($this->get_connection());
-		
-		// cause not ajax (-_-)
-		//~ header('Location: '.base_url.'admin');
 	}
 	
 	function open($type)
@@ -205,8 +128,6 @@ class Admin extends Common
 		$control->update_status($this->get_connection(), 1);
 		$status[] = $control->get_current_status();
 		$control->update_status($this->get_connection(), 2);
-		$status[] = $control->get_current_status();
-		$control->update_status($this->get_connection(), 3);
 		$status[] = $control->get_current_status();
 		
 		// convert data into json

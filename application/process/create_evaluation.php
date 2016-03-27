@@ -50,10 +50,11 @@ class Create_evaluation
 	function create_evaluation_entries($con, $evtype = NULL)
 	{
 		$this->get_year_and_sem($con);
-		$this->check_for_duplicates($con, $evtype);
+		//~ $this->check_for_duplicates($con, $evtype);
 		$this->create_self_evaluation($con);
 		$this->create_principal_evaluation($con);
-		$this->create_supervisor_and_staff($con);
+		$this->create_supervisor_to_staff($con);
+		$this->create_student_teacher($con);
 		$this->create_ratings_container($con);
 	}
 	
@@ -62,10 +63,10 @@ class Create_evaluation
 	{
 		// select all students
 		$this->get_year_and_sem($con);
-		$this->check_for_duplicates($con, 'student');
+		//~ $this->check_for_duplicates($con, 'student');
 		$sql = "SELECT hashid, gradelevel, section
 				FROM users
-				WHERE utype='student';";
+				WHERE utype='student' AND supervisor NOT IN ('principal','api') AND is_deleted=0 ";
 		$query_students = mysqli_query($con, $sql);
 		
 		$students = array();
@@ -85,7 +86,7 @@ class Create_evaluation
 			
 			$sql = "INSERT INTO results
 					(year, semester, evaluator, to_evaluate, evtype)
-					VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
+					VALUES ('".$this->setting[0]."','".$this->setting[1]."','";
 				
 			$a = 0;
 			while ($row = mysqli_fetch_array($query_teachers))
@@ -96,15 +97,12 @@ class Create_evaluation
 					$a++;
 					continue;
 				}
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$student[0]."','".$row[0]."','student-teacher')";
+				$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$student[0]."','".$row[0]."','student-teacher')";
 			}
 			
 			$query = mysqli_query($con, $sql);
 		}
 		$this->messages[] = 'Student to teacher evaluations have been created.';
-		
-		// create rating container
-		//~ $this->create_ratings_container($con);
 	}
 	
 	private function create_self_evaluation($con)
@@ -112,13 +110,13 @@ class Create_evaluation
 		// select all faculty
 		$sql = "SELECT hashid
 				FROM users
-				WHERE utype='faculty';";
+				WHERE utype='faculty'  AND is_deleted=0";
 		$query = mysqli_query($con, $sql);
 		
 		// start new insert query		
 		$sql = "INSERT INTO results
 				(year, semester, evaluator, to_evaluate, evtype)
-				VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
+				VALUES ('".$this->setting[0]."','".$this->setting[1]."','";
 		
 		// set rest of sql query
 		$a = 0;
@@ -130,7 +128,7 @@ class Create_evaluation
 				$a++;
 				continue;
 			}
-			$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."','".$row[0]."','self')";
+			$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$row[0]."','".$row[0]."','self')";
 		}
 		$query = mysqli_query($con, $sql);
 		$this->messages[] = 'Self evaluations have been created.';
@@ -141,13 +139,13 @@ class Create_evaluation
 		// get all non-principal faculty
 		$sql = "SELECT hashid
 				FROM users
-				WHERE utype='faculty' AND supervisor NOT IN ('principal','api');";
+				WHERE utype='faculty' AND supervisor NOT IN ('principal','api') AND is_deleted=0";
 		$query_subordinates = mysqli_query($con, $sql);
 		
 		// select API and principal
 		$sql = "SELECT hashid, supervisor
 				FROM users
-				WHERE utype='faculty' AND supervisor IN ('principal','api');";
+				WHERE utype='faculty' AND supervisor IN ('principal','api') AND is_deleted=0";
 		$query_principals = mysqli_query($con, $sql);
 		
 		$principals = array();
@@ -159,26 +157,26 @@ class Create_evaluation
 		// start new insert query
 		$sql = "INSERT INTO results
 				(year, semester, evaluator, to_evaluate, evtype)
-				VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
+				VALUES ('".$this->setting[0]."','".$this->setting[1]."','";
 		$a = 0;
 		while ($row = mysqli_fetch_array($query_subordinates))
 		{
 			if ($a == 0)
 			{
 				$sql .= $principals[0][0]."','".$row[0]."','".$principals[0][1]."-teacher')";
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$principals[1][0]."','".$row[0]."','".$principals[1][1]."-teacher')";
+				$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$principals[1][0]."','".$row[0]."','".$principals[1][1]."-teacher')";
 				$a++;
 				continue;
 			}
-			$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$principals[0][0]."','".$row[0]."','".$principals[0][1]."-teacher')";
-			$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$principals[1][0]."','".$row[0]."','".$principals[1][1]."-teacher')";
+			$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$principals[0][0]."','".$row[0]."','".$principals[0][1]."-teacher')";
+			$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$principals[1][0]."','".$row[0]."','".$principals[1][1]."-teacher')";
 		}
 		
 		$query = mysqli_query($con, $sql);
 		$this->messages[] = 'API and Principal evaluations have been created.';
 	}
 	
-	private function create_supervisor_and_staff($con)
+	private function create_supervisor_to_staff($con)
 	{
 		$this->subject_area($con);
 		$this->cluster($con);
@@ -191,7 +189,7 @@ class Create_evaluation
 		// get SATLs
 		$sql = "SELECT hashid, subject
 				FROM users
-				WHERE utype='faculty' AND supervisor='satl';";
+				WHERE utype='faculty' AND supervisor='satl' AND is_deleted=0";
 		$query_satl = mysqli_query($con, $sql);
 		
 		$satl = array();
@@ -205,7 +203,7 @@ class Create_evaluation
 			// get all non-principal faculty
 			$sql = "SELECT hashid, subject
 					FROM users
-					WHERE utype='faculty' AND subject='".$subject[1]."' AND hashid !='".$subject[0]."' AND supervisor NOT IN ('principal','api','satl')";
+					WHERE utype='faculty' AND subject='".$subject[1]."' AND hashid !='".$subject[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
 			$query_staff = mysqli_query($con, $sql);
 			
 			// in case SATL has no staff in record
@@ -213,7 +211,7 @@ class Create_evaluation
 			
 			$sql = "INSERT INTO results
 					(year, semester, evaluator, to_evaluate, evtype)
-					VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
+					VALUES ('".$this->setting[0]."','".$this->setting[1]."','";
 				
 			$a = 0;
 			while ($row = mysqli_fetch_array($query_staff))
@@ -224,7 +222,7 @@ class Create_evaluation
 					$a++;
 					continue;
 				}
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$subject[0]."','".$row[0]."','satl-teacher')";
+				$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$subject[0]."','".$row[0]."','satl-teacher')";
 			}
 			$query = mysqli_query($con, $sql);
 		}
@@ -236,7 +234,7 @@ class Create_evaluation
 		// get CCs
 		$sql = "SELECT hashid, cluster
 				FROM users
-				WHERE utype='faculty' AND supervisor='cc' ";
+				WHERE utype='faculty' AND supervisor='cc' AND is_deleted=0 ";
 		$query_coordinator = mysqli_query($con, $sql);
 		
 		$coordinators = array();
@@ -250,7 +248,7 @@ class Create_evaluation
 			// get all non-principal faculty
 			$sql = "SELECT hashid
 					FROM users
-					WHERE cluster='".$coordinator[1]."' AND hashid != '".$coordinator[0]."' AND supervisor NOT IN ('principal','api','satl')";
+					WHERE cluster='".$coordinator[1]."' AND hashid != '".$coordinator[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
 			
 			$query_staff = mysqli_query($con, $sql);
 			
@@ -259,7 +257,7 @@ class Create_evaluation
 			
 			$sql = "INSERT INTO results
 					(year, semester, evaluator, to_evaluate, evtype)
-					VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
+					VALUES ('".$this->setting[0]."','".$this->setting[1]."','";
 				
 			$a = 0;
 			while ($row = mysqli_fetch_array($query_staff))
@@ -270,7 +268,7 @@ class Create_evaluation
 					$a++;
 					continue;
 				}
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$coordinator[0]."','".$row[0]."','cc-teacher')";
+				$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$coordinator[0]."','".$row[0]."','cc-teacher')";
 			}
 			$query = mysqli_query($con, $sql);
 		}
@@ -282,7 +280,7 @@ class Create_evaluation
 		// get LLs
 		$sql = "SELECT hashid, level
 				FROM users
-				WHERE utype='faculty' AND supervisor='ll';";
+				WHERE utype='faculty' AND supervisor='ll' AND is_deleted=0";
 		$query_leader = mysqli_query($con, $sql);
 		
 		$level_leaders = array();
@@ -297,7 +295,7 @@ class Create_evaluation
 			// get all non-principal faculty
 			$sql = "SELECT hashid
 					FROM users
-					WHERE level='".$level_leader[1]."' AND hashid != '".$level_leader[0]."' AND supervisor NOT IN ('principal','api','satl')";
+					WHERE level='".$level_leader[1]."' AND hashid != '".$level_leader[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
 			$query_staff = mysqli_query($con, $sql);
 			
 			// in case CC has no staff on record; should never happen
@@ -305,7 +303,7 @@ class Create_evaluation
 			
 			$sql = "INSERT INTO results
 					(year, semester, evaluator, to_evaluate, evtype)
-					VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
+					VALUES ('".$this->setting[0]."','".$this->setting[1]."','";
 				
 			$a = 0;
 			while ($row = mysqli_fetch_array($query_staff))
@@ -316,7 +314,7 @@ class Create_evaluation
 					$a++;
 					continue;
 				}
-				$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$level_leader[0]."','".$row[0]."','ll-teacher')";
+				$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$level_leader[0]."','".$row[0]."','ll-teacher')";
 			}
 			$query = mysqli_query($con, $sql);
 		}
@@ -325,8 +323,9 @@ class Create_evaluation
 	
 	private function create_ratings_container($con)
 	{
-		$year = $this->setting[0].$this->setting[1];
-		$semester = $this->setting[2];
+		// in theory duplicate ratings entries are impossible
+		$year = $this->setting[0];
+		$semester = $this->setting[1];
 		if ($this->check_for_ratings_duplicates($con, $year, $semester)) exit ();
 		
 		$sql = "SELECT DISTINCT to_evaluate
@@ -336,7 +335,7 @@ class Create_evaluation
 		
 		$sql = "INSERT INTO final_ratings
 					(year, semester, teacherId)
-					VALUES ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','";
+					VALUES ('".$this->setting[0]."','".$this->setting[1]."','";
 				
 		$a = 0;
 		while ($row = mysqli_fetch_array($query))
@@ -347,7 +346,7 @@ class Create_evaluation
 				$a++;
 				continue;
 			}
-			$sql .= ", ('".$this->setting[0].$this->setting[1]."','".$this->setting[2]."','".$row[0]."')";
+			$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$row[0]."')";
 		}
 		$query = mysqli_query($con, $sql);
 		$this->messages[] = 'Rating containers have been created.';

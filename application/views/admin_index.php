@@ -17,8 +17,8 @@ include BASEPATH.'views/templates/header.php';
 		<div class="row">
 			<div class="col l2 m5 hide-on-small-only " id="sidebar">
 				<ul class="section table-of-contents">
-					<li><a href="#create-eval">Create Evalution</a></li>
-					<li><a href="#activate-eval">Activate Evaluation</a></li>
+					<li><a href="#create-eval">Create Evaluation</a></li>
+					<li><a href="#activate-eval">Evalution Control Panel</a></li>
 					<li><a href="#create-user">Create User</a></li>
 					<li><a href="#create-sections">Create Section</a></li>
 					<li><a href="#search-users">Search Users</a></li>
@@ -30,7 +30,7 @@ include BASEPATH.'views/templates/header.php';
 			<div class="col l10 m7 s7 offset-l2 offset-m5 offset-s5" id="maincontent">
 				<div class="row eval-division section scrollspy" id="create-eval">
 					<div class="col l12 m12 s12">
-						<h4>CREATE EVALUATION</h4>
+						<h4>Create Evaluation</h4>
 							<div class="row">
 								<div class="col l12 m12 s12">
 								<form id='semestral-create' onsubmit='return createEvaluations();'>							
@@ -41,17 +41,20 @@ include BASEPATH.'views/templates/header.php';
 										<div class="col l2 m2 s3">				
 										<!-- <div class="input-field col l2 m2 s10 offset-l2"> -->
 											<select name='setting[]'>
-												<?php for ($i = 15; $i < 25; $i++) echo "<option value=20$i>20$i</option>"; ?>
+												<?php for ($i = 15; $i < 25; $i++) echo "<option value='20".$i."20".($i+1)."'>20$i-20".($i+1)."</option>"; ?>
 											</select>
 										</div>
+<!--
 										<div class="col">
 									 		<h6 style="font-size: 1.2em;">to</h6>
 									 	</div>
+
 									 	<div class="col l2 m2 s3">
 											<select name='setting[]'>
 												<?php for ($i = 16; $i < 26; $i++) echo "<option value=20$i>20$i</option>"; ?>
 											</select>
 										</div>
+-->
 									</div>
 									<div class="row">
 										<div class="col">
@@ -59,11 +62,12 @@ include BASEPATH.'views/templates/header.php';
 										</div>
 										<div class="col l2 m2 s10">
 											<select name='setting[]'>
-												<option value=1>1st Sem</option>
-												<option value=2>2nd Sem</option>
+												<option value=1>1st Semester</option>
+												<option value=2>2nd Semester</option>
 											</select>
 										</div>
 									</div>
+<!--
 									<div class="row">
 										<div class="col">
 											<h5>Type:</h5>
@@ -75,9 +79,10 @@ include BASEPATH.'views/templates/header.php';
 											</select>
 										</div>
 									</div>
+-->
 									<div class="row">
 										<div class="col">
-											<button name='submit' class="waves-effect waves-light btn" type='submit'>Create Evaluation</button>
+											<button name='submit' class="waves-effect waves-light btn" type='submit'>Submit</button>
 										</div>
 									</div>
 									<div class="row">
@@ -92,10 +97,10 @@ include BASEPATH.'views/templates/header.php';
 				</div>
 				<div class="row eval-division section scrollspy" id="activate-eval">
 					<div class="col l12 m12 s12">
-						<h4>ACTIVATE EVALUATION</h4>
+						<h4>Evaluation Control Panel</h4>
 						<div class="row">
 							<div class="col l5">
-								<h5 id='faculty-1st-status'>Not available</h5>
+								<h5 id='faculty-1st-status'>Information not available</h5>
 							</div>
 							<div class="col">
 								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return openEvaluation(1)";?>'>Toggle</button>
@@ -106,7 +111,7 @@ include BASEPATH.'views/templates/header.php';
 						</div>
 						<div class="row">
 							<div class="col l5">
-								<h5 id='faculty-2nd-status'>Not available</h5>
+								<h5 id='faculty-2nd-status'>Information not available</h5>
 							</div>
 							<div class="col">
 								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return openEvaluation(2)";?>'>Toggle</button>
@@ -115,6 +120,7 @@ include BASEPATH.'views/templates/header.php';
 								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return deleteEvaluation(2)";?>'>Delete</button>
 							</div>
 						</div>
+<!--
 						<div class="row">
 							<div class="col l5">
 								<h5 id='student-status'>Not available</h5>
@@ -126,9 +132,10 @@ include BASEPATH.'views/templates/header.php';
 								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return deleteEvaluation(3)";?>'>Delete</button>
 							</div>
 						</div>
+-->
 						<div class="row">
 							<div class="col l5">
-								<h5>Archive all results</h5>
+								<h5>Archive All Results</h5>
 							</div>
 							<div class="col">
 								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return archiveEvaluation();";?>'>Archive</button>
@@ -195,8 +202,7 @@ include BASEPATH.'views/templates/header.php';
 														<option value="" disabled>Position</option>
 														<option value='none'>None</option>
 														<option value='principal'>Principal</option>
-														<option value='api'>Asst. for Instruction</option>
-														<option value='apsd'>Asst. for Student Development</option>
+														<option value='api'>Asst. Principal for Instruction</option>
 														<option value='cc'>Cluster Coordinator</option>
 														<option value='ll'>Level Leader</option>
 														<option value='satl'>Subject Area Team Leader</option>

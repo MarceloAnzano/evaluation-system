@@ -7,6 +7,22 @@ class Edit_user_data
 	var $password = '';
 	var $target_id = '';
 	
+	function does_user_exist($con, $id)
+	{
+		$id = mysqli_real_escape_string($con, $id);
+		$sql = "SELECT * 
+				FROM users
+				WHERE hashid = ? AND is_deleted = 0";
+		$stmt = mysqli_prepare($con, $sql);
+		mysqli_stmt_bind_param($stmt, 's', $id);
+		mysqli_stmt_execute($stmt);
+		$query = mysqli_stmt_get_result($stmt);
+		
+		$numrows = mysqli_num_rows($query);
+		if ($numrows > 0)
+			return true;
+	}
+	
 	function edit_user_method($con)
 	{
 		if ( ! isset($_POST['uname']) OR empty($_POST['uname']) 
@@ -18,9 +34,9 @@ class Edit_user_data
 		// get target user's id
 		$this->target_id = mysqli_real_escape_string($con, $_POST['targetid']);
 		
+
 		
 		// get post values
-		
 		$this->uname = mysqli_real_escape_string($con, $_POST['uname']);
 		$this->uname = trim($this->uname);
 						
