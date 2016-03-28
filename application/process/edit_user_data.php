@@ -12,7 +12,7 @@ class Edit_user_data
 		$id = mysqli_real_escape_string($con, $id);
 		$sql = "SELECT * 
 				FROM users
-				WHERE hashid = ? AND is_deleted = 0";
+				WHERE hashid = ? AND utype != 'admin' AND is_deleted = 0";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 's', $id);
 		mysqli_stmt_execute($stmt);

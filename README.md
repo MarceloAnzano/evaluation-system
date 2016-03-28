@@ -6,10 +6,17 @@
 	$mysql_db_user = "root";
 	$mysql_db_password = "root";
 	$mysql_db_database = "myapp";
-- look for logid in users table in phpmyadmin for login usernames
-- all passwords are '1234' without the quotes
-- if 1234 doesn't work and login credentials are correct, click the
-	register password link then enter '1234' in the default password
+- passwords for principal, justinflores1234, asstprincipalinst are '1234' without the quotes
+- list of logid. the following have 'default' as passwords
+	-teacher1
+	-teacher2
+	-student1
+	-student2
+	-hslevel
+	-prilevel
+	-cluster5
+	-cluster2
+	-sciencesatl
 - to create the evaluation make sure there are:	
 	- proper users (login as justinflores1234 for admin privileges)
 	- proper sections (can be done as lorinarittenhouse, patriciaangel or justinflores1234)
@@ -44,4 +51,4 @@ NOTE FOR MARCI:
 - pag naguluhan dito makikita yan: application/process/evaluation_entries.php
 - sa archives naman dito: application/process/evaluation_archives.php
 
-Version 2.1.0
+Version 1.3.0

@@ -111,7 +111,7 @@
 			$.get(link,{},function(response){
 				$('.load-select').material_select('destroy');
 				response.faculty.forEach(function(teacher){
-					$('select[name^='+ 'createAssignTeachers').append($('<option>', { 
+					$('#createSectionForm select[name^='+ 'createAssignTeachers').append($('<option>', { 
 						value: teacher.id,
 						text : teacher.name + ' - ' + teacher.subject 
 					}));
@@ -128,15 +128,15 @@
 			var link = "/admin/get_faculty";
 			
 			$.get(link,{},function(response){
-				$('select[name=userPhotoId]').material_select('destroy');
+				$('#facultyPhotoForm select[name=userPhotoId]').material_select('destroy');
 				response.faculty.forEach(function(teacher){
 					
-					$('select[name=userPhotoId]').append($('<option>', { 
+					$('#facultyPhotoForm select[name=userPhotoId]').append($('<option>', { 
 						value: teacher.id,
 						text : teacher.name 
 					}));
 				});
-				$('select[name=userPhotoId]').material_select();
+				$('#facultyPhotoForm select[name=userPhotoId]').material_select();
 			});
 		}
 	}
@@ -193,7 +193,6 @@
 						+ user.id + "' onclick='return deleteUser(this.href, this);'>Delete User</a></td>/tr>");
 				});
 				if(response.results.length == 0){
-					console.log('Hello');
 			    	$('#linkSpace>tbody').append('<tr><td>None</td></tr>');
 			    	$('#linkSpace>thead>tr').remove();
 			    }
@@ -217,32 +216,32 @@
 
 	displayUserInfo();
 	function displayUserInfo() {
-		if ( !! document.getElementById('protectedInfo'))
+		if ( !! document.getElementById('editUserProtectedInfo'))
 		{
-			var link = "/admin/dump_user_info/"+ $("#targetid").val();
+			var link = "/admin/dump_user_info/"+ $("#manageUserForm [name=editTargetId]").val();
 						
 			$.get(link,{},function(response){
-				$('#protectedInfo').append("<li>User Login ID: " + response.info.logid + "</a></li>");
+				$('#editUserProtectedInfo').append("<li>User Login ID: " + response.info.logid + "</a></li>");
 
-				$("#usertype").val(response.info.type);
-				$("#uname").val(response.info.name);
+				$("#manageUserForm [name=editUsertype]").val(response.info.type);
+				$("#manageUserForm [name=editUname]").val(response.info.name);
 				
 				if (response.info.gradelevel !== '' && response.info.section !== '')
 				{
-					$('#gradelevel').val(response.info.gradelevel);
-					$('#section').val(response.info.section);
+					$('#manageUserForm [name=editUserGradelevel]').val(response.info.gradelevel);
+					$('#manageUserForm [name=editUserSection]').val(response.info.section);
 				}
 				
 				if (response.info.subject !== '' && response.info.cluster !== '' && response.info.level !== '' )
 				{
-					$('#sat').val(response.info.subject);
-					$('#cluster').val(response.info.cluster);
-					$('#level').val(response.info.level);
+					$('#manageUserForm [name=editUserUserSubject]').val(response.info.subject);
+					$('#manageUserForm [name=editUserCluster]').val(response.info.cluster);
+					$('#manageUserForm [name=editUserLevel]').val(response.info.level);
 				}
 				
 				if (response.info.position !== '')
 				{
-					$('#protectedInfo').val(response.info.position);
+					$('#manageUserForm [name=editPosition]').val(response.info.position);
 				}
 			});
 		}
@@ -250,16 +249,16 @@
 	
 	function editUser()
 	{
-		var uname = $('#uname').val();
-		var password = $('#adminpassword').val();
-		var usertype = $('#usertype').val();
-		var sat = $('#sat').val();
-		var gradelevel = $('#gradelevel').val();
-		var section = $('#section').val();
-		var position = $('#position').val();
-		var level = $('#level').val();
-		var cluster = $('#cluster').val();
-		var targetid = $('#targetid').val();
+		var uname = $('#manageUserForm [name=editUname]').val();
+		var password = $('#manageUserForm [name=editPassword]').val();
+		var usertype = $('#manageUserForm [name=editUsertype]').val();
+		var sat = $('#manageUserForm [name=editUserUserSubject]').val();
+		var gradelevel = $('#manageUserForm [name=editUserGradelevel]').val();
+		var section = $('#manageUserForm [name=editUserSection]').val();
+		var position = $('#manageUserForm [name=editPosition]').val();
+		var level = $('#manageUserForm [name=editUserLevel]').val();
+		var cluster = $('#manageUserForm [name=editUserCluster]').val();
+		var targetid = $('#manageUserForm [name=editTargetId]').val();
 				
 		var dataString = 'uname='+ uname + '&targetid='+ targetid + '&password='+ password
 			+ '&usertype=' + usertype + '&sat=' + sat + '&gradelevel=' + gradelevel + '&section=' + section + '&position=' + position
@@ -283,28 +282,6 @@
 		return false;
 	}
 	
-	// NOT DONE YET
-	displaySubjects();
-	function displaySubjects()
-	{
-		if ( !! document.getElementById('sectiontable'))
-		{
-			var link = "/admin/get_section_subjects";
-			
-			$.get(link,{},function(response){
-				response.faculty.forEach(function(teacher){
-					$('select[id^='+ 'teachers').append($('<option>', { 
-						value: teacher.id,
-						text : teacher.name + ' - ' + teacher.subject 
-					}));
-				});
-				
-			});
-			
-		}
-		
-	}
-	
 	function editPercentages()
 	{
 		// post resquest
@@ -318,3 +295,80 @@
 		});
 		return false;
 	}
+	
+	displaySections();
+	function displaySections()
+	{
+		if ( !! document.getElementById('createSectionForm'))
+		{
+			var link = "/admin/get_sections";
+			
+			$.get(link,{},function(response){
+				if (response.sections != null)
+				{
+					response.sections.forEach(function(section){
+						$('#createSectionForm select[name=createSectionSelect]').append($('<option>', { 
+							value: section.concatenated,
+							text : section.concatenated
+						}));
+					});
+					sectionContainer = response;
+				}
+			});
+		}
+	}
+	
+	var sectionContainer;
+	$("#createSectionForm select[name=createSectionSelect]").on('change', function(evt){
+		if (sectionContainer.status == 'OK')
+		{
+			if (sectionContainer.sections != null)
+			{
+				var selected = $("#createSectionForm select[name=createSectionSelect]").val();
+				if (selected == '')
+				{
+					$('#createSectionForm input[name=createSectionGradelevel]').val("");
+					$('#createSectionForm input[name=createSectionSection]').val("");
+					$('#createSectionForm input[name=createSectionGradelevel]').removeAttr('disabled');
+					$('#createSectionForm input[name=createSectionSection]').removeAttr('disabled');
+				}
+				else
+				{
+					var dataString = '';
+					sectionContainer.sections.forEach(function(section){
+						if (selected == section.concatenated)
+						{
+							$('#createSectionForm input[name=createSectionGradelevel]').val(section.gradelevel);
+							$('#createSectionForm input[name=createSectionSection]').val(section.section);
+							$('#createSectionForm input[name=createSectionGradelevel]').attr('disabled', 'disabled');
+							$('#createSectionForm input[name=createSectionSection]').attr('disabled','disabled');
+							dataString = '/'+ section.gradelevel + "/" + section.section;
+						}
+					});		
+					var link = "/admin/get_subjects" + dataString;
+					//~ fillSubjectField(link);
+								
+					
+				}
+			}
+		}
+	});
+	
+	//~ var someKindOfContainer;
+	//~ function fillSubjectField(link)
+	//~ {
+		//~ var count = 0;
+		//~ 
+		//~ $.get(link,{},function(response){
+			//~ console.log(response);
+			//~ 
+			//~ someKindOfContainer = response;
+		//~ });
+		//~ console.log(someKindOfContainer);
+		//~ console.log(sectionContainer);
+		//~ $('#createSectionForm input[name^='+ 'createSubjects').each(function(){
+			//~ console.log('come on');
+			//~ $(this).val(response.subjects.subj[count]);
+			//~ count++;
+		//~ });
+	//~ }

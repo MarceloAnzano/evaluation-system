@@ -145,7 +145,7 @@ include BASEPATH.'views/templates/header.php';
 				</div>
 				<div class="row eval-division section scrollspy" id="create-user">
 					<div class="col l12 m12 s12">
-						<h4>CREATE USER</h4>
+						<h4>Create a User Account</h4>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='createUserForm' onsubmit="return saveUser();">
@@ -244,7 +244,7 @@ include BASEPATH.'views/templates/header.php';
 				?>				
 				<div class="row eval-division section scrollspy" id="create-sections">
 					<div class="col l12 m12 s12">
-						<h4>CREATE SECTION</h4>
+						<h4>Create and Update Section Subjects</h4>
 						<!--
 						<form id='createSectionForm' action='/admin/save_section' method='post'>
 						-->
@@ -252,19 +252,46 @@ include BASEPATH.'views/templates/header.php';
 							<div class="col l12 m12 s12">
 								<form id='createSectionForm' onsubmit='return saveSection();'>
 									<div class="row">
+										<div class="col l4 m5 s6">
+											<select id='createSectionSelect' name='createSectionSelect'>
+												<option value='' selected>New Section</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<h5>New Grade and Section</h5>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col l4 m5 s6">
+											<input id='createSectionGradelevel'name='createSectionGradelevel' placeholder='Grade level'>
+										</div>
+										<div class="col l4 m5 s6">
+											<input id='createSectionSection' name='createSectionSection' placeholder='Section'>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<h6>*leave subject field blank if not needed</h6>
+										</div>
+									</div>
+									<div class="row">
 										<div class="col l10 m10 s12">
-											<table style="margin-bottom: 0px">
+											<table class='striped' style="margin-bottom: 0px">
 												<thead>
 													<tr>
+														<th>#</th>
 														<th>Subject</th>
 														<th>Adviser</th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php 
-														for ($i = 0; $i < 15; $i++)
+														for ($i = 1; $i <= 15; $i++)
 														{
 															echo "<tr>";
+															echo "<td>$i.</td>";
 															echo "<td><input name='createSubjects[]'></td>";
 															echo "<td><select class='load-select' name='createAssignTeachers[]'></select></td>";
 															echo "</tr>";
@@ -274,24 +301,7 @@ include BASEPATH.'views/templates/header.php';
 											</table>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col">
-											<h6>*leave subject field blank if not needed</h6>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col">
-											<h5>Grade  Section</h5>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col l4 m5 s6">
-											<input name='createSectionGradelevel' placeholder='Grade level'>
-										</div>
-										<div class="col l4 m5 s6">
-											<input name='createSectionSection' placeholder='Section'>
-										</div>
-									</div>
+									
 									<div class="row">
 										<div class="col">
 											<button class="waves-effect waves-light btn" name='submit' type='submit'>Submit Section</button>

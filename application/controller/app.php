@@ -34,14 +34,14 @@ class App extends Common
 	}
 	
 	// display the principal page
-	function principal()
-	{
-		if ($this->logged_as_principal())
-		{
-			$this->this_view('views/principal_index.php');
-		}
-		else exit ('Access Denied');
-	}
+	//~ function principal()
+	//~ {
+		//~ if ($this->logged_as_principal())
+		//~ {
+			//~ $this->this_view('views/principal_index.php');
+		//~ }
+		//~ else exit ('Access Denied');
+	//~ }
 	
 	// display the register password page
 	function register()

@@ -1,5 +1,5 @@
 <div class="nav-wrapper subNav">
-			<span class="brand-logo" style="text-transform: none !important; margin: 0px;"id='protectedInfo'></span>
+		<span class="brand-logo" style="text-transform: none !important; margin: 0px;"id='editUserProtectedInfo'></span>
 		</div>
 <main>
 	<div class="container">
@@ -7,48 +7,49 @@
 			<div class="col s12 m10 l10 offset-l1 offset-m1">
 				<div class="card">
 					<div class="card-content" style="width: 80%">
-						<form onsubmit="return editUser();">
+						<form id='manageUserForm' onsubmit="return editUser();">
+							<h5>User Details:</h5>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='uname' name='uname' type='text' autofocus>
-									<label for="uname">Full Name</label>
+									<input id='editUname' name='editUname' type='text' autofocus>
+									<label for="editUname">Full Name</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='adminpassword' name='password' type='password' <?php if ( ! $this->logged_as_admin())echo "readonly"?>>
-									<label for="adminpassword">Password</label>
+									<input id='editPassword' name='editPassword' type='password' <?php if ( ! $this->logged_as_admin())echo "readonly"?>>
+									<label for="editPassword">Password</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='usertype' name='usertype'<?php if ( ! $this->logged_as_admin())echo "readonly"?> type="text" placeholder=" " >
-									<label for="usertype">UserType</label>
+									<input id='editUsertype' name='editUsertype'<?php if ( ! $this->logged_as_admin())echo "readonly"?> type="text" placeholder=" " >
+									<label for="editUsertype">User Type</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='sat' name='sat' type='text'placeholder=" ">
-									<label for="sat">Subject</label>
+									<input id='editUserUserSubject' name='editUserUserSubject' type='text'placeholder=" ">
+									<label for="editUserUserSubject">Subject</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='gradelevel' name='gradelevel' type='text'>
-									<label for="gradelevel">Grade Level</label>
+									<input id='editUserGradelevel' name='editUserGradelevel' type='text'>
+									<label for="editUserGradelevel">Grade Level</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='section' name='section' type='text'>
-									<label for="section">Section</label>
+									<input id='editUserSection' name='editUserSection' type='text'>
+									<label for="editUserSection">Section</label>
 								</div>
 							</div>
 							<div class="row">
-								<h5>If Supervisor:</h5>
+								<h5>Position:</h5>
 								<div class="row">
 									<div class="col m8 l8 s12">
-										<select id='position' name='position' >
+										<select id='editPosition' name='editPosition' >
 											<option value='' disabled selected>Select position</option>
 											<option value='none'>None</option>
 											<option value='principal'>Principal</option>
@@ -61,18 +62,18 @@
 								</div>
 								<div class="row">
 									<div class="input-field col l8 m18 s12">
-										<input id='level' name='level' type='text' placeholder=" ">
-										<label for="level">Teaching Level</label>
+										<input id='editUserLevel' name='editUserLevel' type='text' placeholder=" ">
+										<label for="editUserLevel">Teaching Level</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col l8 m18 s12">
-										<input id='cluster' name='cluster' type='text' placeholder=" ">
-										<label for="cluster">Cluster</label>
+										<input id='editUserCluster' name='editUserCluster' type='text' placeholder=" ">
+										<label for="editUserCluster">Cluster</label>
 									</div>
 								</div>
 							</div>
-							<?php echo "<input type='hidden' id='targetid' name='targetid' value='".$data."'><br>"; ?>
+							<input type='hidden' id='editTargetId' name='editTargetId' value='<?php echo $data; ?>'><br>
 							<div class="row">
 								<button class="waves-effect waves-light btn" type='submit' name='submit'>Submit</button>
 							</div>

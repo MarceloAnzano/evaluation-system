@@ -20,25 +20,13 @@ class Create_evaluation
 		}
 	}
 	
-	function check_for_duplicates($con, $evtype = '')
+	function check_for_duplicates($con)
 	{
 		$statement = NULL;
-		$year = $this->setting[0].$this->setting[1];
-		$semester = $this->setting[2];
-		switch ($evtype)
-		{
-			case 'student':
-				$statement = " AND evtype='student-teacher'";
-				break;
-			case 'faculty':
-				$statement = " AND evtype != 'student-teacher'";
-				break;
-			default:
-				exit ('Invalid');
-		}
+		$semester = $this->setting[1];
 		$sql = "SELECT *
 				FROM results
-				WHERE year='".$year."' AND semester='".$semester."'".$statement.";";
+				WHERE semester='$semester'";
 		
 		$query = mysqli_query($con, $sql);
 		$numrows = mysqli_num_rows($query);
@@ -50,7 +38,7 @@ class Create_evaluation
 	function create_evaluation_entries($con, $evtype = NULL)
 	{
 		$this->get_year_and_sem($con);
-		//~ $this->check_for_duplicates($con, $evtype);
+		$this->check_for_duplicates($con, $evtype);
 		$this->create_self_evaluation($con);
 		$this->create_principal_evaluation($con);
 		$this->create_supervisor_to_staff($con);
@@ -110,7 +98,7 @@ class Create_evaluation
 		// select all faculty
 		$sql = "SELECT hashid
 				FROM users
-				WHERE utype='faculty'  AND is_deleted=0";
+				WHERE utype='faculty'  AND is_deleted=0 AND supervisor = 'none'";
 		$query = mysqli_query($con, $sql);
 		
 		// start new insert query		
@@ -136,10 +124,10 @@ class Create_evaluation
 	
 	private function create_principal_evaluation($con)
 	{
-		// get all non-principal faculty
+		// get all non-supervisory faculty
 		$sql = "SELECT hashid
 				FROM users
-				WHERE utype='faculty' AND supervisor NOT IN ('principal','api') AND is_deleted=0";
+				WHERE utype='faculty' AND supervisor = 'none' AND is_deleted=0";
 		$query_subordinates = mysqli_query($con, $sql);
 		
 		// select API and principal

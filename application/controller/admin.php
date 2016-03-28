@@ -26,7 +26,7 @@ class Admin extends Common
 			{
 				$this->this_view('views/change_user_settings.php', $id);
 			}
-			else exit ('User does not exist!');
+			else exit ('Invalid user!');
 		}
 		else exit('Access Denied');
 	}
@@ -59,6 +59,43 @@ class Admin extends Common
 			$get_list = new Users_and_sections();
 			$data = $get_list->get_faculty($this->get_connection());
 			$data['status'] = "OK";
+			
+			// convert data into json
+			header('Content-Type: application/json');
+			echo json_encode($data);
+			return;
+		}
+		else exit('Not authorized!');
+	}
+	
+	
+	function get_sections()
+	{
+		// different because principals can also access this
+		if ($this->logged_as_admin() OR $this->logged_as_principal())
+		{
+			include BASEPATH.'process/users_and_sections.php';
+			$get_list = new Users_and_sections();
+			$data = $get_list->get_section_method($this->get_connection());
+			$data['status'] = "OK";
+			
+			// convert data into json
+			header('Content-Type: application/json');
+			echo json_encode($data);
+			return;
+		}
+		else exit('Not authorized!');
+	}
+	
+	function get_subjects($gradelevel, $section)
+	{
+		// different because principals can also access this
+		if ($this->logged_as_admin() OR $this->logged_as_principal())
+		{
+			include BASEPATH.'process/users_and_sections.php';
+			$get_list = new Users_and_sections();
+			$data = $get_list->get_subject_method($this->get_connection(), $gradelevel, $section);
+			$data['status'] = 'OK';
 			
 			// convert data into json
 			header('Content-Type: application/json');

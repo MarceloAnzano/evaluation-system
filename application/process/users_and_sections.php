@@ -25,7 +25,54 @@ class Users_and_sections
 	
 	function get_section_method($con)
 	{
-		// get sections
+		$sql = "SELECT DISTINCT gradelevel, section
+				FROM subjects";
+		$query = mysqli_query($con, $sql);
+		$results = array();
+		while ($row = mysqli_fetch_array($query))
+		{
+			array_push($results, array(
+				'concatenated' => ucwords($row[0].' '.$row[1]),
+				'gradelevel' => ucwords($row[0]),
+				'section' => ucwords($row[1])
+			));
+		}
+		
+		$data = array(
+			'sections' => $results
+		);
+		
+		return $data;
+	}
+	
+	function get_subject_method($con, $gradelevel, $section)
+	{
+		$gradelevel =strtolower(urldecode($gradelevel));
+		$section = strtolower(urldecode($section));
+		//~ $gradelevel = strtolower(mysqli_real_escape_string($con, $_POST['gradelevel']));
+		//~ $section = strtolower(mysqli_real_escape_string($con, $_POST['section']));
+		
+		$sql = "SELECT subjects.subject, users.uname 
+				FROM subjects
+				JOIN users ON subjects.teacherId=users.hashid
+				WHERE subjects.gradelevel = '$gradelevel' AND subjects.section = '$section'";
+		$query = mysqli_query($con, $sql);
+		
+		$results = array();
+		while ($row = mysqli_fetch_array($query))
+		{
+			array_push($results, array(
+				'subj' => $row[0],
+				'name' => $row[1]
+			));
+		}
+		
+		$data = array(
+			'subjects' => $results
+		);
+		
+		return $data;
+		
 	}
 	
 	function get_user_info($con, $id)
@@ -36,11 +83,11 @@ class Users_and_sections
 				WHERE hashid='$id' AND is_deleted=0";
 		$query = mysqli_query($con, $sql);
 		$row = mysqli_fetch_array($query);
-		if (strlen($row[7]) > 3)
+		if (strlen($row[8]) > 3)
 		{
-			$position = ucfirst($row[7]);
+			$position = ucfirst($row[8]);
 		}
-		else $position = strtoupper($row[7]);
+		else $position = strtoupper($row[8]);
 		
 		$results['info'] = array(
 				'userid' => $id,

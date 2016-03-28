@@ -35,6 +35,7 @@
 								$percent = 0;
 								$category = "";
 								$question = $data['title'][$title_index];
+								echo "<thead><tr><th><h4>".ucwords(str_replace("_", " ", $data['title'][$title_index]))."</h4></th></tr></thead>";
 								$title_index++;
 								
 								// start of table output
