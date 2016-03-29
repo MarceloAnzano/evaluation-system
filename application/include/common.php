@@ -4,6 +4,19 @@
 
 class Common
 {
+	var $link;
+	
+	public function __construct()
+	{
+		$this->get_connection();
+	} 
+	
+	function get_connection()
+	{
+		include BASEPATH.'include/connect.php';
+		$this->link = $con;
+	}
+	
 	function this_view($view, $data = NULL, $data2 = NULL, $data3 = NULL, $data4 = NULL, $data5 = NULL)
 	{
 		include BASEPATH.'views/templates/header.php';
@@ -15,7 +28,7 @@ class Common
 	function check_user_login()
 	{
 		$check = new Check_login();
-		$check->check_user_session($this->get_connection());
+		$check->check_user_session($this->link);
 		return $check->get_status();
 	}
 	
@@ -29,14 +42,16 @@ class Common
 		else return FALSE;
 	}
 	
-	function logged_as_principal()
+	function logged_as_principal($type = 'both')
 	{
 		$check = new Check_login();
-		if ($this->check_user_login() && $check->is_user_principal())
+
+		if ($this->check_user_login() && $check->is_user_principal($type))
 		{
 			return TRUE;
 		}
 		else return FALSE;
+		
 	}
 	
 	function allow_supervisors()
@@ -46,12 +61,6 @@ class Common
 			return TRUE;
 		}
 		else return FALSE;
-	}
-	
-	function get_connection()
-	{
-		include BASEPATH.'include/connect.php';
-		return $con;
 	}
 	
 	function get_session_info($info)

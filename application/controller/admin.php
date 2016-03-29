@@ -3,15 +3,12 @@
 	require_once BASEPATH.'include/common.php';
 
 class Admin extends Common
-{
-	var $link = '';
-	
+{	
 	function index()
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
 		{
-			//~ $this->this_view('views/admin_index.php');
-			include BASEPATH.'views/admin_index.php';
+			$this->this_view('views/admin_index.php');
 		}
 		else exit('Access Denied');
 	}
@@ -22,7 +19,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/edit_user_data.php';
 			$user = new Edit_user_data();
-			if ($user->does_user_exist($this->get_connection(), $id))
+			if ($user->does_user_exist($this->link, $id))
 			{
 				$this->this_view('views/change_user_settings.php', $id);
 			}
@@ -38,11 +35,11 @@ class Admin extends Common
 	{
 		if ( ! $this->logged_as_admin()) exit('Not authorized!');
 		
-		//~ $type = mysqli_real_escape_string($this->get_connection(), $_POST['create-type']);
+		//~ $type = mysqli_real_escape_string($this->link, $_POST['create-type']);
 		
 		include BASEPATH.'process/create_evaluation.php';
 		$create = new Create_evaluation();
-		$create->create_evaluation_entries($this->get_connection());
+		$create->create_evaluation_entries($this->link);
 		foreach ($create->messages as &$message)
 		{
 			echo $message;
@@ -57,7 +54,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/users_and_sections.php';
 			$get_list = new Users_and_sections();
-			$data = $get_list->get_faculty($this->get_connection());
+			$data = $get_list->get_faculty($this->link);
 			$data['status'] = "OK";
 			
 			// convert data into json
@@ -76,7 +73,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/users_and_sections.php';
 			$get_list = new Users_and_sections();
-			$data = $get_list->get_section_method($this->get_connection());
+			$data = $get_list->get_section_method($this->link);
 			$data['status'] = "OK";
 			
 			// convert data into json
@@ -94,7 +91,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/users_and_sections.php';
 			$get_list = new Users_and_sections();
-			$data = $get_list->get_subject_method($this->get_connection(), $gradelevel, $section);
+			$data = $get_list->get_subject_method($this->link, $gradelevel, $section);
 			$data['status'] = 'OK';
 			
 			// convert data into json
@@ -111,7 +108,7 @@ class Admin extends Common
 		
 		include BASEPATH.'process/save_user.php';
 		$save = new Save_user();
-		$save->save_user_entry($this->get_connection());
+		$save->save_user_entry($this->link);
 	}
 	
 	function edit_user()
@@ -120,7 +117,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/edit_user_data.php';
 			$user = new Edit_user_data();
-			$user->edit_user_method($this->get_connection());
+			$user->edit_user_method($this->link);
 		}
 		else exit('Not authorized!');
 	}
@@ -131,7 +128,7 @@ class Admin extends Common
 		
 		include BASEPATH.'process/save_section.php';
 		$save = new Save_section();
-		$save->save_section_entry($this->get_connection());
+		$save->save_section_entry($this->link);
 	}
 	
 	function open($type)
@@ -140,7 +137,7 @@ class Admin extends Common
 		
 		include BASEPATH.'process/open_evaluation.php';
 		$control = new Open_evaluation();
-		$control->evaluation_control($this->get_connection(), $type);
+		$control->evaluation_control($this->link, $type);
 		
 		echo $control->get_current_status();
 	}
@@ -151,7 +148,7 @@ class Admin extends Common
 		
 		include BASEPATH.'process/delete_evaluation.php';
 		$control = new Delete_evaluation();
-		$control->delete_evaluation_entries($this->get_connection(), $type);		
+		$control->delete_evaluation_entries($this->link, $type);		
 	}
 	
 	function evaluation_status()
@@ -162,9 +159,9 @@ class Admin extends Common
 		$control = new Open_evaluation();
 		$status = array();
 		
-		$control->update_status($this->get_connection(), 1);
+		$control->update_status($this->link, 1);
 		$status[] = $control->get_current_status();
-		$control->update_status($this->get_connection(), 2);
+		$control->update_status($this->link, 2);
 		$status[] = $control->get_current_status();
 		
 		// convert data into json
@@ -180,7 +177,7 @@ class Admin extends Common
 		include BASEPATH.'process/file_upload_parser.php';
 		$image = new File_upload_parser();
 		$image->image_upload();
-		$image->store_image_reference($this->get_connection());
+		$image->store_image_reference($this->link);
 		
 		// cause not ajax (-_-)
 		header('Location: '.base_url.'admin');
@@ -192,7 +189,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/users_and_sections.php';
 			$get_list = new Users_and_sections();
-			$data = $get_list->get_all_users($this->get_connection());
+			$data = $get_list->get_all_users($this->link);
 			$data['status'] = "OK";
 			
 			header('Content-Type: application/json');
@@ -208,7 +205,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/users_and_sections.php';
 			$get_list = new Users_and_sections();
-			$data =  $get_list->get_user_info($this->get_connection(), $id);
+			$data =  $get_list->get_user_info($this->link, $id);
 			$data['status'] = "OK";
 			
 			header('Content-Type: application/json');
@@ -225,7 +222,7 @@ class Admin extends Common
 		
 		include BASEPATH.'process/evaluation_archive.php';
 		$archive = new Evaluation_archive();
-		$archive->create_archive($this->get_connection());
+		$archive->create_archive($this->link);
 	}
 	
 	function delete_user($id)
@@ -234,7 +231,7 @@ class Admin extends Common
 		
 		include BASEPATH.'process/users_and_sections.php';
 		$archive = new Users_and_sections();
-		$archive->delete_user_method($this->get_connection(), $id);
+		$archive->delete_user_method($this->link, $id);
 		
 		echo 'User deleted.';
 	}
@@ -249,8 +246,8 @@ class Admin extends Common
 			{
 				include BASEPATH.'process/configuration.php';
 				$question = new Configuration_admin();
-				$data = $file->csv_get_reference_path($this->get_connection());
-				$question->edit_questionnaire($this->get_connection(), $data['name'], $data['path']);
+				$data = $file->csv_get_reference_path($this->link);
+				$question->edit_questionnaire($this->link, $data['name'], $data['path']);
 				
 				// cause not ajax (-_-)
 				header('Location: '.base_url.'admin');
@@ -266,7 +263,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/configuration.php';
 			$percent = new Configuration_admin();
-			$percent->configure_rating_percentages($this->get_connection());
+			$percent->configure_rating_percentages($this->link);
 		}
 		else exit('Not authorized!');
 	}	

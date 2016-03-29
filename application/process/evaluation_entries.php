@@ -105,6 +105,74 @@ class Evaluation_entries
 		}
 	}
 	
+	function get_all_quest_scores($con)
+	{
+		$sql = "SELECT users.uname, tc, ea, ap, student, evtype
+				FROM results
+				JOIN users ON results.evaluator=users.hashid";
+		$stmt = mysqli_prepare($con, $sql);
+		mysqli_stmt_execute($stmt);
+		$query = mysqli_stmt_get_result($stmt);
+		
+		$temp = array();
+		while ($row = mysqli_fetch_array($query))
+		{
+			$temp[] = $row;
+		}
+		
+		$sql = "SELECT users.uname
+				FROM results
+				JOIN users ON results.to_evaluate=users.hashid";
+		$stmt = mysqli_prepare($con, $sql);
+		mysqli_stmt_execute($stmt);
+		$query = mysqli_stmt_get_result($stmt);
+		
+		$scores = array();
+		$count = 0;
+		while ($row = mysqli_fetch_array($query))
+		{
+			if ($temp[$count][5] != 'self')
+			{
+				list($evaluator, $evaluated) = explode('-', $temp[$count][5]);
+				if (strlen($evaluator) > 4)
+				{
+					$evaluator = ucfirst($evaluator);
+				}
+				else $evaluator = strtoupper($evaluator);
+				
+				if (strlen($evaluated) > 4)
+				{
+					$evaluated = ucfirst($evaluated);
+				}
+				else $evaluated = strtoupper($evaluated);
+				$type = $evaluator." to ".$evaluated;
+			}
+			else $type = ucfirst($temp[$count][5]);
+			
+			array_push($scores, array(
+					'evaluator' => ucwords($temp[$count][0]),
+					'evaluated' => ucwords($row[0]),
+					'tc' => $this->check_if_null($temp[$count][1]),
+					'ea' => $this->check_if_null($temp[$count][2]),
+					'ap' => $this->check_if_null($temp[$count][3]),
+					'stud' => $this->check_if_null($temp[$count][4]),
+					'type' => $type
+				)
+			);
+			$count++;
+		}
+		$data = array(
+			'scores' => $scores
+		);
+		return $data;
+	}
+	
+	private function check_if_null($string)
+	{
+		if ($string == NULL)
+			return '--';
+		else return $string;
+	}
 }
 
 /* End of file */

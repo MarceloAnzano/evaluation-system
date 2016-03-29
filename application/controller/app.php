@@ -14,8 +14,6 @@
 	
 class App extends Common
 {
-	var $target_id = '';
-	
 	// displays the main page
 	function index()
 	{
@@ -32,16 +30,6 @@ class App extends Common
 		}
 		else $this->this_view('views/login.php');
 	}
-	
-	// display the principal page
-	//~ function principal()
-	//~ {
-		//~ if ($this->logged_as_principal())
-		//~ {
-			//~ $this->this_view('views/principal_index.php');
-		//~ }
-		//~ else exit ('Access Denied');
-	//~ }
 	
 	// display the register password page
 	function register()
@@ -137,21 +125,21 @@ class App extends Common
 	{
 		include_once BASEPATH.'process/validate.php';
 		$validation = new Validate();
-		$validation->validate_credentials($this->get_connection());
+		$validation->validate_credentials($this->link);
 	}
 	
 	function regpass()
 	{
 		include_once BASEPATH.'process/register_pass.php';
 		$register = new Register_pass();
-		$register->register_password($this->get_connection());
+		$register->register_password($this->link);
 	}
 	
 	function change_pass()
 	{
 		include_once BASEPATH.'process/change_pass.php';
 		$change = new Change_pass();
-		$change->change_password($this->get_connection(), $this->get_session_info('logid'));
+		$change->change_password($this->link, $this->get_session_info('logid'));
 	}
 	
 	function get_list_of_evaluation()
@@ -161,7 +149,7 @@ class App extends Common
 		include BASEPATH.'process/evaluation_entries.php';
 		$entries = new Evaluation_entries();
 			
-		$list = $entries->get_persons_to_evaluate($this->get_connection(), $this->get_session_info('userid'));
+		$list = $entries->get_persons_to_evaluate($this->link, $this->get_session_info('userid'));
 		return $list;
 	}
 	
@@ -172,7 +160,7 @@ class App extends Common
 		include BASEPATH.'process/evaluation_archive.php';
 		$entries = new Evaluation_archive();
 			
-		$list = $entries->get_archived_evaluation($this->get_connection(), $this->get_session_info('userid'));
+		$list = $entries->get_archived_evaluation($this->link, $this->get_session_info('userid'));
 		return $list;
 	}
 	
@@ -182,7 +170,7 @@ class App extends Common
 		
 		include BASEPATH.'process/question.php';
 		$questions = new Question();
-		return $questions->display_questions($this->get_connection(),$this->get_session_info('utype'));
+		return $questions->display_questions($this->link,$this->get_session_info('utype'));
 		
 	}
 	
@@ -192,7 +180,7 @@ class App extends Common
 		
 		include BASEPATH.'process/record_result.php';
 		$record = new Record_result();
-		$record->compute_score($this->get_connection(), $this->get_session_info('utype'), $this->get_session_info('userid'));
+		$record->compute_score($this->link, $this->get_session_info('utype'), $this->get_session_info('userid'));
 		
 		header ('Location: '.base_url);
 	}
@@ -204,7 +192,7 @@ class App extends Common
 		include BASEPATH.'process/evaluation_entries.php';
 		$entries = new Evaluation_entries();
 		
-		$list = $entries->get_rating_for_person($this->get_connection(), $this->get_session_info('userid'), $this->get_session_info('utype'), $id, $semester);
+		$list = $entries->get_rating_for_person($this->link, $this->get_session_info('userid'), $this->get_session_info('utype'), $id, $semester);
 		//~ header('Content-Type: application/json');
 		//~ echo json_encode($list);
 		//~ return;
@@ -217,7 +205,7 @@ class App extends Common
 		
 		include BASEPATH.'process/evaluation_archive.php';
 		$entries = new Evaluation_archive();
-		$list = $entries->get_rating_for_person($this->get_connection(), $this->get_session_info('userid'), $this->get_session_info('utype'), $id, $year, $semester);
+		$list = $entries->get_rating_for_person($this->link, $this->get_session_info('userid'), $this->get_session_info('utype'), $id, $year, $semester);
 		//~ header('Content-Type: application/json');
 		//~ echo json_encode($list);
 		//~ return;
@@ -230,16 +218,31 @@ class App extends Common
 		
 		include BASEPATH.'process/calculate.php';
 		$calculate = new Calculate();
-		$calculate->get_final_rating($this->get_connection());
+		$calculate->get_final_rating($this->link);
 	}
 	
-	function display_ratings()
+	function display_ratings($year, $semester)
 	{
 		if ( ! $this->allow_supervisors()) exit ('Access Denied');
 		
 		include BASEPATH.'process/calculate.php';
 		$calculate = new Calculate();
-		$data = $calculate->display_subordinate_ratings($this->get_connection(), $this->get_session_info('userid'), $this->get_session_info('supervisor'));
+		$data = $calculate->display_subordinate_ratings($this->link, $this->get_session_info('userid'), $this->get_session_info('supervisor'), $year, $semester);
+		$data['status'] = 'OK';
+		header('Content-Type: application/json');
+		echo json_encode($data);
+		return;
+	}
+	
+	function display_quest_scores()
+	{
+		if ( ! $this->logged_as_principal('principal')) exit ('Access Denied!');
+		
+		include BASEPATH.'process/evaluation_entries.php';
+		$entries = new Evaluation_entries();
+		$data = $entries->get_all_quest_scores($this->link);
+		$data['status'] = 'OK';
+		
 		header('Content-Type: application/json');
 		echo json_encode($data);
 		return;
@@ -255,7 +258,7 @@ class App extends Common
 		
 		include_once BASEPATH.'process/file_upload_parser.php';
 		$photo = new File_upload_parser();
-		return $photo->get_image_reference($this->get_connection(), $id, $no_photo_ref);
+		return $photo->get_image_reference($this->link, $id, $no_photo_ref);
 	}
 	
 	function get_user_details($id)
@@ -264,7 +267,7 @@ class App extends Common
 		
 		include_once BASEPATH.'process/users_and_sections.php';
 		$details = new Users_and_sections();
-		return $details->get_user_info($this->get_connection(), $id);
+		return $details->get_user_info($this->link, $id);
 	}
 	
 	// logout user

@@ -9,17 +9,41 @@
 					<div class="card-content" style="width: 90%; margin:auto;">
 						<div class="row" style="margin-top:20px; margin-bottom: 20px;">
 							<div class="col l10 m10 s12 offset-l1 offset-m1">
-								<button class="waves-effect waves-light btn col l12 m12 s12" id='view-ratings' type='submit' onclick='return updateRatings();'>Update Ratings</button>
+								<button class="waves-effect waves-light btn col l12 m12 s12" id='view-ratings' type='submit' onclick='return updateRatings();'>View Final Ratings</button>
 							</div>
+							<div class="col l2 m2 s3">				
+								<select name='viewRatingYear'>
+									<?php for ($i = 15; $i < 25; $i++) echo "<option value='20".$i."20".($i+1)."'>20$i-20".($i+1)."</option>"; ?>
+								</select>
+							</div>
+							<div class="col l2 m2 s10">
+								<select name='viewRatingSemester'>
+									<option value=1>1st Semester</option>
+									<option value=2>2nd Semester</option>
+								</select>
+							</div>
+							<?php 
+								if ($this->logged_as_principal('principal'))
+								{
+									echo "<div class='col l10 m10 s12 offset-l1 offset-m1'>";
+									echo "<button class='waves-effect waves-light btn col l12 m12 s12' id='view-ratings' type='submit' onclick='return viewAllScores();'>Evaluation Scores</button>";
+									echo "</div>";
+								}
+							?>
 						</div>
 						<div class="row">
 							<table class="striped" id='ratings-table'>
+<!--
 								<thead>
+									<tr>
+										<th>Final Ratings</th>
+									</tr>
 									<tr>
 										<th>Teacher</th>
 										<th>Rating</th>
 									</tr>
 								</thead>
+-->
 							</table>
 						</div>
 						<div class="row">

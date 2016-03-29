@@ -49,8 +49,6 @@ class Users_and_sections
 	{
 		$gradelevel =strtolower(urldecode($gradelevel));
 		$section = strtolower(urldecode($section));
-		//~ $gradelevel = strtolower(mysqli_real_escape_string($con, $_POST['gradelevel']));
-		//~ $section = strtolower(mysqli_real_escape_string($con, $_POST['section']));
 		
 		$sql = "SELECT subjects.subject, users.uname 
 				FROM subjects

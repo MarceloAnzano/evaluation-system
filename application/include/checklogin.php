@@ -51,11 +51,20 @@ class Check_login
 			return true;
 	}
 	
-	function is_user_principal()
+	function is_user_principal($type = 'both')
 	{
-		if (preg_replace('#[^a-z]#', '', $_SESSION['supervisor']) == 'principal' 
-			OR preg_replace('#[^a-z]#', '', $_SESSION['supervisor']) == 'api')
-			return true;
+		if ($type == 'both')
+		{
+			if (preg_replace('#[^a-z]#', '', $_SESSION['supervisor']) == 'principal' 
+				OR preg_replace('#[^a-z]#', '', $_SESSION['supervisor']) == 'api')
+				return true;
+		}
+		elseif ($type == 'principal')
+		{
+			if (preg_replace('#[^a-z]#', '', $_SESSION['supervisor']) == 'principal')
+				return true;
+		}
+		else return false;
 	}
 }
 /* End of File */

@@ -1,14 +1,4 @@
-<?php
-include BASEPATH.'views/templates/header.php';
-?>
-
 <body>
-<?php 
-/**
- * ERASE MO TONG COMMENT PAGKATAPOS
- * Evaluation Control Panel
- * **/
-?>
 <main>
 	<div class="container-admin">
 		<div class="nav-wrapper subNav">
@@ -634,9 +624,4 @@ include BASEPATH.'views/templates/header.php';
 		</div>
 	</div>	
 </main>
-<?php
-include BASEPATH.'views/templates/footer.php';
-?>
 </body>
-<?php if ($this->logged_as_admin() OR $this->logged_as_principal()) echo "<script type='text/javascript' src='".htmlspecialchars(STATICPATH."js/admin.js")."'></script>";?>
-<?php if ($this->logged_as_admin()) echo "<script type='text/javascript' src='".htmlspecialchars(STATICPATH."js/evaluation.js")."'></script>";?>

@@ -8,6 +8,8 @@ class Create_evaluation
 	
 	function message_to_admin()
 	{
+		foreach ($this->messages as $message)
+			$message = $message.'<br>';
 		return $this->messages;
 	}
 	
@@ -23,35 +25,45 @@ class Create_evaluation
 	function check_for_duplicates($con)
 	{
 		$statement = NULL;
+		$year = $this->setting[0];
 		$semester = $this->setting[1];
 		$sql = "SELECT *
 				FROM results
-				WHERE semester='$semester'";
+				WHERE semester='$semester' LIMIT 1";
 		
 		$query = mysqli_query($con, $sql);
 		$numrows = mysqli_num_rows($query);
 		
 		if ($numrows > 0) exit ('You have already created evaluations for this semester!');
+		
+		// check archives if existing
+		$sql = "SELECT *
+				FROM results_archive
+				WHERE year='$year' AND semester='$semester' LIMIT 1";
+		
+		$query = mysqli_query($con, $sql);
+		$numrows = mysqli_num_rows($query);
+		
+		if ($numrows > 0) exit ('This evaluation has already been archived!');
 	}
 	
 	// main creation method
 	function create_evaluation_entries($con, $evtype = NULL)
 	{
 		$this->get_year_and_sem($con);
-		$this->check_for_duplicates($con, $evtype);
+		$this->check_for_duplicates($con);
 		$this->create_self_evaluation($con);
 		$this->create_principal_evaluation($con);
 		$this->create_supervisor_to_staff($con);
-		$this->create_student_teacher($con);
+		$this->create_student_to_teacher($con);
 		$this->create_ratings_container($con);
 	}
 	
 	// main method for creating student evaluation of faculty
-	function create_student_teacher($con)
+	function create_student_to_teacher($con)
 	{
 		// select all students
 		$this->get_year_and_sem($con);
-		//~ $this->check_for_duplicates($con, 'student');
 		$sql = "SELECT hashid, gradelevel, section
 				FROM users
 				WHERE utype='student' AND supervisor NOT IN ('principal','api') AND is_deleted=0 ";

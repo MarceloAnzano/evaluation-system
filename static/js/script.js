@@ -112,24 +112,52 @@
 	
 	function updateRatings()
 	{
-		var link = "/app/calculate_ratings";
-		
-		$.get(link,{},function(){});
-		location.reload();
-		//~ displayRatings();
-	}
-	
-	displayRatings();
-	function displayRatings()
-	{
 		if ( !! document.getElementById('ratings-table'))
 		{
-			var link = "/app/display_ratings";
+
+			var link = "/app/calculate_ratings";
+			
+			$.get(link,{},function(){});
+			displayRatings();
+		}
+	}
+	
+	function displayRatings()
+	{
+		
+		if ( !! document.getElementById('ratings-table'))
+		{
+			$('#ratings-table').find('thead').remove();
+			$('#ratings-table').find('tbody').remove();
+			
+			var year = $("select[name=viewRatingYear]").val();
+			var semester = $("select[name=viewRatingSemester]").val();
+			var link = "/app/display_ratings/" + year + "/" + semester ;
 			
 			$.get(link,{},function(response){
-				response.results.forEach(function(teacher){
-					$("#ratings-table").append("<tr><td>" + teacher.name + "</td><td>" + teacher.rating+ "</td></tr>");
-				});			
+				if (response.status == 'OK')
+				{
+					$("#ratings-table")
+						.append(
+							"<thead>\
+								<tr>\
+									<th>Final Ratings</th>\
+								</tr>\
+								<tr>\
+									<th>Teacher</th>\
+									<th>Rating</th>\
+								</tr>\
+							</thead>"
+						);
+					if (response.results != null)
+					{
+						response.results.forEach(function(teacher){
+							$("#ratings-table").append("<tr><td>" + teacher.name + "</td><td>" + teacher.rating+ "</td></tr>");
+						});
+					}
+					else $("#ratings-table").append("Data Not Available");
+				}
+				else $("#ratings-table").append("Data Not Available");
 			});
 		}
 	}

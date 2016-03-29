@@ -346,7 +346,6 @@
 						}
 					});		
 					var link = "/admin/get_subjects" + dataString;
-					//~ fillSubjectField(link);
 								
 					
 				}
@@ -354,21 +353,41 @@
 		}
 	});
 	
-	//~ var someKindOfContainer;
-	//~ function fillSubjectField(link)
-	//~ {
-		//~ var count = 0;
-		//~ 
-		//~ $.get(link,{},function(response){
-			//~ console.log(response);
-			//~ 
-			//~ someKindOfContainer = response;
-		//~ });
-		//~ console.log(someKindOfContainer);
-		//~ console.log(sectionContainer);
-		//~ $('#createSectionForm input[name^='+ 'createSubjects').each(function(){
-			//~ console.log('come on');
-			//~ $(this).val(response.subjects.subj[count]);
-			//~ count++;
-		//~ });
-	//~ }
+	function viewAllScores()
+	{
+		if ( !! document.getElementById('ratings-table'))
+		{
+			$('#ratings-table').find('thead').remove();
+			$('#ratings-table').find('tbody').remove();
+			var link = "/app/display_quest_scores";
+			
+			$.get(link,{},function(response){
+				if (response.status == 'OK')
+				{
+					$("#ratings-table")
+						.append(
+							"<thead>\
+								<tr>\
+									<th>Questionnaire Scores</th>\
+								</tr>\
+								<tr>\
+									<th>Evaluator</th>\
+									<th>Faculty Evaluated</th>\
+									<th>TC Score</th>\
+									<th>EA Score</th>\
+									<th>AP Score</th>\
+									<th>Student Score</th>\
+									<th>Evaluation Type</th>\
+								</tr>\
+							</thead>"
+						);
+						
+					response.scores.forEach(function(item){
+						$("#ratings-table").append("<tr><td>" + item.evaluator + "</td><td>" + item.evaluated + "</td><td>" 
+							+ item.tc + "</td><td>" + item.ea + "</td><td>" + item.ap + "</td><td>" + item.stud + "</td><td>" + item.type + "</td></tr>");
+					});	
+				}
+			});
+		}
+		
+	}

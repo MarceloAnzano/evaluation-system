@@ -30,8 +30,24 @@ class Calculate
 	var $inst_faculty = 0;
 	var $inst_student = 0;
 	
-	function display_subordinate_ratings($con, $id, $position)
+	// i know these queries can be condensed into one query...
+	function display_subordinate_ratings($con, $id, $position, $year, $semester)
 	{
+		// get target user's id
+		$year = mysqli_real_escape_string($con, $year);
+		$semester = mysqli_real_escape_string($con, $semester);
+		
+		$sql = "SELECT DISTINCT year, semester 
+				FROM final_ratings 
+				WHERE year='$year' AND semester='$semester' LIMIT 2";
+		$query = mysqli_query($con, $sql);
+		$numrows = mysqli_num_rows($query);
+		if ($numrows > 0)
+		{
+			$table = 'final_ratings';
+		}
+		else $table ='final_ratings_archive';
+		
 		switch ($position)
 		{
 			case 'satl':
@@ -43,9 +59,9 @@ class Calculate
 				$row = mysqli_fetch_array($query);
 		
 				$sql = "SELECT users.uname, rating
-						FROM final_ratings
-						LEFT JOIN users ON final_ratings.teacherId=users.hashid
-						WHERE users.subject='".$row[0]."'";
+						FROM ".$table."
+						LEFT JOIN users ON ".$table.".teacherId=users.hashid
+						WHERE users.subject='".$row[0]."' AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'll':
@@ -57,9 +73,9 @@ class Calculate
 				$row = mysqli_fetch_array($query);
 		
 				$sql = "SELECT users.uname, rating
-						FROM final_ratings
-						LEFT JOIN users ON final_ratings.teacherId=users.hashid
-						WHERE users.level='".$row[0]."'";
+						FROM ".$table."
+						LEFT JOIN users ON ".$table.".teacherId=users.hashid
+						WHERE users.level='".$row[0]."' AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'cc':
@@ -71,16 +87,17 @@ class Calculate
 				$row = mysqli_fetch_array($query);
 		
 				$sql = "SELECT users.uname, rating
-						FROM final_ratings
-						LEFT JOIN users ON final_ratings.teacherId=users.hashid
-						WHERE users.cluster='".$row[0]."'";
+						FROM ".$table."
+						LEFT JOIN users ON ".$table.".teacherId=users.hashid
+						WHERE users.cluster='".$row[0]."' AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'api':
 			case 'principal':
 				$sql = "SELECT users.uname, rating
-						FROM final_ratings
-						LEFT JOIN users ON final_ratings.teacherId=users.hashid";
+						FROM ".$table."
+						LEFT JOIN users ON ".$table.".teacherId=users.hashid
+						WHERE year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			default:
@@ -90,6 +107,7 @@ class Calculate
 	
 	private function prepare_data_for_json($query)
 	{
+		$results = array();
 		while ($row = mysqli_fetch_array($query))
 		{	
 			$results[] = array(
@@ -166,18 +184,17 @@ class Calculate
 						+ ($principal[1][2] * $this->ap_principal_per) + ($self[2] * $this->ap_self_per);
 					
 					$rating = ($tc * $this->tc_percentage) + ($ea * $this->ea_percentage) + ($ap * $this->ap_percentage);
-					var_dump($tc);
-					var_dump($ea);
-					var_dump($ap);
-					var_dump($this->ap_ll_per);
-					var_dump($rating);
+					
+					
 					if (count($students) > 0)
 					{
 						$partial = 0;
-						foreach ($students as &$student)
+						foreach ($students as $student)
 						{
-							$partial += $student[0];
+							$partial += $student;
+							
 						}
+						
 						$partial = $partial / count($students);
 						$rating = ($rating * $this->inst_faculty) + ($partial * $this->inst_student);
 					}
