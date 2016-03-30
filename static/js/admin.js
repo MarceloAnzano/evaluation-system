@@ -177,20 +177,34 @@
 				
 				response.results.forEach(function(user)
 				{
+					// if (response.type === 'student')
+					// {
+					// 	$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+					// 	<td>" + user.gradelevel + "</td><td>" + user.section + "</td><td><a class='delete-user' href='/admin/delete_user/" + user.id + "'\
+					// 	onclick='return deleteUser(this.href);'>Delete User</a></td>/tr>");
+					// }
+					// else if (response.type === 'faculty')
+					// {	
+					// 	$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+					// 	<td>" + user.subject + "</td><td>" + user.level + "</td><td>" + user.cluster + "</td><td>"
+					// 	 + user.supervisor + "</td><td><a class='delete-user' href='/admin/delete_user/" + user.id + "' onclick='return deleteUser(this.href);'>Delete User</a></td>/tr>");
+					// }
+					// else $('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td><td><a class='delete-user' href='/admin/delete_user/" 
+					// 	+ user.id + "' onclick='return deleteUser(this.href, this);'>Delete User</a></td>/tr>");
 					if (response.type === 'student')
 					{
 						$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
-						<td>" + user.gradelevel + "</td><td>" + user.section + "</td><td><a href='/admin/delete_user/" + user.id + "'\
-						onclick='return deleteUser(this.href);'>Delete User</a></td>/tr>");
+						<td>" + user.gradelevel + "</td><td>" + user.section + "</td><td><a class='delete-user1' href='/admin/delete_user/" + user.id + "'\
+						>Delete User</a></td>/tr>");
 					}
 					else if (response.type === 'faculty')
 					{	
 						$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
 						<td>" + user.subject + "</td><td>" + user.level + "</td><td>" + user.cluster + "</td><td>"
-						 + user.supervisor + "</td><td><a href='/admin/delete_user/" + user.id + "' onclick='return deleteUser(this.href);'>Delete User</a></td>/tr>");
+						 + user.supervisor + "</td><td><a class='delete-user1' href='/admin/delete_user/" + user.id + "'>Delete User</a></td>/tr>");
 					}
-					else $('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td><td><a href='/admin/delete_user/" 
-						+ user.id + "' onclick='return deleteUser(this.href, this);'>Delete User</a></td>/tr>");
+					else $('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td><td><a class='delete-user2' href='/admin/delete_user/" 
+						+ user.id + "'>Delete User</a></td>/tr>");
 				});
 				if(response.results.length == 0){
 			    	$('#linkSpace>tbody').append('<tr><td>None</td></tr>');
@@ -209,7 +223,7 @@
 			ev.removeAttribute('href');
 			ev.removeAttribute('onclick');
 		});
-		$('#modal1').openModal();
+		$('#modal-delete-success').openModal();
 		searchUser();
 		return false;
 	}

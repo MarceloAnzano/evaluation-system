@@ -1,5 +1,5 @@
 $(window).on('scroll', function(){
-	console.log(window.pageYOffset);
+//	console.log(window.pageYOffset);
 // 	if(window.pageYOffset < 100){
 // 		$('#sidebar').css('top',window.pageYOffset + 90 +"px")
 // 	}else{
@@ -21,8 +21,8 @@ $(document).ready(function(){
 	}
     $('select').material_select();
     $('nav').pushpin({ top: 88, offset: 0 });
-    $('.subNav').pushpin({ top: 130, offset: 40 });
-    $('#sidebar').pushpin({ top: 5, offset: -100 });
+    //$('.subNav').pushpin({ top: 130, offset: 40 });
+    $('#sidebar').pushpin({ top: 10, offset: -130 });
     $("#semestral-create select").change(function(event) {
     	console.log("hey");
     	$("#semestral-create #status").text("");
@@ -30,4 +30,39 @@ $(document).ready(function(){
     $('.modal-trigger').leanModal();
     $('.scrollspy').scrollSpy();
     // $("#maincontent input").attr('autocomplete','off');
+    // $('a.delete-user2').click(function(e) {
+    //     return deleteUser(this.href);
+    // });
+    $('.button-collapse').sideNav({
+      menuWidth: 240, // Default is 240
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    });
+    $("#linkSpace").bind("DOMSubtreeModified", function() {
+        attachDeleteUser();
+    });
+    $('.error-message').bind("DOMSubtreeModified", function() {
+        $status = $(this).html();
+        if($status.length > 1){
+            $('#modal-error-message h5').html($status);
+            $('#modal-error-message').openModal();
+            $(this).html("");
+        }
+    });
 });
+function attachDeleteUser(){
+    $('a.delete-user2').click(function(e) {
+        e.stopImmediatePropagation();
+        $href = $(this).attr("href");
+        $('.delete-ok2').attr("href",$href);
+        $('#modal-delete-confirm2').openModal();
+        return false;
+    });
+    $('a.delete-user1').click(function(e) {
+        e.stopImmediatePropagation();
+        $href = $(this).attr("href");
+        $('.delete-ok1').attr("href",$href);
+        $('#modal-delete-confirm1').openModal();
+        return false;
+    });
+}

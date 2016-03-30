@@ -28,7 +28,7 @@
 				<center class="row">
 					<button class="btn waves-effect waves-light right"  id="loginbtn" type="submit">SET</button>
 				</center>
-				<center id="status">
+				<center class="error-message-bottom" id="status">
 				</center>
 			</center>
 		</form>

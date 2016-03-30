@@ -102,7 +102,7 @@ class Create_evaluation
 			
 			$query = mysqli_query($con, $sql);
 		}
-		$this->messages[] = 'Student to teacher evaluations have been created.';
+		$this->messages[] = 'Student to teacher evaluations have been created.<br>';
 	}
 	
 	private function create_self_evaluation($con)
@@ -131,7 +131,7 @@ class Create_evaluation
 			$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$row[0]."','".$row[0]."','self')";
 		}
 		$query = mysqli_query($con, $sql);
-		$this->messages[] = 'Self evaluations have been created.';
+		$this->messages[] = 'Self evaluations have been created.<br>';
 	}
 	
 	private function create_principal_evaluation($con)
@@ -173,7 +173,7 @@ class Create_evaluation
 		}
 		
 		$query = mysqli_query($con, $sql);
-		$this->messages[] = 'API and Principal evaluations have been created.';
+		$this->messages[] = 'API and Principal evaluations have been created.<br>';
 	}
 	
 	private function create_supervisor_to_staff($con)
@@ -226,7 +226,7 @@ class Create_evaluation
 			}
 			$query = mysqli_query($con, $sql);
 		}
-		$this->messages[] = 'Subject area evaluations have been created.';
+		$this->messages[] = 'Subject area evaluations have been created.<br>';
 	}
 	
 	private function cluster($con)
@@ -272,7 +272,7 @@ class Create_evaluation
 			}
 			$query = mysqli_query($con, $sql);
 		}
-		$this->messages[] = 'Cluster evaluations have been created.';
+		$this->messages[] = 'Cluster evaluations have been created.<br>';
 	}
 	
 	private function level($con)
@@ -318,7 +318,7 @@ class Create_evaluation
 			}
 			$query = mysqli_query($con, $sql);
 		}
-		$this->messages[] = 'Level evaluations have been created.';
+		$this->messages[] = 'Level evaluations have been created.<br>';
 	}
 	
 	private function create_ratings_container($con)
@@ -349,7 +349,7 @@ class Create_evaluation
 			$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$row[0]."')";
 		}
 		$query = mysqli_query($con, $sql);
-		$this->messages[] = 'Rating containers have been created.';
+		$this->messages[] = 'Rating containers have been created.<br>';
 	}
 	
 	private function check_for_ratings_duplicates($con, $year, $semester)
