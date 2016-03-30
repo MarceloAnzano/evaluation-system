@@ -14,7 +14,7 @@ li {list-style-type: none;}
 	margin-top: 20px;
 	margin-bottom: 40px;
 }
-.eval-division> .col.l12.m12.s12 > h3{
+.eval-division> .col.l12.m12.s12 > h3, th > h4{
 	color: #EA4A4F;
 }
 .eval-division> .col.l12.m12.s12  h5{
@@ -316,7 +316,7 @@ button.btn, i.btn1{
 	transition: all .2s ease-out;
 }
 
-.loading{
+/*.loading{
 	display: block;
 	position: fixed;
 	z-index: 1000;
@@ -332,7 +332,7 @@ button.btn, i.btn1{
 .spinner-layer{
 	color:#161616 !important;
 }
-
+*/
 .back{
 	font-size: 2rem;
 }
@@ -343,9 +343,9 @@ button.btn, i.btn1{
 	padding-left: 0px !important;
 }
 
-table tr{
+/*table tr{
 	height: 10px !important;
-}
+}*/
 table{
 	margin-bottom: 1.75rem;
 }
@@ -357,8 +357,12 @@ td {
 	padding-top: 0px !important;
 	padding-bottom: 0px !important;
 	font-size: 1.2rem;
+	vertical-align:bottom;
 }
-thead th{
+td::first-letter {
+	text-transform: capitalize;
+}
+#evalform thead th{
 	font-size: 1.22rem;
 	font-weight: bold !important;
 	padding-top:2.75rem;

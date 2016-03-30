@@ -15,13 +15,15 @@
 	<div class="container-div">
 		<center class="card" style="width:400px">
 			<center class="card-content">
-				<center class="card-title loginTitle">PAST SCORE</center>
+				<center class="card-title"><h4>PAST SCORE</h4></center>
 				<center class="row">
 					<center class="input-field">
 						<?php
+						$skip = 0;
 						foreach ($scores['target'] as $score)
 						{
-							echo '<br>'.$score;
+							if($skip != 0) echo '<br>'.$score;
+							$skip++;
 						}
 						?>
 					</center>

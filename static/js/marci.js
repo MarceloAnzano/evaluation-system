@@ -24,7 +24,6 @@ $(document).ready(function(){
     //$('.subNav').pushpin({ top: 130, offset: 40 });
     $('#sidebar').pushpin({ top: 10, offset: -130 });
     $("#semestral-create select").change(function(event) {
-    	console.log("hey");
     	$("#semestral-create #status").text("");
     });
     $('.modal-trigger').leanModal();
@@ -48,6 +47,9 @@ $(document).ready(function(){
             $('#modal-error-message').openModal();
             $(this).html("");
         }
+    });
+    $('#submit-eval-yes').on('click', function(){
+        $('#evalform').submit();
     });
 });
 $(document).on('change','#createSectionSelect', function(){

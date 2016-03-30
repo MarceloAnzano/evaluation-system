@@ -8,10 +8,7 @@
 				<div class="card">
 					<div class="card-content" style="width: 90%; margin:auto; margin-top: 20px;">
 						<div class="row" style="margin-top:20px; margin-bottom: 20px;">
-							<div class="col l10 m10 s12 offset-l1 offset-m1">
-								<button class="waves-effect waves-light btn col l12 m12 s12" id='view-ratings' type='submit' onclick='return printReport();'>Print Report</button>
-							</div>
-							<div class="col l2 m2 s2>				
+							<div class="col l2 m2 s2">				
 								<select name='viewRatingYear'>
 									<?php for ($i = 15; $i < 25; $i++) echo "<option value='20".$i."20".($i+1)."'>20$i-20".($i+1)."</option>"; ?>
 								</select>
@@ -33,6 +30,11 @@
 									echo "</div>";
 								}
 							?>
+<!-- 							<div class="fixed-action-btn horizontal" style="top: 200px; right: 24px;">
+								<button class="btn-floating btn-large red waves-effect waves-light" id='view-ratings' type='submit' onclick='return printReport();'>
+									<i class="large material-icons">print</i>
+								</button>
+							</div> -->
 						</div>
 						<div class="row">
 							<table class="striped" id='ratings-table'>
