@@ -14,8 +14,11 @@ li {list-style-type: none;}
 	margin-top: 20px;
 	margin-bottom: 40px;
 }
-.eval-division> .col.l12.m12.s12 > h4{
+.eval-division> .col.l12.m12.s12 > h3{
 	color: #EA4A4F;
+}
+.eval-division> .col.l12.m12.s12  h5{
+	-webkit-font-smoothing: antialiased;
 }
 .eval-division>.col.l12.m12.s12>.row{
 	border-left: 3px solid #009688;
@@ -25,16 +28,24 @@ li {list-style-type: none;}
 	border-left: 8px solid blue;
 	padding-left:10px;
 }*/
-/*#maincontent{
-	flex: 1 0;
-	position: absolute;
-	height: 100%;
-}*/
+#maincontent{
+	background-color: #FCFCFC;
+	box-shadow: inset 2px 0px 5px 0 rgba(0,0,0,0.16), inset 2px 0px 10px 0 rgba(0,0,0,0.12);
+}
 #sidebar{
 	padding-top: 200px;
 	position: absolute;
+	/*transition: all 0.1s ease-in;*/
 }
-.error-message{
+#sidebar li{
+	font-size: 1.1rem;
+	transition: all 0.2s ease-in;
+}
+#sidebar .active{
+	font-size: 1.3rem;
+	transition: all 0.2s ease-out;
+}
+.error-message-bottom{
 	line-height: 100%;
 	color: red;
 	font-size: 1.2em;
@@ -97,12 +108,25 @@ header{
 	height: 90%;
 	margin-top: 0.5em;
 }
+.navImgSmall{
+	position: absolute;
+	overflow: hidden;
+	width: 100%;
+	bottom: 50px;
+}
+.navImgSmall > img{
+	width: 90%;
+	margin: auto;
+}
 label.active{
 	padding-bottom: 5px;
 }
 #headImageHolder{
 	height: 90px;
 }
+/*#headImageHolder.hide-on-med-and-up{
+	height: 60px;
+}*/
 #navHolder{
 	position: static;
 	-webkit-box-sizing: border-box;
@@ -111,6 +135,15 @@ label.active{
 	height: 50px;
 	background-color: #161616 !important;
 	line-height: 50px;
+}
+#navHolder li{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+#navHolder i{
+	font-size: 2.1rem;
+	line-height: 150%;
+	padding-right: 0.7rem;
 }
 /*nav{
 	/*height: 60px !important;
@@ -407,3 +440,7 @@ td{
 	padding-right: 10px;
 	padding-left: 10px;
 }
+/*.modal-content{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}*/

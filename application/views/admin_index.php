@@ -5,7 +5,7 @@
 			<span class="brand-logo" style="text-transform: none !important;">Evaluation Control Panel</span>
 		</div>
 		<div class="row">
-			<div class="col l2 m5 hide-on-small-only " id="sidebar">
+			<div class="right col l2 m3 hide-on-small-only " id="sidebar">
 				<ul class="section table-of-contents">
 					<li><a href="#create-eval">Create Evaluation</a></li>
 					<li><a href="#activate-eval">Evalution Control Panel</a></li>
@@ -17,10 +17,10 @@
 					<li><a href="#upload-photo">Upload Photo</a></li>
 				</ul>
 			</div>
-			<div class="col l10 m7 s7 offset-l2 offset-m5 offset-s5" id="maincontent">
+			<div class="col l10 m9 s12 offset-l2 offset-m3" id="maincontent">
 				<div class="row eval-division section scrollspy" id="create-eval">
 					<div class="col l12 m12 s12">
-						<h4>Create Evaluation</h4>
+						<h3>Create Evaluation</h3>
 							<div class="row">
 								<div class="col l12 m12 s12">
 								<form id='semestral-create' onsubmit='return createEvaluations();'>							
@@ -87,7 +87,7 @@
 				</div>
 				<div class="row eval-division section scrollspy" id="activate-eval">
 					<div class="col l12 m12 s12">
-						<h4>Evaluation Control Panel</h4>
+						<h3>Evaluation Control Panel</h3>
 						<div class="row">
 							<div class="col l5">
 								<h5 id='faculty-1st-status'>Information not available</h5>
@@ -128,14 +128,22 @@
 								<h5>Archive All Results</h5>
 							</div>
 							<div class="col">
-								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return archiveEvaluation();";?>'>Archive</button>
+								<button id='' data-target="modal-archive-success" class="modal-trigger waves-effect waves-light btn" type='button' onclick='<?php echo "return archiveEvaluation();";?>'>Archive</button>
+							</div>
+							<div id="modal-archive-success" class="modal col l4 m4 s8 offset-l2 offset-m2">
+								<center class="modal-content">
+									<h5>Evaluation Archived</h5>
+								</center>
+								<div class="modal-footer">
+									<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row eval-division section scrollspy" id="create-user">
 					<div class="col l12 m12 s12">
-						<h4>Create a User Account</h4>
+						<h3>Create a User Account</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='createUserForm' onsubmit="return saveUser();">
@@ -234,7 +242,7 @@
 				?>				
 				<div class="row eval-division section scrollspy" id="create-sections">
 					<div class="col l12 m12 s12">
-						<h4>Create and Update Section Subjects</h4>
+						<h3>Create and Update Section Subjects</h3>
 						<!--
 						<form id='createSectionForm' action='/admin/save_section' method='post'>
 						-->
@@ -293,7 +301,7 @@
 									</div>
 									
 									<div class="row">
-										<div class="col">
+										<div class="col" style="padding-top: 10px;">
 											<button class="waves-effect waves-light btn" name='submit' type='submit'>Submit Section</button>
 										</div>
 									</div>
@@ -315,7 +323,7 @@
 				?>
 				<div class="row eval-division section scrollspy" id="search-users">
 					<div class="col l12 m12 s12">
-						<h4>SEARCH USERS</h4>
+						<h3>SEARCH USERS</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='searchUserForm' onsubmit="return searchUser();">
@@ -332,11 +340,11 @@
 												<div class="col l12 m12 s12">
 													<div class="row">
 														<input type='radio' id='searchUsername' name='searchtype' value='username' checked>
-														<label for='searchUsername'>Name</label>
+														<label for='searchUsername'>Name (Fullname)</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchSection' name='searchtype' value='section'>
-														<label for='searchSection'>Section Number</label>
+														<label for='searchSection'>Section name</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchSat' name='searchtype' value='sat'>
@@ -344,11 +352,11 @@
 													</div>
 													<div class="row">
 														<input type='radio' id='searchLevel' name='searchtype' value='level'>
-														<label for='searchLevel'>Teaching level</label>
+														<label for='searchLevel'>Teaching level (High School, Intermediate, Primary)</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchCluster' name='searchtype' value='cluster'>
-														<label for='searchCluster'>Cluster Number</label>
+														<label for='searchCluster'>Cluster number</label>
 													</div>
 												</div>
 											</div>
@@ -392,15 +400,6 @@
 										</table>
 									</div>
 								</div>
-								<!-- <button class="modal-trigger" href="#modal1">Hey</button> -->
-								<div id="modal1" class="modal col l3 m3 s8 offset-l2 offset-m">
-									<center class="model-content">
-										<h5>Delete Success</h5>
-									</center>
-									<div class="modal-footer">
-										<a href="#search-result" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -413,7 +412,7 @@
 				?>
 				<div class="row eval-division section scrollspy" id="percentage-settings">
 					<div class="col l12 m12 s12">
-						<h4>PERCENTAGE SETTINGS</h4>
+						<h3>PERCENTAGE SETTINGS</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='percentageTable' onsubmit='return editPercentages();'>
@@ -545,7 +544,7 @@
 				?>
 				<div class="row eval-division section scrollspy" id="manage-questionnaire">
 					<div class="col l12 m12 s12">
-						<h4>QUESTIONNAIRE</h4>
+						<h3>QUESTIONNAIRE</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='questionnaireForm' enctype="multipart/form-data" action="/admin/process_csv" method="POST">
@@ -588,7 +587,7 @@
 				?>
 				<div class="row eval-division section scrollspy" id="upload-photo">
 					<div class="col l12 m12 s12">
-						<h4>UPLOAD FACULTY PHOTO</h4>
+						<h3>UPLOAD FACULTY PHOTO</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='facultyPhotoForm' enctype="multipart/form-data" action="/admin/upload_photo" method="POST">
@@ -619,7 +618,42 @@
 						</div>
 					</div>
 				</div>
-				<div class="row eval-division" style="height: 100px;"></div>
+				<div class="row eval-division" style="height: 100px;">
+					<div id="modal-error-message" class="modal">
+						<center class="modal-content">
+							<h5></h5>
+						</center>
+						<div class="modal-footer">
+							<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+						</div>
+					</div>
+					<div id="modal-delete-success" class="modal">
+						<center class="modal-content">
+							<h5>Delete Success</h5>
+						</center>
+						<div class="modal-footer">
+							<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+						</div>
+					</div>
+					<div id="modal-delete-confirm1" class="modal">
+						<center class="modal-content">
+							<h5>Delete User?</h5>
+						</center>
+						<div class="modal-footer">
+							<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+							<a href="" onclick="return deleteUser(this.href);" class="delete-ok1 modal-action modal-close waves-effect waves-green btn-flat">YES</a>
+						</div>
+					</div>
+					<div id="modal-delete-confirm2" class="modal">
+						<center class="modal-content">
+							<h5>Delete User?</h5>
+						</center>
+						<div class="modal-footer">
+							<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+							<a href="" onclick="return deleteUser(this.href, this);" class="delete-ok2 modal-action modal-close waves-effect waves-green btn-flat">YES</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>	
