@@ -8,7 +8,7 @@ class Admin extends Common
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
 		{
-			$this->this_view('views/admin_index.php');
+			$this->this_view('views/admin_index.php', $this->get_percentages());
 		}
 		else exit('Access Denied');
 	}
@@ -266,6 +266,18 @@ class Admin extends Common
 			$percent->configure_rating_percentages($this->link);
 		}
 		else exit('Not authorized!');
-	}	
+	}
+	
+	function get_percentages()
+	{
+		if ($this->logged_as_admin() OR $this->logged_as_principal())
+		{
+			include BASEPATH.'process/configuration.php';
+			$percent = new Configuration_admin();
+			$data = $percent->get_percentages($this->link);
+			return $data;
+		}
+		else exit('Not authorized!');
+	}
 }
 /* End of File */

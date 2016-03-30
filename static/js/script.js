@@ -145,6 +145,10 @@
 								</tr>\
 								<tr>\
 									<th>Teacher</th>\
+									<th>TC Score</th>\
+									<th>EA Score</th>\
+									<th>AP Score</th>\
+									<th>Student Score</th>\
 									<th>Rating</th>\
 								</tr>\
 							</thead>"
@@ -152,7 +156,9 @@
 					if (response.results != null)
 					{
 						response.results.forEach(function(teacher){
-							$("#ratings-table").append("<tr><td>" + teacher.name + "</td><td>" + teacher.rating+ "</td></tr>");
+							$("#ratings-table").append("<tr><td>" + teacher.name + "</td><td>" 
+							+ teacher.tc+ "</td><td>" + teacher.ea+ "</td><td>" + teacher.ap+ "</td><td>" 
+							+ teacher.student+ "</td><td>" + teacher.rating+ "</td></tr>");
 						});
 					}
 					else $("#ratings-table").append("Data Not Available");
@@ -160,4 +166,15 @@
 				else $("#ratings-table").append("Data Not Available");
 			});
 		}
+	}
+	
+	function printReport()
+	{
+		var year = $("select[name=viewRatingYear]").val();
+		var semester = $("select[name=viewRatingSemester]").val();
+		var link = "/app/print_ratings_report/" + year + "/" + semester ;
+		
+		$.get(link,{},function(response){
+			
+		});
 	}

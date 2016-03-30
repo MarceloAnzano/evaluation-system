@@ -11,6 +11,10 @@
 							<div class="col l10 m10 s12 offset-l1 offset-m1">
 								<button class="waves-effect waves-light btn col l12 m12 s12" id='view-ratings' type='submit' onclick='return updateRatings();'>View Final Ratings</button>
 							</div>
+							<br>
+							<div class="col l10 m10 s12 offset-l1 offset-m1">
+								<button class="waves-effect waves-light btn col l12 m12 s12" id='view-ratings' type='submit' onclick='return printReport();'>Print Report</button>
+							</div>
 							<div class="col l2 m2 s3">				
 								<select name='viewRatingYear'>
 									<?php for ($i = 15; $i < 25; $i++) echo "<option value='20".$i."20".($i+1)."'>20$i-20".($i+1)."</option>"; ?>

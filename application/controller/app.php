@@ -270,6 +270,16 @@ class App extends Common
 		return $details->get_user_info($this->link, $id);
 	}
 	
+	function print_ratings_report($year, $semester)
+	{
+		if ( ! $this->logged_as_principal()) exit ('Access Denied!');
+		
+		include BASEPATH.'process/calculate.php';
+		$calculate = new Calculate();
+		$data = $calculate->display_subordinate_ratings($this->link, $this->get_session_info('userid'), $this->get_session_info('supervisor'), $year, $semester);
+		var_dump($data);
+	}
+	
 	// logout user
 	function logout()
 	{
@@ -278,7 +288,7 @@ class App extends Common
 			include BASEPATH.'process/logout.php';
 		}
 		else exit ('Error 404');
-	}	
+	}
 }
 	
 

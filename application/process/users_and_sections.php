@@ -28,13 +28,39 @@ class Users_and_sections
 		$sql = "SELECT DISTINCT gradelevel, section
 				FROM subjects";
 		$query = mysqli_query($con, $sql);
+		
 		$results = array();
-		while ($row = mysqli_fetch_array($query))
+		$temp = array();
+		
+		while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC))
 		{
+			$temp[] = $row;
+		}
+
+		foreach ($temp as $item)
+		{
+			$sql = "SELECT subjects.subject, users.uname, users.hashid
+					FROM subjects
+					JOIN users ON subjects.teacherId=users.hashid
+					WHERE subjects.gradelevel = '".$item['gradelevel']."' AND subjects.section = '".$item['section']."'";
+			
+			$query = mysqli_query($con, $sql);
+			$subjects = array();
+			
+			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC))
+			{
+				array_push($subjects, array(
+					'subj' => ucwords($row['subject']),
+					//~ 'name' => ucwords($row['uname']),
+					'id' => ucwords($row['hashid']),
+				));
+			}
+			
 			array_push($results, array(
-				'concatenated' => ucwords($row[0].' '.$row[1]),
-				'gradelevel' => ucwords($row[0]),
-				'section' => ucwords($row[1])
+				'concatenated' => ucwords($item['gradelevel'].' '.$item['section']),
+				'gradelevel' => ucwords($item['gradelevel']),
+				'section' => ucwords($item['section']),
+				'subjects' => $subjects
 			));
 		}
 		
@@ -43,34 +69,6 @@ class Users_and_sections
 		);
 		
 		return $data;
-	}
-	
-	function get_subject_method($con, $gradelevel, $section)
-	{
-		$gradelevel =strtolower(urldecode($gradelevel));
-		$section = strtolower(urldecode($section));
-		
-		$sql = "SELECT subjects.subject, users.uname 
-				FROM subjects
-				JOIN users ON subjects.teacherId=users.hashid
-				WHERE subjects.gradelevel = '$gradelevel' AND subjects.section = '$section'";
-		$query = mysqli_query($con, $sql);
-		
-		$results = array();
-		while ($row = mysqli_fetch_array($query))
-		{
-			array_push($results, array(
-				'subj' => $row[0],
-				'name' => $row[1]
-			));
-		}
-		
-		$data = array(
-			'subjects' => $results
-		);
-		
-		return $data;
-		
 	}
 	
 	function get_user_info($con, $id)

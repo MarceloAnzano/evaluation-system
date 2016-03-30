@@ -2,26 +2,26 @@
 # GUIDE:
 - create a virtual host that leads to the location of index.php
 - go to application/include/connect.php then edit accordingly:
-	$mysql_db_hostname = "localhost";
-	$mysql_db_user = "root";
-	$mysql_db_password = "root";
-	$mysql_db_database = "myapp";
+	- $mysql_db_hostname = "localhost";
+	- $mysql_db_user = "root";
+	- $mysql_db_password = "root";
+	- $mysql_db_database = "myapp";
 - passwords for principal, justinflores1234, asstprincipalinst are '1234' without the quotes
 - list of logid. the following have 'default' as passwords
-	-teacher1
-	-teacher2
-	-student1
-	-student2
-	-hslevel
-	-prilevel
-	-cluster5
-	-cluster2
-	-sciencesatl
+	- teacher1
+	- teacher2
+	- student1
+	- student2
+	- hslevel
+	- prilevel
+	- cluster5
+	- cluster2
+	- sciencesatl
+	- if in doubt, gamitin ang admin search all users
 - to create the evaluation make sure there are:	
 	- proper users (login as justinflores1234 for admin privileges)
 	- proper sections (can be done as lorinarittenhouse, patriciaangel or justinflores1234)
 	- create evaluation (only justinflores1234 and the other app admin)
-- 
 
 NOTE FOR MARCI:
 - yung mga js, css at kung ano mang ilalagay mo sa front end nasa static folder (kalapit nina application at index.php)
@@ -51,4 +51,4 @@ NOTE FOR MARCI:
 - pag naguluhan dito makikita yan: application/process/evaluation_entries.php
 - sa archives naman dito: application/process/evaluation_archives.php
 
-Version 1.3.0
+Version 1.4.0

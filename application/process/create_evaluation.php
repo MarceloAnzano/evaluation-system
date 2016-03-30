@@ -47,11 +47,35 @@ class Create_evaluation
 		if ($numrows > 0) exit ('This evaluation has already been archived!');
 	}
 	
+	
+	function check_if_same_year($con)
+	{
+		$statement = NULL;
+		$year = $this->setting[0];
+		$sql = "SELECT id
+				FROM results
+				WHERE year='$year' LIMIT 1";
+		
+		$query = mysqli_query($con, $sql);
+		$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		
+		// if table has any entry
+		if(isset($row['id']))
+		{
+			$numrows = mysqli_num_rows($query);
+			
+			// if no match with the year
+			if ($numrows == 0) exit ('You may only create evaluations for the same year!');
+		}
+		
+	}
+	
 	// main creation method
 	function create_evaluation_entries($con, $evtype = NULL)
 	{
 		$this->get_year_and_sem($con);
 		$this->check_for_duplicates($con);
+		$this->check_if_same_year($con);
 		$this->create_self_evaluation($con);
 		$this->create_principal_evaluation($con);
 		$this->create_supervisor_to_staff($con);

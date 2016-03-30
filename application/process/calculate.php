@@ -58,7 +58,7 @@ class Calculate
 		
 				$row = mysqli_fetch_array($query);
 		
-				$sql = "SELECT users.uname, rating
+				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
 						WHERE users.subject='".$row[0]."' AND year='$year' AND semester='$semester'";
@@ -72,7 +72,7 @@ class Calculate
 		
 				$row = mysqli_fetch_array($query);
 		
-				$sql = "SELECT users.uname, rating
+				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
 						WHERE users.level='".$row[0]."' AND year='$year' AND semester='$semester'";
@@ -86,7 +86,7 @@ class Calculate
 		
 				$row = mysqli_fetch_array($query);
 		
-				$sql = "SELECT users.uname, rating
+				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
 						WHERE users.cluster='".$row[0]."' AND year='$year' AND semester='$semester'";
@@ -94,7 +94,7 @@ class Calculate
 				return $this->prepare_data_for_json($query);
 			case 'api':
 			case 'principal':
-				$sql = "SELECT users.uname, rating
+				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
 						WHERE year='$year' AND semester='$semester'";
@@ -112,7 +112,11 @@ class Calculate
 		{	
 			$results[] = array(
 				'name' => ucwords($row[0]),
-				'rating' => $row[1]
+				'rating' => $row[1],
+				'tc' => $row[2],
+				'ea' => $row[3],
+				'ap' => $row[4],
+				'student' => $row[5],
 			);
 			$rating = $row[1];
 			if ($row[1] == NULL)
@@ -167,6 +171,10 @@ class Calculate
 			//~ exit();
 			$identity = $this->who_is($con, $teacher[0]);
 			$rating = 0;
+			$tc = 0;
+			$ea = 0;
+			$ap = 0;
+			$partial = 0;
 			switch ($identity[0])
 			{
 				case 'api':
@@ -188,7 +196,6 @@ class Calculate
 					
 					if (count($students) > 0)
 					{
-						$partial = 0;
 						foreach ($students as $student)
 						{
 							$partial += $student;
@@ -202,17 +209,17 @@ class Calculate
 				default:
 					break;
 			}
-			$this->update_final_rating($con, $rating, $teacher[0], $teacher[1], $teacher[2]);
+			$this->update_final_rating($con, $rating, $tc, $ea, $ap, $partial, $teacher[0], $teacher[1], $teacher[2]);
 		}
 	}
 	
-	private function update_final_rating($con, $rating, $id, $year, $semester)
+	private function update_final_rating($con, $rating, $tc, $ea, $ap, $partial, $id, $year, $semester)
 	{
 		$sql = "UPDATE final_ratings
-				SET rating=?
+				SET rating=?, tc=?, ea=?, ap=?, student=?
 				WHERE teacherId=? AND year=? AND semester=?";
 		$stmt = mysqli_prepare($con, $sql);
-		mysqli_stmt_bind_param($stmt, 'dsdd', $rating, $id, $year, $semester);
+		mysqli_stmt_bind_param($stmt, 'dddddsdd', $rating, $tc, $ea, $ap, $partial, $id, $year, $semester);
 		mysqli_stmt_execute($stmt);
 	}
 	

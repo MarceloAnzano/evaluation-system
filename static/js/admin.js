@@ -111,7 +111,7 @@
 			$.get(link,{},function(response){
 				$('.load-select').material_select('destroy');
 				response.faculty.forEach(function(teacher){
-					$('#createSectionForm select[name^='+ 'createAssignTeachers').append($('<option>', { 
+					$('#createSectionForm select[name^=createAssignTeachers]').append($('<option>', { 
 						value: teacher.id,
 						text : teacher.name + ' - ' + teacher.subject 
 					}));
@@ -321,15 +321,20 @@
 				if (response.sections != null)
 				{
 					response.sections.forEach(function(section){
-						$('#createSectionForm select[name=createSectionSelect]').append($('<option>', { 
+						$('#createSectionSelect').append($('<option>', { 
+						//$('#createSectionForm select[name=createSectionSelect]').append($('<option>', { 
 							value: section.concatenated,
 							text : section.concatenated
 						}));
+						$('#createSectionSelect').material_select('destroy');
+						$("#createSectionSelect").material_select();
 					});
 					sectionContainer = response;
 				}
 			});
 		}
+		
+
 	}
 	
 	var sectionContainer;
@@ -345,6 +350,9 @@
 					$('#createSectionForm input[name=createSectionSection]').val("");
 					$('#createSectionForm input[name=createSectionGradelevel]').removeAttr('disabled');
 					$('#createSectionForm input[name=createSectionSection]').removeAttr('disabled');
+					$('#createSectionForm input[name^=createSubjects]').each(function(){
+						$(this).val("");
+					});
 				}
 				else
 				{
@@ -356,10 +364,30 @@
 							$('#createSectionForm input[name=createSectionSection]').val(section.section);
 							$('#createSectionForm input[name=createSectionGradelevel]').attr('disabled', 'disabled');
 							$('#createSectionForm input[name=createSectionSection]').attr('disabled','disabled');
-							dataString = '/'+ section.gradelevel + "/" + section.section;
+							
+							var count = 0;
+							var limit = Object.keys(section.subjects).length;
+							$('#createSectionForm input[name^=createSubjects]').each(function(){
+								if (count < limit)
+								{
+									$(this).val(section.subjects[count].subj);
+									count++;
+								}
+							});
+							
+							count = 0;
+							$('#createSectionForm select[name^=createAssignTeachers]').each(function(){
+								if (count < limit)
+								{
+									// supposed to work on normal selects
+									var index = $(this).find('option[value='+section.subjects[count].id+']').index();
+									var teacher = $(this).children().eq(index).val();
+									$(this).val(teacher);
+									count++;
+								}
+							});
 						}
 					});		
-					var link = "/admin/get_subjects" + dataString;
 								
 					
 				}

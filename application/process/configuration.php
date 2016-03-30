@@ -107,14 +107,54 @@ class Configuration_admin
 		if (($percentages[15] + $percentages[16] + $percentages[17]) != 100
 			&& ( ! empty($percentages[15]) && ! empty($percentages[16]) && ! empty($percentages[17])))
 			exit ('Category percentages do not equal 100');
-		if (($percentages[18] + $percentages[19]) != 100)
+		if ((($percentages[18] + $percentages[19]) != 100)
 			&& ( ! empty($percentages[18]) && ! empty($percentages[19])))
 			exit ('Instrument percentages do not equal 100');
 	}
 	
 	function get_percentages($con)
 	{
+		$sql = "SELECT item, percent
+				FROM percentages";
+		$query = mysqli_query($con, $sql);
 		
+		$items = array(
+			'tc-satl',
+			'tc-cc',
+			'tc-api',
+			'tc-principal',
+			'tc-self',
+			'ea-satl',
+			'ea-ll',
+			'ea-api',
+			'ea-principal',
+			'ea-self',
+			'ap-satl',
+			'ap-ll',
+			'ap-api',
+			'ap-principal',
+			'ap-self',
+			'tc',
+			'ea',
+			'ap',
+			'inst-faculty',
+			'inst-student'
+		);
+		
+		$percentages = array();
+		while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC))
+		{
+			foreach ($items as $item)
+			{
+				if ($row['item'] == $item)
+				{
+					$percentages[$item] = $row['percent'];
+					break;
+				}
+			}
+		}
+		
+		return $percentages;
 	}
 }
 
