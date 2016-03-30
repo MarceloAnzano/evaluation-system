@@ -8,6 +8,7 @@
 	
 	if ($entries != NULL) 
 	{
+		$ctr1 = 0;
 		foreach ($entries as &$entry)
 		{
 			// prepare for display
@@ -39,9 +40,9 @@
 				$closed = '';
 			}
 			
+			if($ctr1 == 0) echo '<div class="row">';
 			echo '
-			<div class="row">
-				<div class="col l4 m4 s8 offset-l4 offset-m4 offset-s2" id="teacher1">';
+				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
 			if ($closed == '')
 				echo "
 
@@ -78,10 +79,10 @@
 				</div>
 				</a>
 				</div>
-			</div>
-		</div>";
-
-
+			</div>";
+			if($ctr1 == 3) echo '</div>';
+			$ctr1++;
+			if($ctr1 > 3) $ctr1 = 0;
 			// if ($entry['type'] == 'self')
 			// {
 			// 	echo "<a href=".$link.">".$link_text." Self evaluation</a> ".$closed;
@@ -94,6 +95,7 @@
 	$archives = $data2;
 	if ($archives != NULL) 
 	{
+		$ctr2 = 0;
 		foreach ($archives as &$archive)
 		{
 			if ($archive['semester'] == 1)
@@ -116,9 +118,9 @@
 			// }
 			// else echo "<a href=".$link.">".$link_text.' '.$archive['full_name']."</a> ";
 
+			if($ctr2 == 0) echo '<div class="row">';
 			echo '
-			<div class="row">
-				<div class="col l4 m4 s8 offset-l4 offset-m4 offset-s2" id="teacher1">';
+				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
 			echo "
 				<div class='card disabledCard'>
 					<a class='card-content' href=".$link.">";
@@ -142,8 +144,10 @@
 				</div>
 				</a>
 				</div>
-			</div>
-		</div>";
+			</div>";
+			if($ctr2 == 3)echo '</div>';
+			$ctr2++;
+			if($ctr1 > 3) $ctr2 = 0;
 		}
 	}
 ?>

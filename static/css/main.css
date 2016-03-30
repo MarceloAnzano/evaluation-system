@@ -1,6 +1,6 @@
 .row{
-	margin: 0px;
-	width: 100%;
+	margin: 0px !important;
+	width: 100% !important;
 }
 label{
 	color: #7c7c7c !important;

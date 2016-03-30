@@ -8,13 +8,19 @@
 			<div class="right col l2 m3 hide-on-small-only " id="sidebar">
 				<ul class="section table-of-contents">
 					<li><a href="#create-eval">Create Evaluation</a></li>
+				<?php if (!($this->logged_as_principal())){
+					echo '
 					<li><a href="#activate-eval">Evalution Control Panel</a></li>
-					<li><a href="#create-user">Create User</a></li>
+					<li><a href="#create-user">Create User</a></li>';
+				}?>
 					<li><a href="#create-sections">Create Section</a></li>
 					<li><a href="#search-users">Search Users</a></li>
 					<li><a href="#percentage-settings">Percentage Settings</a></li>
 					<li><a href="#manage-questionnaire">Manage Questionnaire</a></li>
-					<li><a href="#upload-photo">Upload Photo</a></li>
+				<?php if (!($this->logged_as_principal())){
+					echo '	
+					<li><a href="#upload-photo">Upload Photo</a></li>';
+				}?>
 				</ul>
 			</div>
 			<div class="col l10 m9 s12 offset-l2 offset-m3" id="maincontent">
@@ -85,41 +91,43 @@
 						</div>
 					</div>
 				</div>
+<?php if (!($this->logged_as_principal())){
+			echo '
 				<div class="row eval-division section scrollspy" id="activate-eval">
 					<div class="col l12 m12 s12">
 						<h3>Evaluation Control Panel</h3>
 						<div class="row">
 							<div class="col l5">
-								<h5 id='faculty-1st-status'>Information not available</h5>
+								<h5 id="faculty-1st-status">Information not available</h5>
 							</div>
 							<div class="col">
-								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return openEvaluation(1)";?>'>Toggle</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return openEvaluation(1)";?>">Toggle</button>
 							</div>
 							<div class="col">
-								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return deleteEvaluation(1)";?>'>Delete</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return deleteEvaluation(1)";?>">Delete</button>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col l5">
-								<h5 id='faculty-2nd-status'>Information not available</h5>
+								<h5 id="faculty-2nd-status">Information not available</h5>
 							</div>
 							<div class="col">
-								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return openEvaluation(2)";?>'>Toggle</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return openEvaluation(2)";?>">Toggle</button>
 							</div>
 							<div class="col">
-								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return deleteEvaluation(2)";?>'>Delete</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return deleteEvaluation(2)";?>">Delete</button>
 							</div>
 						</div>
 <!--
 						<div class="row">
 							<div class="col l5">
-								<h5 id='student-status'>Not available</h5>
+								<h5 id="student-status">Not available</h5>
 							</div>
 							<div class="col">
-								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return openEvaluation(3)";?>'>Toggle</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return openEvaluation(3)";?>">Toggle</button>
 							</div>
 							<div class="col">
-								<button id='' class="waves-effect waves-light btn" type='button' onclick='<?php echo "return deleteEvaluation(3)";?>'>Delete</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return deleteEvaluation(3)";?>">Delete</button>
 							</div>
 						</div>
 -->
@@ -128,7 +136,7 @@
 								<h5>Archive All Results</h5>
 							</div>
 							<div class="col">
-								<button id='' data-target="modal-archive-success" class="modal-trigger waves-effect waves-light btn" type='button' onclick='<?php echo "return archiveEvaluation();";?>'>Archive</button>
+								<button id="" data-target="modal-archive-success" class="modal-trigger waves-effect waves-light btn" type="button" onclick="'; echo "return archiveEvaluation();"; echo'>Archive</button>
 							</div>
 							<div id="modal-archive-success" class="modal col l4 m4 s8 offset-l2 offset-m2">
 								<center class="modal-content">
@@ -140,54 +148,58 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>';
+	}
+?>
+<?php if (!($this->logged_as_principal())){
+			echo '
 				<div class="row eval-division section scrollspy" id="create-user">
 					<div class="col l12 m12 s12">
 						<h3>Create a User Account</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
-								<form id='createUserForm' onsubmit="return saveUser();">
+								<form id="createUserForm" onsubmit="return saveUser();">
 									<div class="row">
 										<div class="input-field col l6 m6 s12">
-											<input id="eval-create-uname" name='createUname' type='text'>
+											<input id="eval-create-uname" name="createUname" type="text">
 											<label for="eval-create-uname">Full Name</label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col l6 m6 s12">
-											<input id="eval-create-logid" name='createLogid' type='text'>
+											<input id="eval-create-logid" name="createLogid" type="text">
 											<label for="eval-create-logid">Login ID</label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col l6 m6 s12">
-											<input id="eval-create-pass" name='createPassword' type='password' readonly onfocus="this.removeAttribute('readonly');">
+											<input id="eval-create-pass" name="createPassword" type="password" readonly onfocus="this.removeAttribute("readonly");">
 											<label for="eval-create-pass">Password</label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col l6 m6 s12">
-											<select name='createUsertype'>
-												<option value='' disabled selected>User Type</option>
-												<option value='student'>Student</option>
-												<option value='faculty'>Faculty</option>
-												<option value='admin'>Admin</option>
+											<select name="createUsertype">
+												<option value="" disabled selected>User Type</option>
+												<option value="student">Student</option>
+												<option value="faculty">Faculty</option>
+												<option value="admin">Admin</option>
 											</select>
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col l3 m3 s6">
-											<input id="eval-create-grade" name='createUserGradelevel' type='text' disabled>
+											<input id="eval-create-grade" name="createUserGradelevel" type="text" disabled>
 											<label for="eval-create-grade">Grade</label>
 										</div>
 										<div class="input-field col l3 m3 s6">
-											<input id="eval-create-section" name='createUserSection' type='text' disabled>
+											<input id="eval-create-section" name="createUserSection" type="text" disabled>
 											<label for="eval-create-section">Section</label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col l6 m6 s12">
-											<input id="eval-create-subject" name='createUserSubject' type='text' disabled>
+											<input id="eval-create-subject" name="createUserSubject" type="text" disabled>
 											<label for="eval-create-subject">Subject Area</label>
 										</div>
 									</div>
@@ -196,24 +208,24 @@
 											<h6 style="font-weight: 700">If Supervisor:</h6>
 											<div class="row">
 												<div class="col l6 m6 s12" id="supervisor-position-div">
-													<select name='createPosition' disabled>
+													<select name="createPosition" disabled>
 														<option value="" disabled>Position</option>
-														<option value='none'>None</option>
-														<option value='principal'>Principal</option>
-														<option value='api'>Asst. Principal for Instruction</option>
-														<option value='cc'>Cluster Coordinator</option>
-														<option value='ll'>Level Leader</option>
-														<option value='satl'>Subject Area Team Leader</option>
+														<option value="none">None</option>
+														<option value="principal">Principal</option>
+														<option value="api">Asst. Principal for Instruction</option>
+														<option value="cc">Cluster Coordinator</option>
+														<option value="ll">Level Leader</option>
+														<option value="satl">Subject Area Team Leader</option>
 													</select>
 												</div>
 											</div>
 											<div class="row">
 												<div class="input-field col l3 m3 s6">
-													<input id="eval-create-level" name='createUserLevel' type='text' disabled>
+													<input id="eval-create-level" name="createUserLevel" type="text" disabled>
 													<label for="eval-create-level">Level</label>
 												</div>
 												<div class="input-field col l3 m3 s6">
-													<input id="eval-create-cluster" name='createUserCluster' type='text' disabled>
+													<input id="eval-create-cluster" name="createUserCluster" type="text" disabled>
 													<label for="eval-create-cluster">Cluster</label>
 												</div>
 											</div>
@@ -221,19 +233,21 @@
 									</div>
 									<div class="row">
 										<div class="col">
-											<button class="waves-effect waves-light btn" type='submit' name='submit'>Submit</button>
+											<button class="waves-effect waves-light btn" type="submit" name="submit">Submit</button>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col">
-											<h6 class="error-message" id='createUserStatus'></h6>
+											<h6 class="error-message" id="createUserStatus"></h6>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>';
+	}
+?>
 				<?php 
 				/**
 				 * ERASE MO TONG COMMENT PAGKATAPOS
@@ -250,7 +264,7 @@
 							<div class="col l12 m12 s12">
 								<form id='createSectionForm' onsubmit='return saveSection();'>
 									<div class="row">
-										<div class="col l4 m5 s6">
+										<div class="input-field col l4 m5 s6">
 											<h5>Select a Section</h5>
 											<select id='createSectionSelect' name='createSectionSelect'>
 												<option value='' selected>New Section</option>
@@ -260,17 +274,17 @@
 									<div class="row">
 <!--
 										<div class="col">
-											Grade and Section
+											<h5>New Grade and Section</h5>
 										</div>
 -->
 									</div>
 									<div class="row">
-										<div class="col l4 m5 s6">
-											<input id='createSectionGradelevel'name='createSectionGradelevel'>
+										<div class="input-field col l4 m5 s6">
+											<input id='createSectionGradelevel' name='createSectionGradelevel' type="text">
 											<label for='createSectionGradelevel'>Grade</label>
 										</div>
-										<div class="col l4 m5 s6">
-											<input id='createSectionSection' name='createSectionSection'>
+										<div class="input-field col l4 m5 s6">
+											<input id='createSectionSection' name='createSectionSection' type="text">
 											<label for='createSectionSection'>Section</label>
 										</div>
 									</div>
@@ -590,12 +604,14 @@
 				 * Upload Faculty Photo
 				 * **/
 				?>
+<?php if (!($this->logged_as_principal())){
+			echo '
 				<div class="row eval-division section scrollspy" id="upload-photo">
 					<div class="col l12 m12 s12">
 						<h3>UPLOAD FACULTY PHOTO</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
-								<form id='facultyPhotoForm' enctype="multipart/form-data" action="/admin/upload_photo" method="POST">
+								<form id="facultyPhotoForm" enctype="multipart/form-data" action="/admin/upload_photo" method="POST">
 									<div class="row">
 									    <div class="file-field input-field">
 										    <div class="waves-effect waves-light btn" style="padding-left: 1.2rem; padding-right: 1.2rem;">
@@ -610,7 +626,7 @@
 								    </div>
 								    <div class="row">
 								    	<div class="col l7 m7 s12">
-										    <select name='userPhotoId'>
+										    <select name="userPhotoId">
 												<option value="" disabled selected>Select User</option>
 										    </select>
 									    </div>
@@ -622,7 +638,8 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>';
+}?>
 				<div class="row eval-division" style="height: 100px;">
 					<div id="modal-error-message" class="modal">
 						<center class="modal-content">
