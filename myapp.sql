@@ -172,7 +172,7 @@ CREATE TABLE `img_uploads` (
   `userId` varchar(150) DEFAULT NULL,
   `img_reference` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +181,7 @@ CREATE TABLE `img_uploads` (
 
 LOCK TABLES `img_uploads` WRITE;
 /*!40000 ALTER TABLE `img_uploads` DISABLE KEYS */;
+INSERT INTO `img_uploads` VALUES (1,'67128cdfc21239fb7468e7e15acef04b2ad0d5cf3e8ddc6e899248cca19c3d0e','images/profilepic1.jpg'),(2,'1895dc08da433683829fcbd562a9b73ff2d469e284fe575943b2fc5947bd2bb4','images/profilepic3.jpg');
 /*!40000 ALTER TABLE `img_uploads` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +288,7 @@ CREATE TABLE `student_questionnaire` (
   `percent` float(7,4) unsigned DEFAULT NULL,
   `content` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,7 +297,7 @@ CREATE TABLE `student_questionnaire` (
 
 LOCK TABLES `student_questionnaire` WRITE;
 /*!40000 ALTER TABLE `student_questionnaire` DISABLE KEYS */;
-INSERT INTO `student_questionnaire` VALUES (1,100.0000,'How well does the teacher teach the subject?'),(2,0.0000,'Teacher is really, really prepared for  class.'),(3,0.0000,'Teacher is really, really prepared for  class.'),(4,0.0000,'Teacher is really, really prepared for  class.'),(5,0.0000,'Teacher is really, really prepared for  class.'),(6,0.0000,'Teacher is really, really prepared for  class.'),(7,0.0000,'Teacher knows his/her subject.'),(8,0.0000,'Teacher is organized and neat.'),(9,0.0000,'Teacher plans class time and assignments that help us solve problems and think critically.'),(10,0.0000,'Teacher has clear classroom procedures so we don\'t waste time.'),(11,0.0000,'Teacher is clear in giving directions and on explaining what is expected on assignments and tests.'),(12,0.0000,'Teacher is creative in developing activities and lessons.'),(13,0.0000,'Teacher provides activities that make subject matter meaningful.'),(14,0.0000,'Teacher returns homework, seatwork, projects, and tests in a timely manner.'),(15,0.0000,'Teacher gives me good feedback on homework and projects so that I can improve.'),(16,0.0000,'Teacher is flexible in accommodating for our individual needs.'),(17,0.0000,'Teachers grades fairly.'),(18,100.0000,'How well does the teachr model the core values through his/her behaviour with the students and with the other school personnel?'),(19,0.0000,'Teacher is sensitive and responsive to our needs.'),(20,0.0000,'Teacher listens and understands our opinions; he/she may not agree but we feel understood.'),(21,0.0000,'Teacher is willing to learn from us.'),(22,0.0000,'Teacher is willling to accept responsibility for his/her own mistakes.'),(23,0.0000,'Teacher is consistent, fair and firm in discipline without being to strict.'),(24,0.0000,'Teacher follows through on what he/she says. You can count on the teacher\'s word.'),(25,0.0000,'Teacher is fun to be with.'),(26,0.0000,'Teacher tries to model what teacher expects of students.'),(27,100.0000,'How well does the teacher inspire me to be responsible for my own learning?'),(28,0.0000,'I am encouraged to bring things needed for my learning.'),(29,0.0000,'I am motivated to come to his/her class on time.'),(30,0.0000,'I am enthused to speak up and be active in the class.'),(31,0.0000,'I am expected to submit my homework and projects on time.'),(32,0.0000,'I am always reminded to speak and act with respect.');
+INSERT INTO `student_questionnaire` VALUES (1,100.0000,'How well does the teacher teach the subject?'),(2,0.0000,'Teacher is prepared for  class.'),(3,0.0000,'Teacher knows his/her subject.'),(4,0.0000,'Teacher is organized and neat.'),(5,0.0000,'Teacher plans class time and assignments that help us solve problems and think critically.'),(6,0.0000,'Teacher has clear classroom procedures so we don\'t waste time.'),(7,0.0000,'Teacher is clear in giving directions and on explaining what is expected on assignments and tests.'),(8,0.0000,'Teacher is creative in developing activities and lessons.'),(9,0.0000,'Teacher provides activities that make subject matter meaningful.'),(10,0.0000,'Teacher returns homework, seatwork, projects, and tests in a timely manner.'),(11,0.0000,'Teacher gives me good feedback on homework and projects so that I can improve.'),(12,0.0000,'Teacher is flexible in accommodating for our individual needs.'),(13,0.0000,'Teachers grades fairly.'),(14,100.0000,'How well does the teachr model the core values through his/her behaviour with the students and with the other school personnel?'),(15,0.0000,'Teacher is sensitive and responsive to our needs.'),(16,0.0000,'Teacher listens and understands our opinions; he/she may not agree but we feel understood.'),(17,0.0000,'Teacher is willing to learn from us.'),(18,0.0000,'Teacher is willling to accept responsibility for his/her own mistakes.'),(19,0.0000,'Teacher is consistent, fair and firm in discipline without being to strict.'),(20,0.0000,'Teacher follows through on what he/she says. You can count on the teacher\'s word.'),(21,0.0000,'Teacher is fun to be with.'),(22,0.0000,'Teacher tries to model what teacher expects of students.'),(23,100.0000,'How well does the teacher inspire me to be responsible for my own learning?'),(24,0.0000,'I am encouraged to bring things needed for my learning.'),(25,0.0000,'I am motivated to come to his/her class on time.'),(26,0.0000,'I am enthused to speak up and be active in the class.'),(27,0.0000,'I am expected to submit my homework and projects on time.'),(28,0.0000,'I am always reminded to speak and act with respect.');
 /*!40000 ALTER TABLE `student_questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,4 +400,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-31  2:11:31
+-- Dump completed on 2016-03-31 13:10:40

@@ -342,7 +342,7 @@
 				?>
 				<div class="row eval-division section scrollspy" id="search-users">
 					<div class="col l12 m12 s12">
-						<h3>SEARCH USERS</h3>
+						<h3>Search and Manage Users</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='searchUserForm' onsubmit="return searchUser();">
@@ -409,6 +409,7 @@
 						<div class="row" style="padding-top: 20px;" id="search-result">
 							<div class="col l12 m12 s12">
 								<h5>Search Results:</h5>
+								<h6>click on the name to manage user profile</h6>
 								<div class="row">
 									<div class="col l12 m12 s12">
 										<table id='linkSpace' class="highlight">
@@ -431,7 +432,7 @@
 				?>
 				<div class="row eval-division section scrollspy" id="percentage-settings">
 					<div class="col l12 m12 s12">
-						<h3>PERCENTAGE SETTINGS</h3>
+						<h3>Percentage Settings</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='percentageTable' onsubmit='return editPercentages();'>
@@ -563,7 +564,7 @@
 				?>
 				<div class="row eval-division section scrollspy" id="manage-questionnaire">
 					<div class="col l12 m12 s12">
-						<h3>QUESTIONNAIRE</h3>
+						<h3>Manage Questionnaire</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='questionnaireForm' enctype="multipart/form-data" action="/admin/process_csv" method="POST">
@@ -608,14 +609,14 @@
 			echo '
 				<div class="row eval-division section scrollspy" id="upload-photo">
 					<div class="col l12 m12 s12">
-						<h3>UPLOAD FACULTY PHOTO</h3>
+						<h3>Upload Faculty Photo</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id="facultyPhotoForm" enctype="multipart/form-data" action="/admin/upload_photo" method="POST">
 									<div class="row">
 									    <div class="file-field input-field">
 										    <div class="waves-effect waves-light btn" style="padding-left: 1.2rem; padding-right: 1.2rem;">
-										    	<input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
+										    	<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 											    <span style="line-height: 100%">Choose File</span>
 											    <input name="facultyPhoto" type="file" />
 										    </div>

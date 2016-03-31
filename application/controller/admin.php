@@ -176,11 +176,18 @@ class Admin extends Common
 		
 		include BASEPATH.'process/file_upload_parser.php';
 		$image = new File_upload_parser();
-		$image->image_upload();
-		$image->store_image_reference($this->link);
+		if ($image->is_valid_userid($this->link))
+		{
+			if ($image->image_upload())
+			{
+				$image->store_image_reference($this->link);
+			}
+			else exit(' Could not upload file');
+		}
+		else exit('Invalid user ID');
 		
 		// cause not ajax (-_-)
-		header('Location: '.base_url.'admin');
+		header('Location: '.base_url.'admin#upload-photo');
 	}
 	
 	function search_for()
@@ -242,17 +249,21 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/file_upload_parser.php';
 			$file = new File_upload_parser();
-			if ($file->csv_upload())
+			if ($file->is_valid_questionnaire($this->link))
 			{
-				include BASEPATH.'process/configuration.php';
-				$question = new Configuration_admin();
-				$data = $file->csv_get_reference_path($this->link);
-				$question->edit_questionnaire($this->link, $data['name'], $data['path']);
-				
-				// cause not ajax (-_-)
-				header('Location: '.base_url.'admin');
+				if ($file->csv_upload())
+				{
+					include BASEPATH.'process/configuration.php';
+					$question = new Configuration_admin();
+					$data = $file->csv_get_reference_path($this->link);
+					$question->edit_questionnaire($this->link, $data['name'], $data['path']);
+					
+					// cause not ajax (-_-)
+					header('Location: '.base_url.'admin#manage-questionnaire');
+				}
+				else exit(' Could not upload file');
 			}
-			else exit ('Invalid file. File was not uploaded.');
+			else exit('Invalid Input');
 		}
 		else exit('Not authorized!');
 	}

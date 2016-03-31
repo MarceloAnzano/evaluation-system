@@ -51,45 +51,24 @@ class Calculate
 		switch ($position)
 		{
 			case 'satl':
-				$sql = "SELECT subject
-						FROM users
-						WHERE hashid='".$id."'";
-				$query = mysqli_query($con, $sql);
-		
-				$row = mysqli_fetch_array($query);
-		
 				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
-						WHERE users.subject='".$row[0]."' AND year='$year' AND semester='$semester'";
+						WHERE users.subject= ( SELECT subject FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'll':
-				$sql = "SELECT level
-						FROM users
-						WHERE hashid='".$id."'";
-				$query = mysqli_query($con, $sql);
-		
-				$row = mysqli_fetch_array($query);
-		
 				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
-						WHERE users.level='".$row[0]."' AND year='$year' AND semester='$semester'";
+						WHERE users.level=( SELECT level FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'cc':
-				$sql = "SELECT cluster
-						FROM users
-						WHERE hashid='".$id."'";
-				$query = mysqli_query($con, $sql);
-		
-				$row = mysqli_fetch_array($query);
-		
 				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
-						WHERE users.cluster='".$row[0]."' AND year='$year' AND semester='$semester'";
+						WHERE users.cluster=( SELECT cluster FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'api':
