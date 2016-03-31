@@ -19,12 +19,11 @@ $(document).ready(function(){
 	if($('#password').text()!=""){
 		$('password-label').addClass('active');
 	}
-    $('select').material_select();
+    $('select').not('#createSectionSelect').material_select();
     $('nav').pushpin({ top: 88, offset: 0 });
     //$('.subNav').pushpin({ top: 130, offset: 40 });
     $('#sidebar').pushpin({ top: 10, offset: -130 });
     $("#semestral-create select").change(function(event) {
-    	console.log("hey");
     	$("#semestral-create #status").text("");
     });
     $('.modal-trigger').leanModal();
@@ -49,7 +48,18 @@ $(document).ready(function(){
             $(this).html("");
         }
     });
+    $('#submit-eval-yes').on('click', function(){
+        $('#evalform').submit();
+    });
 });
+$(document).on('change','#createSectionSelect', function(){
+    if($('#createSectionSelect').val() != ""){
+        $('label[for="createSectionGradelevel"], label[for="createSectionSection"]').addClass('active');
+    }else{
+        $('label[for="createSectionGradelevel"], label[for="createSectionSection"]').removeClass('active');
+    }
+});
+
 function attachDeleteUser(){
     $('a.delete-user2').click(function(e) {
         e.stopImmediatePropagation();

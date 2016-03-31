@@ -141,7 +141,7 @@
 						.append(
 							"<thead>\
 								<tr>\
-									<th>Final Ratings</th>\
+									<th colspan='2'><h4>Final Ratings</h4></th>\
 								</tr>\
 								<tr>\
 									<th>Teacher</th>\

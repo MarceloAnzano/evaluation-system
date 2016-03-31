@@ -73,7 +73,18 @@
 							echo "<input name='semester' type='hidden' value='".$semester."'/>";
 						?>
 					</table>
-					<button  class="btn waves-effect waves-light right" type='submit' name='submit' value='Submit'>Submit</button>
+					<button  class="btn waves-effect waves-light right modal-trigger" data-target="modal-submit-eval">Submit</button>
+					<div id="modal-submit-eval" class="modal">
+						<center class="modal-content">
+							<h5>Submit your answers?</h5>
+							<h6>You can not edit your answers once you submit</h6>
+						</center>
+						<div class="modal-footer">
+							<a class="modal-action modal-close waves-effect waves-teal btn-flat">NO</a>
+							<a class="modal-action modal-close waves-effect waves-teal btn-flat" id="submit-eval-yes">YES</a>
+						</div>
+					</div>
+					<!-- <button  class="btn waves-effect waves-light right" type='submit' name='submit' value='Submit'>Submit</button>-->
 				</form>
 				<p id="status"></p>
 			</div>

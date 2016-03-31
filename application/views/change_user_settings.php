@@ -17,13 +17,13 @@
 							</div>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='editPassword' name='editPassword' type='password' <?php if ( ! $this->logged_as_admin())echo "readonly"?>>
+									<input id='editPassword' name='editPassword' type='password' <?php if ( ! $this->logged_as_admin())echo "disabled"?>>
 									<label for="editPassword">Password</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
-									<input id='editUsertype' name='editUsertype'<?php if ( ! $this->logged_as_admin())echo "readonly"?> type="text" placeholder=" " >
+									<input id='editUsertype' name='editUsertype'<?php if ( ! $this->logged_as_admin())echo "disabled"?> type="text" placeholder=" " >
 									<label for="editUsertype">User Type</label>
 								</div>
 							</div>
@@ -80,6 +80,23 @@
 						</form>
 						<p class="error-message" id='status'></p>
 					</div>
+				</div>
+			</div>
+			<div id="modal-error-message" class="modal">
+				<center class="modal-content">
+					<h5></h5>
+				</center>
+				<div class="modal-footer">
+					<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+				</div>
+			</div>
+			<div id="modal-submit-useredit" class="modal">
+				<center class="modal-content">
+					<h5>Submit user edit?</h5>
+				</center>
+				<div class="modal-footer">
+					<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+					<a href="" onclick="return deleteUser(this.href);" class="delete-ok1 modal-action modal-close waves-effect waves-green btn-flat">YES</a>
 				</div>
 			</div>
 		</div>

@@ -410,7 +410,7 @@
 						.append(
 							"<thead>\
 								<tr>\
-									<th>Questionnaire Scores</th>\
+									<th colspan='2'><h4>Questionnaire Scores</h4></th>\
 								</tr>\
 								<tr>\
 									<th>Evaluator</th>\

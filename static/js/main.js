@@ -8,11 +8,6 @@ function onReady(callback) {
     }
 }
 
-onReady(function(){
-	//$('.loading').css("display","none");
-	$('.loading').fadeOut("fast")
-});
-
 $(document).ready(function(e){
 	$displayHeight = $(window).height();
 	
@@ -27,7 +22,6 @@ $(document).ready(function(e){
 	$(".avatarHead").css("width",$subNav*0.7+"px");
 	$(".avatarHead").css("margin",$subNav*0.15+"px");
 	$(".avatarHead").css("margin-right","0px");
-	console.log($subNav)
 	//$("footer").css("top",$displayHeight-50+"px");
 	$totalHead = $("header").height() + $("nav").height();
 	$availableDisplay = $displayHeight - $totalHead;
@@ -40,9 +34,7 @@ $(document).ready(function(e){
 	if($contentHeight < $availableDisplay){
 		$contentHeight = $availableDisplay;
 	}
-	console.log($contentHeight);
 	$(".pageContent").css("height",$contentHeight-$totalFoot- $subNav+"px");
-	console.log($contentHeight-$totalHead)
 	$(".contentWidth").css("width",$(window).width()+"px");
 	// $forgotMarginBtm = parseInt($(".forgot").css("margin-bottom"));
 	// $forgotMarginTop = parseInt($(".forgot").css("margin-top"));
@@ -51,6 +43,3 @@ $(document).ready(function(e){
 
 	$("input#partialbtn").css("height", $("i.btn").height()+"px");
 });
-
-
-//1 m6 push-m3
