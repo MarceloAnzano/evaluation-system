@@ -9,5 +9,7 @@
 <script type="text/javascript" src="<?php echo htmlspecialchars(STATICPATH."js/script.js");?>"></script>
 <?php if ($this->logged_as_admin() OR $this->logged_as_principal()) echo "<script type='text/javascript' src='".htmlspecialchars(STATICPATH."js/admin.js")."'></script>";?>
 <?php if ($this->logged_as_admin()) echo "<script type='text/javascript' src='".htmlspecialchars(STATICPATH."js/evaluation.js")."'></script>";?>
+<?php if ($this->logged_as_principal()) echo '<script type="text/javascript" src="'.htmlspecialchars(STATICPATH."js/jquery.TableCSVExport.js").'"></script>';?>
 <script type="text/javascript" src="<?php echo htmlspecialchars(STATICPATH."js/marci.js");?>"></script>
+
 </html>

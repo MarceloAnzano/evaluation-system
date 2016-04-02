@@ -141,7 +141,8 @@
 						.append(
 							"<thead>\
 								<tr>\
-									<th colspan='2'><h4>Final Ratings</h4></th>\
+									<th colspan='4'><h4>Final Ratings</h4></th>\
+									<th colspan='2' class='td-right'><button class='waves-effect waves-light btn' id='exportThisRatings'>Download as csv</button></th>\
 								</tr>\
 								<tr>\
 									<th>Teacher</th>\

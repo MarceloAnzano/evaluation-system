@@ -60,6 +60,21 @@ $(document).on('change','#createSectionSelect', function(){
     }
 });
 
+$(document).on('click','#exportThisRatings', function(e){
+    $('#ratings-table').TableCSVExport({
+        delivery: 'download',
+        filename: 'Ratings.csv',
+        header: ['Teacher','TC Score','EA Score','AP Score','Student Score','Rating']
+    })
+})
+
+$(document).on('click','#exportThisScores', function(e){
+    $('#ratings-table').TableCSVExport({
+        delivery: 'download',
+        filename: 'Scores.csv',
+        header: ['Evaluator','Faculty Evaluated','TC Score','EA Score','AP Score','Student Score','Evaluation Type']
+    })
+})
 function attachDeleteUser(){
     $('a.delete-user2').click(function(e) {
         e.stopImmediatePropagation();

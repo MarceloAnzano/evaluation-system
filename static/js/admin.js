@@ -410,7 +410,8 @@
 						.append(
 							"<thead>\
 								<tr>\
-									<th colspan='2'><h4>Questionnaire Scores</h4></th>\
+									<th colspan='5'><h4>Questionnaire Scores</h4></th>\
+									<th colspan='2' class='td-right'><button class='waves-effect waves-light btn' id='exportThisScores'>Download as csv</button></th>\
 								</tr>\
 								<tr>\
 									<th>Evaluator</th>\

@@ -71,7 +71,9 @@ class App extends Common
 		if($this->check_user_login())
 		{
 			$data = $this->get_past_ratings($id, $semester);
-			$this->this_view('views/past_rating.php', $data);
+			$data2 = $id;
+			$data3 = $semester;
+			$this->this_view('views/past_rating.php', $data, $data2, $data3);
 		}
 		else header('Location: '.base_url);
 	}
@@ -81,7 +83,10 @@ class App extends Common
 		if($this->check_user_login())
 		{
 			$data = $this->get_archived_ratings($id, $year, $semester);
-			$this->this_view('views/past_rating.php', $data);
+			$data2 = $id;
+			$data3 = $semester;
+			$data4 = $year;
+			$this->this_view('views/past_rating.php', $data, $data2, $data3, $data4);
 		}
 		else header('Location: '.base_url);
 	}

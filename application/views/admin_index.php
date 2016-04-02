@@ -101,10 +101,10 @@
 								<h5 id="faculty-1st-status">Information not available</h5>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return openEvaluation(1)";?>">Toggle</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="return openEvaluation(1)">Toggle</button>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return deleteEvaluation(1)";?>">Delete</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="return deleteEvaluation(1)">Delete</button>
 							</div>
 						</div>
 						<div class="row">
@@ -112,10 +112,10 @@
 								<h5 id="faculty-2nd-status">Information not available</h5>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return openEvaluation(2)";?>">Toggle</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="return openEvaluation(2)">Toggle</button>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return deleteEvaluation(2)";?>">Delete</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="return deleteEvaluation(2)">Delete</button>
 							</div>
 						</div>
 <!--
@@ -124,10 +124,10 @@
 								<h5 id="student-status">Not available</h5>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return openEvaluation(3)";?>">Toggle</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick="return openEvaluation(3)">Toggle</button>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="<?php echo "return deleteEvaluation(3)";?>">Delete</button>
+								<button id="" class="waves-effect waves-light btn" type="button" onclick=return deleteEvaluation(3)">Delete</button>
 							</div>
 						</div>
 -->
@@ -136,7 +136,7 @@
 								<h5>Archive All Results</h5>
 							</div>
 							<div class="col">
-								<button id="" data-target="modal-archive-success" class="modal-trigger waves-effect waves-light btn" type="button" onclick="'; echo "return archiveEvaluation();"; echo'>Archive</button>
+								<button id="" data-target="modal-archive-success" class="modal-trigger waves-effect waves-light btn" type="button" onclick="return archiveEvaluation()">Archive</button>
 							</div>
 							<div id="modal-archive-success" class="modal col l4 m4 s8 offset-l2 offset-m2">
 								<center class="modal-content">
@@ -409,7 +409,7 @@
 						<div class="row" style="padding-top: 20px;" id="search-result">
 							<div class="col l12 m12 s12">
 								<h5>Search Results:</h5>
-								<h6>click on the name to manage user profile</h6>
+								<h6>Click on the name to manage user profile</h6>
 								<div class="row">
 									<div class="col l12 m12 s12">
 										<table id='linkSpace' class="highlight">
@@ -573,7 +573,7 @@
 										    <div class="waves-effect waves-light btn" style="padding-left: 1.2rem; padding-right: 1.2rem;">
 										    	<input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
 											    <span style="line-height: 100%">Choose File</span>
-											    <input name="questionFile" type="file" style="height: inherit;">
+											    <input name="questionFile" type="file" style="height: inherit;" accept=".csv">
 										    </div>
 										    <div class="file-path-wrapper  col l5 m5 s8">
 										    	<input class="file-path validate" type="text" >    	
@@ -618,7 +618,7 @@
 										    <div class="waves-effect waves-light btn" style="padding-left: 1.2rem; padding-right: 1.2rem;">
 										    	<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 											    <span style="line-height: 100%">Choose File</span>
-											    <input name="facultyPhoto" type="file" />
+											    <input name="facultyPhoto" type="file" accept=".jpg,.jpeg,.png"/>
 										    </div>
 										    <div class="file-path-wrapper  col l5 m5 s8">
 										    	<input class="file-path validate" type="text" >    	
@@ -636,6 +636,16 @@
 								    	<button class="waves-effect waves-light btn" type="submit">Upload Photo</button>
 								    </div>
 								</form>
+								<div id="modal-invalid-photo" class="modal">
+									<center class="modal-content">
+										<h5>Invalid Image</h5>
+										<h6>The image should be in .jpg or png</h6>
+										<h6>and atmost 100kb</h6>
+									</center>
+									<div class="modal-footer">
+										<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
