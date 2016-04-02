@@ -82,7 +82,9 @@
 							echo "<input name='semester' type='hidden' value='".$semester."'/>";
 						?>
 					</table>
-					<button  class="btn waves-effect waves-light right modal-trigger" data-target="modal-submit-eval">Submit</button>
+					<div class="row">
+						<button  class="btn-large waves-effect waves-light right modal-trigger" data-target="modal-submit-eval">Submit</h5></button>
+					</div>
 					<div id="modal-submit-eval" class="modal">
 						<center class="modal-content">
 							<h5>Submit your answers?</h5>

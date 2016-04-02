@@ -36,8 +36,13 @@
 								</button>
 							</div> -->
 						</div>
+						<div class="row table-title-here">
+						</div>
 						<div class="row">
-							<table class="striped" id='ratings-table'>
+							<table class="striped tablesorter" id='ratings-table'>
+								<thead>
+								</thead>
+								<tbody></tbody>
 <!--
 								<thead>
 									<tr>
@@ -50,6 +55,11 @@
 								</thead>
 -->
 							</table>
+						</div>
+						<div class="row">
+							<div class="progress" style="display: none;">
+							    <div class="indeterminate"></div>
+							</div>
 						</div>
 						<div class="row">
 							<h6 class="error-message" id='status'></h6>

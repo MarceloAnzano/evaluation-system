@@ -127,32 +127,40 @@
 		
 		if ( !! document.getElementById('ratings-table'))
 		{
-			$('#ratings-table').find('thead').remove();
-			$('#ratings-table').find('tbody').remove();
-			
+			$('.progress').css('display','block');
+			$('#ratings-table').css('display','none');
+			$('#ratings-table thead').empty();
+			$('#ratings-table tbody tr').addClass('delete-this-row');
+			$('.table-title-here').empty();
 			var year = $("select[name=viewRatingYear]").val();
 			var semester = $("select[name=viewRatingSemester]").val();
 			var link = "/app/display_ratings/" + year + "/" + semester ;
 			
 			$.get(link,{},function(response){
 				if (response.status == 'OK')
-				{
-					$("#ratings-table")
+				{	
+					if(semester == "2") semstr = "2nd";
+					else if(semester == "1") semstr = "1st";
+					else semstr ="";
+					$('.table-title-here').append(
+							"<div class='col s8 m8 l8'>\
+								<div class='row'><h4 style='margin-bottom:0px;' class='rating-title'>Final Ratings</h4></div>\
+								<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\
+							</div>\
+							<div class='col s4 m4 l4 print-holder'>\
+								<button class='waves-effect waves-light btn' id='exportThisRatings'>Download as csv</button>\
+							</div>"
+						)
+					$("#ratings-table thead")
 						.append(
-							"<thead>\
-								<tr>\
-									<th colspan='4'><h4>Final Ratings</h4></th>\
-									<th colspan='2' class='td-right'><button class='waves-effect waves-light btn' id='exportThisRatings'>Download as csv</button></th>\
-								</tr>\
-								<tr>\
+								"<tr>\
 									<th>Teacher</th>\
 									<th>TC Score</th>\
 									<th>EA Score</th>\
 									<th>AP Score</th>\
 									<th>Student Score</th>\
 									<th>Rating</th>\
-								</tr>\
-							</thead>"
+								</tr>"
 						);
 					if (response.results != null)
 					{
@@ -162,20 +170,25 @@
 							+ teacher.student+ "</td><td>" + teacher.rating+ "</td></tr>");
 						});
 					}
-					else $("#ratings-table").append("Data Not Available");
+					else $("#ratings-table tbody").append("<tr><td>Data Not Available</td></tr>");
+					$("#ratings-table").tablesorter({sortList: [[0,0]]});
+					$('.delete-this-row').remove();
+					$("#ratings-table").trigger("update");
+					$('.progress').css('display','none');
+					$('#ratings-table').css('display','table');
 				}
-				else $("#ratings-table").append("Data Not Available");
+				else $("#ratings-table").append("<tr><td>Data Not Available</td></tr>");
 			});
 		}
 	}
 	
-	function printReport()
-	{
-		var year = $("select[name=viewRatingYear]").val();
-		var semester = $("select[name=viewRatingSemester]").val();
-		var link = "/app/print_ratings_report/" + year + "/" + semester ;
+	// function printReport()
+	// {
+	// 	var year = $("select[name=viewRatingYear]").val();
+	// 	var semester = $("select[name=viewRatingSemester]").val();
+	// 	var link = "/app/print_ratings_report/" + year + "/" + semester ;
 		
-		$.get(link,{},function(response){
+	// 	$.get(link,{},function(response){
 			
-		});
-	}
+	// 	});
+	// }

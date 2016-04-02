@@ -50,7 +50,7 @@
 					<a class=' card-content' href=".$link.">";
 			else
 				echo "
-					<div class='card disabledCard'>
+					<div class='card waves-effect disabledCard'>
 					<a class='card-content' href=".$link.">";
 					
 			// echo "
@@ -122,7 +122,7 @@
 			echo '
 				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
 			echo "
-				<div class='card disabledCard'>
+				<div class='card waves-effect disabledCard'>
 					<a class='card-content' href=".$link.">";
 			echo "
 				<div class='row'>
