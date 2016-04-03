@@ -5,12 +5,12 @@
 		</div>
 <?php // because i don't like working with javascript :(
 	$entries = $data;
-	
+	$cardNum = 0;
 	if ($entries != NULL) 
 	{
-		$ctr1 = 0;
 		foreach ($entries as &$entry)
 		{
+			if($cardNum > 3) $cardNum = 0;
 			// prepare for display
 			if ($entry['semester'] == 1)
 			{
@@ -40,7 +40,7 @@
 				$closed = '';
 			}
 			
-			if($ctr1 == 0) echo '<div class="row">';
+			if($cardNum == 0) echo '<div class="row">';
 			echo '
 				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
 			if ($closed == '')
@@ -80,9 +80,8 @@
 				</a>
 				</div>
 			</div>";
-			if($ctr1 == 3) echo '</div>';
-			$ctr1++;
-			if($ctr1 > 3) $ctr1 = 0;
+			if($cardNum == 3) echo '</div>';
+			$cardNum++;
 			// if ($entry['type'] == 'self')
 			// {
 			// 	echo "<a href=".$link.">".$link_text." Self evaluation</a> ".$closed;
@@ -95,9 +94,9 @@
 	$archives = $data2;
 	if ($archives != NULL) 
 	{
-		$ctr2 = 0;
 		foreach ($archives as &$archive)
 		{
+			if($cardNum > 3) $cardNum = 0;
 			if ($archive['semester'] == 1)
 			{
 				$semester = '1st Semester';
@@ -118,7 +117,7 @@
 			// }
 			// else echo "<a href=".$link.">".$link_text.' '.$archive['full_name']."</a> ";
 
-			if($ctr2 == 0) echo '<div class="row">';
+			if($cardNum == 0) echo '<div class="row">';
 			echo '
 				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
 			echo "
@@ -145,11 +144,12 @@
 				</a>
 				</div>
 			</div>";
-			if($ctr2 == 3)echo '</div>';
-			$ctr2++;
-			if($ctr1 > 3) $ctr2 = 0;
+			if($cardNum == 3)echo '</div>';
+			$cardNum++;
 		}
 	}
+	if($cardNum > 3) $cardNum = 0;
+	if($cardNum > 0) echo '</div>';
 ?>
 	</div>
 
