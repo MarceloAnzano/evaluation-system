@@ -62,7 +62,9 @@
 							</div>
 						</div>
 						<div class="row">
-							<h6 class="error-message" id='status'></h6>
+							<div class="col">
+								<h5 class="error-ratings"></h5>
+							</div>
 						</div>
 					</div>
 				</div>
