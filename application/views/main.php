@@ -23,7 +23,7 @@
 			else $semester = '';
 				
 			
-			$link_text = 'Evaluate for '.$entry['year'].' '.$semester;
+			$link_text = 'Evaluate for '.$entry['year'].'<br>'.$semester;
 			$closed = '[Closed]';
 			$link = '';
 			if ($entry['open'])
@@ -34,7 +34,7 @@
 				}
 				else
 				{
-					$link_text = 'Score for '.$entry['year'].' '.$semester;
+					$link_text = 'Score for '.$entry['year'].'<br>'.$semester;
 					$link = '/app/score/'.$entry['userid'].'/'.$entry['semester'];
 				}
 				$closed = '';
@@ -50,7 +50,7 @@
 					<a class=' card-content' href=".$link.">";
 			else
 				echo "
-					<div class='card disabledCard'>
+					<div class='card waves-effect disabledCard'>
 					<a class='card-content' href=".$link.">";
 					
 			// echo "
@@ -109,9 +109,9 @@
 			else $semester = '';
 			
 			$link = '/app/archive/'.$archive['userid'].'/'.$archive['year'].'/'.$archive['semester'];
-			$date = substr($archive['year'], 0, strlen($archive['year']) / 2).' '.substr($archive['year'], strlen($archive['year']) / 2);
+			$date = substr($archive['year'], 0, strlen($archive['year']) / 2).'-'.substr($archive['year'], strlen($archive['year']) / 2);
 			
-			$link_text = 'Archived '.$date.' '.$semester;
+			$link_text = 'Archived '.$date.'<br>'.$semester;
 			// if ($archive['type'] == 'self')
 			// {
 			// 	echo "<a href=".$link.">".$link_text." Self evaluation</a> ";
@@ -122,22 +122,22 @@
 			echo '
 				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
 			echo "
-				<div class='card disabledCard'>
+				<div class='card waves-effect disabledCard'>
 					<a class='card-content' href=".$link.">";
 			echo "
 				<div class='row'>
 					<div class='col s4 m4'>
 						<div class='imgholder1x1'>
-							<img src=".$this->get_photo($entry['userid']).">
+							<img src=".$this->get_photo($archive['userid']).">
 						</div>
 					</div>
 					<div class='col s8 m8'>";
-			if ($entry['type'] == 'self')
+			if ($archive['type'] == 'self')
 				echo "
 						<h6 class='flow-text name'>Self Evaluation</h6>";
 			else
 				echo "
-						<h6 class='flow-text name'>".$entry['full_name']."</h6>";
+						<h6 class='flow-text name'>".$archive['full_name']."</h6>";
 			echo "
 						<p class='bodyText flow-text'>".$link_text."</p>
 					</div>

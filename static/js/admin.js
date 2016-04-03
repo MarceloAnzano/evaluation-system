@@ -399,35 +399,51 @@
 	{
 		if ( !! document.getElementById('ratings-table'))
 		{
-			$('#ratings-table').find('thead').remove();
-			$('#ratings-table').find('tbody').remove();
+			$('.progress').css('display','block');
+			$('#ratings-table').css('display','none');
+			$('#ratings-table thead').empty();
+			$('#ratings-table tbody tr').addClass('delete-this-row');
+			$('.table-title-here').empty();
 			var link = "/app/display_quest_scores";
 			
 			$.get(link,{},function(response){
 				if (response.status == 'OK')
 				{
-					$("#ratings-table")
-						.append(
-							"<thead>\
-								<tr>\
-									<th colspan='2'><h4>Questionnaire Scores</h4></th>\
-								</tr>\
-								<tr>\
-									<th>Evaluator</th>\
-									<th>Faculty Evaluated</th>\
-									<th>TC Score</th>\
-									<th>EA Score</th>\
-									<th>AP Score</th>\
-									<th>Student Score</th>\
-									<th>Evaluation Type</th>\
-								</tr>\
-							</thead>"
-						);
-						
-					response.scores.forEach(function(item){
-						$("#ratings-table").append("<tr><td>" + item.evaluator + "</td><td>" + item.evaluated + "</td><td>" 
-							+ item.tc + "</td><td>" + item.ea + "</td><td>" + item.ap + "</td><td>" + item.stud + "</td><td>" + item.type + "</td></tr>");
-					});	
+					//if(semester == "2") semstr = "2nd";
+					//else if(semester == "1") semstr = "1st";
+					//else semstr ="";
+					//<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\					
+					$('.table-title-here').append(
+						"<div class='col s8 m8 l8'>\
+							<div class='row'><h4 style='margin-bottom:0px;' class='rating-title'>Questionnaire Scores</h4></div>\
+						</div>\
+						<div class='col s4 m4 l4 print-holder'>\
+							<button class='waves-effect waves-light btn' id='exportThisScores'>Download as csv</button>\
+						</div>"
+					);
+					$("#ratings-table thead").append(
+						"<tr>\
+							<th>Evaluator</th>\
+							<th>Faculty Evaluated</th>\
+							<th>TC Score</th>\
+							<th>EA Score</th>\
+							<th>AP Score</th>\
+							<th>Student Score</th>\
+							<th>Evaluation Type</th>\
+						</tr>"
+					);
+					if (response.scores != null)
+					{
+						response.scores.forEach(function(item){
+							$("#ratings-table tbody").append("<tr><td>" + item.evaluator + "</td><td>" + item.evaluated + "</td><td>" 
+								+ item.tc + "</td><td>" + item.ea + "</td><td>" + item.ap + "</td><td>" + item.stud + "</td><td>" + item.type + "</td></tr>");
+						});
+					}else $("#ratings-table tbody").append("<tr><td>Data Not Available</td></tr>");
+					$("#ratings-table").tablesorter({sortList: [[0,0]]});
+					$('.delete-this-row').remove();
+					$("#ratings-table").trigger("update");
+					$('.progress').css('display','none');
+					$('#ratings-table').css('display','table');
 				}
 			});
 		}

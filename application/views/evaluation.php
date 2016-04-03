@@ -3,12 +3,21 @@
 	<div class="row">
 		<div class="col s2 m2 l1">
 			<div class="imgholder1x1">
-				<?php $person = $data2; echo '<img src="'.$this->get_photo($person['info']['userid']).'">'; ?>
+				<?php echo '<img src="'.$this->get_photo($data2['info']['userid']).'">'; ?>
 			</div>
 		</div>
 		<div class="col l9">
 			<span class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
-			<span class="subBrand"></span>
+			<span class="subBrand">
+				<?php 
+					if($data3 == '1'){
+						echo '1st ';
+					}else if($data3 == '2'){
+						echo '2nd ';
+					}
+					echo 'semester';
+				?>
+			</span>
 		</div>
 	</div>
 </div>
@@ -73,7 +82,9 @@
 							echo "<input name='semester' type='hidden' value='".$semester."'/>";
 						?>
 					</table>
-					<button  class="btn waves-effect waves-light right modal-trigger" data-target="modal-submit-eval">Submit</button>
+					<div class="row">
+						<button  class="btn-large waves-effect waves-light right modal-trigger" data-target="modal-submit-eval">Submit</h5></button>
+					</div>
 					<div id="modal-submit-eval" class="modal">
 						<center class="modal-content">
 							<h5>Submit your answers?</h5>
