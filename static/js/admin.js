@@ -402,28 +402,28 @@
 		{
 			$('.progress').css('display','block');
 			$('#ratings-table').css('display','none');
+			$(".error-ratings").empty();
 			$('#ratings-table thead').empty();
 			$('#ratings-table tbody tr').addClass('delete-this-row');
 			$('.table-title-here').empty();
 			var year = $("select[name=viewRatingYear]").val();
 			var semester = $("select[name=viewRatingSemester]").val();
 			var link = "/app/display_quest_scores/" + year + "/" + semester;
-			
+			if(semester == "2") semstr = "2nd";
+			else if(semester == "1") semstr = "1st";
+			else semstr ="";
 			$.get(link,{},function(response){
 				if (response.status == 'OK' && Object.keys(response.scores).length > 0)
 				{
-					//if(semester == "2") semstr = "2nd";
-					//else if(semester == "1") semstr = "1st";
-					//else semstr ="";
-					//<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\					
 					$('.table-title-here').append(
 						"<div class='col s8 m8 l8'>\
 							<div class='row'><h4 style='margin-bottom:0px;' class='rating-title'>Questionnaire Scores</h4></div>\
+							<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\
 						</div>\
 						<div class='col s4 m4 l4 print-holder'>\
 							<button class='waves-effect waves-light btn' id='exportThisScores'>Download as csv</button>\
 						</div>"
-					);
+					);			
 					$("#ratings-table thead").append(
 						"<tr>\
 							<th>Evaluator</th>\
@@ -441,12 +441,21 @@
 							$("#ratings-table tbody").append("<tr><td>" + item.evaluator + "</td><td>" + item.evaluated + "</td><td>" 
 								+ item.tc + "</td><td>" + item.ea + "</td><td>" + item.ap + "</td><td>" + item.stud + "</td><td>" + item.type + "</td></tr>");
 						});
-					}else $("#ratings-table tbody").append("<tr><td>Data Not Available</td></tr>");
+					}
+					// else $("#ratings-table tbody").append("<tr><td>Data Not Available</td></tr>");
 					$("#ratings-table").tablesorter({sortList: [[0,0]]});
 					$('.delete-this-row').remove();
 					$("#ratings-table").trigger("update");
 					$('.progress').css('display','none');
 					$('#ratings-table').css('display','table');
+				}else{
+					$('.table-title-here').append(
+					"<div class='col s8 m8 l8'>\
+						<div class='row'><h4 style='margin-bottom:0px;' class='rating-title'>Questionnaire Scores</h4></div>\
+						<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\
+					</div>");
+					$(".error-ratings").html("Data not available");
+					$('.progress').css('display','none');
 				}
 			});
 		}

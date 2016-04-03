@@ -129,55 +129,63 @@
 		{
 			$('.progress').css('display','block');
 			$('#ratings-table').css('display','none');
+			$(".error-ratings").empty();
 			$('#ratings-table thead').empty();
 			$('#ratings-table tbody tr').addClass('delete-this-row');
 			$('.table-title-here').empty();
 			var year = $("select[name=viewRatingYear]").val();
 			var semester = $("select[name=viewRatingSemester]").val();
 			var link = "/app/display_ratings/" + year + "/" + semester ;
-			
+			if(semester == "2") semstr = "2nd";
+			else if(semester == "1") semstr = "1st";
+			else semstr ="";
 			$.get(link,{},function(response){
-				if (response.status == 'OK')
+				if (response.status == 'OK' && Object.keys(response.results).length > 0)
 				{	
-					if(semester == "2") semstr = "2nd";
-					else if(semester == "1") semstr = "1st";
-					else semstr ="";
 					$('.table-title-here').append(
-							"<div class='col s8 m8 l8'>\
-								<div class='row'><h4 style='margin-bottom:0px;' class='rating-title'>Final Ratings</h4></div>\
-								<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\
-							</div>\
-							<div class='col s4 m4 l4 print-holder'>\
-								<button class='waves-effect waves-light btn' id='exportThisRatings'>Download as csv</button>\
-							</div>"
-						)
-					$("#ratings-table thead")
-						.append(
-								"<tr>\
-									<th>Teacher</th>\
-									<th>TC Score</th>\
-									<th>EA Score</th>\
-									<th>AP Score</th>\
-									<th>Student Score</th>\
-									<th>Rating</th>\
-								</tr>"
-						);
+						"<div class='col s8 m8 l8'>\
+							<div class='row'><h4 style='margin-bottom:0px;' class='rating-title'>Final Ratings</h4></div>\
+							<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\
+						</div>\
+						<div class='col s4 m4 l4 print-holder'>\
+							<button class='waves-effect waves-light btn' id='exportThisRatings'>Download as csv</button>\
+						</div>"
+					);
+					$("#ratings-table thead").append(
+						"<tr>\
+							<th>Teacher</th>\
+							<th>TC Score</th>\
+							<th>EA Score</th>\
+							<th>AP Score</th>\
+							<th>Student Score</th>\
+							<th>Rating</th>\
+						</tr>"
+					);
 					if (response.results != null)
 					{
 						response.results.forEach(function(teacher){
-							$("#ratings-table").append("<tr><td>" + teacher.name + "</td><td>" 
+							$("#ratings-table tbody").append("<tr><td>" + teacher.name + "</td><td>" 
 							+ teacher.tc+ "</td><td>" + teacher.ea+ "</td><td>" + teacher.ap+ "</td><td>" 
 							+ teacher.student+ "</td><td>" + teacher.rating+ "</td></tr>");
 						});
 					}
-					else $("#ratings-table tbody").append("<tr><td>Data Not Available</td></tr>");
+					// else $("#ratings-table tbody").append("<tr><td>Data Not Available</td></tr>");
 					$("#ratings-table").tablesorter({sortList: [[0,0]]});
 					$('.delete-this-row').remove();
 					$("#ratings-table").trigger("update");
 					$('.progress').css('display','none');
 					$('#ratings-table').css('display','table');
 				}
-				else $("#ratings-table").append("<tr><td>Data Not Available</td></tr>");
+				else {
+					$('.table-title-here').append(
+						"<div class='col s8 m8 l8'>\
+							<div class='row'><h4 style='margin-bottom:0px;' class='rating-title'>Final Ratings</h4></div>\
+							<div class='row'><h6 style='margin-top:0px;'>SY "+year.substring(0,4)+"-"+year.substring(4,8)+" "+semstr+" Semester</h6></div>\
+						</div>"
+					);
+					$(".error-ratings").html("Data not available");
+					$('.progress').css('display','none');
+				}
 			});
 		}
 	}

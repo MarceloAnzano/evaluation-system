@@ -55,9 +55,10 @@ $(document).on('click','#exportThisRatings', function(e){
 })
 
 $(document).on('click','#exportThisScores', function(e){
+    $filename = $('.table-title-here h6').text();
     $('#ratings-table').TableCSVExport({
         delivery: 'download',
-        filename: 'Scores.csv',
+        filename: 'Scores '+$filename+'.csv',
         //header: ['Evaluator','Faculty Evaluated','TC Score','EA Score','AP Score','Student Score','Evaluation Type']
     })
 })
