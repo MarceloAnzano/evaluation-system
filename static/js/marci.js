@@ -1,9 +1,4 @@
-$(window).on('scroll', function(){
-});
 $(document).ready(function(){
-	// if($('#password').text()!=""){
-	// 	$('password-label').addClass('active');
-	// }
     //Activate all select
     $('select').not('#createSectionSelect').material_select();
     
@@ -12,19 +7,16 @@ $(document).ready(function(){
     //$('.subNav').pushpin({ top: 130, offset: 40 });
     $('#sidebar').pushpin({ top: 10, offset: -130 });
     
-    $("#semestral-create select").change(function(event) {
-    	$("#semestral-create #status").text("");
-    });
-
-    //Activate Modal triggers
-    $('.modal-trigger').leanModal();
+    $("#semestral-create select").change(function(event) {$("#semestral-create #status").text("");});
+    $(".dropdown-button").dropdown();
     $('.scrollspy').scrollSpy();
     $('.button-collapse').sideNav({
-      menuWidth: 240, // Default is 240
       edge: 'right', // Choose the horizontal origin
       closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
     });
-    // $("#ratings-table").tablesorter();
+
+    //Modal Popups
+    $('.modal-trigger').leanModal();
     $('.error-message').bind("DOMSubtreeModified", function() {
         $status = $(this).html();
         if($status.length > 1){
@@ -35,6 +27,81 @@ $(document).ready(function(){
     });
     $('#submit-eval-yes').on('click', function(){
         $('#evalform').submit();
+    });
+    $('#archive-ok').on('click', function(){
+        $('#modal-archive-success').openModal();
+    });
+    $('#archive-button').on('click', function(){
+        $sem1st = $('#faculty-1st-status').text();
+        $sem2nd = $('#faculty-2nd-status').text();
+        if($sem1st.toLowerCase().indexOf("not") >= 0 && $sem2nd.toLowerCase().indexOf("not")) $('#modal-archive-error').openModal();
+        else $('#modal-archive-confirm').openModal();
+    });
+    $("#delete-eval-button1").on('click', function(){
+        $sem1st = $('#faculty-1st-status').text();
+        if($sem1st.toLowerCase().indexOf("not") >= 0) $('#modal-archive-error').openModal();
+        else $('#modal-eval-delete-confirm1').openModal();
+    });
+    $("#delete-eval-button2").on('click', function(){
+        $sem2nd = $('#faculty-2nd-status').text();
+        if($sem2nd.toLowerCase().indexOf("not") >= 0) $('#modal-archive-error').openModal();
+        else $('#modal-eval-delete-confirm2').openModal();
+    });
+
+    //csv tooltip
+    $("#submit-csv-button").on('click', function(e){
+        e.stopImmediatePropagation();
+        $CSVflag = true;
+        if($('#select-csv').val() == null){
+            $('#csv-tooltip').addClass('tooltipped');
+            $('#csv-tooltip.tooltipped').tooltip({delay: 50});
+            $("#csv-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            $CSVflag = false;
+        }
+        if($("#csv-file").val() == ""){
+            $('#csv-file-tooltip').addClass('tooltipped');
+            $('#csv-file-tooltip.tooltipped').tooltip({delay: 50});
+            $("#csv-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            $CSVflag = false;
+        }
+        if($CSVflag == false) return false;
+        else $('#questionnaireForm').submit();
+    });
+    $('#csv-tooltip').on('mouseenter',function(e){
+        $('#csv-tooltip').removeClass('tooltipped');
+        $('#csv-tooltip').tooltip('remove');
+    });
+    $('#csv-file-tooltip').on('mouseenter',function(e){
+        $('#csv-file-tooltip').removeClass('tooltipped');
+        $('#csv-file-tooltip').tooltip('remove');
+    });
+
+    //image tooltip
+    $("#submit-img-button").on('click', function(e){
+        e.stopImmediatePropagation();
+        $IMGFlag = true;
+        if($('#select-img-user').val() == null){
+            $('#img-tooltip').addClass('tooltipped');
+            $('#img-tooltip.tooltipped').tooltip({delay: 50});
+            $("#img-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            $IMGFlag = false;
+        }
+        if($("#img-file").val() == ""){
+            $('#img-file-tooltip').addClass('tooltipped');
+            $('#img-file-tooltip.tooltipped').tooltip({delay: 50});
+            $("#img-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            $IMGFlag = false;
+        }
+        if($IMGFlag == false) return false;
+        else $('#facultyPhotoForm').submit();
+    });
+    $('#img-tooltip').on('mouseenter',function(e){
+        $('#img-tooltip').removeClass('tooltipped');
+        $('#img-tooltip').tooltip('remove');
+    });
+    $('#img-file-tooltip').on('mouseenter',function(e){
+        $('#img-file-tooltip').removeClass('tooltipped');
+        $('#img-file-tooltip').tooltip('remove');
     });
 });
 $(document).on('change','#createSectionSelect', function(){
@@ -50,7 +117,6 @@ $(document).on('click','#exportThisRatings', function(e){
     $('#ratings-table').TableCSVExport({
         delivery: 'download',
         filename: 'Ratings '+$filename+'.csv',
-        //header: ['Teacher','TC Score','EA Score','AP Score','Student Score','Rating']
     })
 })
 
@@ -59,7 +125,6 @@ $(document).on('click','#exportThisScores', function(e){
     $('#ratings-table').TableCSVExport({
         delivery: 'download',
         filename: 'Scores '+$filename+'.csv',
-        //header: ['Evaluator','Faculty Evaluated','TC Score','EA Score','AP Score','Student Score','Evaluation Type']
     })
 })
 

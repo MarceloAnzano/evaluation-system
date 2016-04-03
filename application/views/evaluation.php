@@ -1,25 +1,47 @@
 
-<div class="nav-wrapper subNav">
+<div class="nav-wrapper subNav NavEval">
 	<div class="row">
-		<div class="col l1 s2 m2">
+		<div class="col l1 m2 s4">
 			<div class="imgholder1x1">
 				<?php echo '<img src="'.$this->get_photo($data2['info']['userid']).'">'; ?>
 			</div>
 		</div>
-		<div class="col l6 m6 s6">
-			<span class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
-			<span class="subBrand">
-				<?php 
-					if($data3 == '1'){
-						echo '1st ';
-					}else if($data3 == '2'){
-						echo '2nd ';
-					}
-					echo 'semester';
-				?>
-			</span>
+		<div class="col l5 m4 s6">
+			<div class="row">
+				<span class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
+			</div>
+			<div class="row">
+				<span class="subBrand">
+					<?php if($data3 == '1')echo '1st ';
+						else if($data3 == '2')echo '2nd ';
+						echo 'semester';
+					?>
+				</span>
+			</div>
 		</div>
-		<div class="col l5 m4 s4 instruc">
+		<div class="col l6 m6 s4 instruc hide-on-small-only">
+			<div class="row">
+				<div class="col">
+					<h6><span>The number rating stands for the following</span></h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="row"><h6>2 = Satisfactory</h6></div>
+					<div class="row"><h6>0 = Poor</h6></div>
+				</div>
+				<div class="col">
+					<div class="row"><h6>3 = Very Satisfactory</h6></div>
+					<div class="row"><h6>1 = Fair</h6></div>
+				</div>
+				<div class="col">
+					<div class="row"><h6>4 = Excellent</h6></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row hide-on-med-and-up">
+		<div class="col s12 instruc">
 			<h6><span>The number rating stands for the following</span></h6>
 			<div class="row">
 				<div class="col">
@@ -39,7 +61,7 @@
 </div>
 <main>
 <div class="row">
-	<div class="col s8 m8 l8 push-s2 push-m2 push-l2">
+	<div class="col s12 m10 l8 offset-m1 offset-l2">
 		<div class="card">
 			<div class="card-content">
 				<form id="evalform" action='/app/post_result' method='post'>
