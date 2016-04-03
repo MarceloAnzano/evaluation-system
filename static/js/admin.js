@@ -165,6 +165,7 @@
 			cache: false,
 			success: function(response)
 			{
+				console.log(response);
 				if (response.type === 'student')
 				{
 					$('#linkSpace thead').append("<tr><th>Name</th><th>Grade Level</th><th>Section</th></tr>");
@@ -404,10 +405,12 @@
 			$('#ratings-table thead').empty();
 			$('#ratings-table tbody tr').addClass('delete-this-row');
 			$('.table-title-here').empty();
-			var link = "/app/display_quest_scores";
+			var year = $("select[name=viewRatingYear]").val();
+			var semester = $("select[name=viewRatingSemester]").val();
+			var link = "/app/display_quest_scores/" + year + "/" + semester;
 			
 			$.get(link,{},function(response){
-				if (response.status == 'OK')
+				if (response.status == 'OK' && Object.keys(response.scores).length > 0)
 				{
 					//if(semester == "2") semstr = "2nd";
 					//else if(semester == "1") semstr = "1st";
@@ -432,7 +435,7 @@
 							<th>Evaluation Type</th>\
 						</tr>"
 					);
-					if (response.scores != null)
+					if (response.scores != null )
 					{
 						response.scores.forEach(function(item){
 							$("#ratings-table tbody").append("<tr><td>" + item.evaluator + "</td><td>" + item.evaluated + "</td><td>" 

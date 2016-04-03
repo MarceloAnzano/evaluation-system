@@ -30,10 +30,8 @@ class Calculate
 	var $inst_faculty = 0;
 	var $inst_student = 0;
 	
-	// i know these queries can be condensed into one query...
 	function display_subordinate_ratings($con, $id, $position, $year, $semester)
 	{
-		// get target user's id
 		$year = mysqli_real_escape_string($con, $year);
 		$semester = mysqli_real_escape_string($con, $semester);
 		

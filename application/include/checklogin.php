@@ -17,7 +17,7 @@ class Check_login
 			&& isset($_SESSION['password']) && isset($_SESSION['utype']) && isset($_SESSION['supervisor']))
 		{
 			$userid = mysqli_real_escape_string($con, $_SESSION['userid']);
-			$logid = preg_replace('#[^a-z0-9]#', '', $_SESSION['logid']);
+			$logid = preg_replace('#[^a-zA-Z0-9]#', '', $_SESSION['logid']);
 			$password = mysqli_real_escape_string($con, $_SESSION['password']);
 			$utype = preg_replace('#[^a-z]#', '', $_SESSION['utype']);
 			$supervisor = preg_replace('#[^a-z]#', '', $_SESSION['supervisor']);
@@ -31,7 +31,7 @@ class Check_login
 	{	
 		$sql = "SELECT * 
 				FROM users 
-				WHERE hashid=? AND logid=? AND password=? AND utype=? AND supervisor=? AND activation=1 AND is_deleted=0";
+				WHERE hashid=? AND logid =? AND password=? AND utype=? AND supervisor=? AND activation=1 AND is_deleted=0";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 'sssss', $userid, $logid, $password, $utype, $supervisor);	
 			

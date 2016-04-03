@@ -14,6 +14,10 @@
 	
 class App extends Common
 {
+	function show_stuff()
+	{
+		var_dump($_SESSION['userid']);
+	}
 	// displays the main page
 	function index()
 	{
@@ -239,13 +243,13 @@ class App extends Common
 		return;
 	}
 	
-	function display_quest_scores()
+	function display_quest_scores($year, $semester)
 	{
 		if ( ! $this->logged_as_principal('principal')) exit ('Access Denied!');
 		
 		include BASEPATH.'process/evaluation_entries.php';
 		$entries = new Evaluation_entries();
-		$data = $entries->get_all_quest_scores($this->link);
+		$data = $entries->get_all_quest_scores($this->link, $year, $semester);
 		$data['status'] = 'OK';
 		
 		header('Content-Type: application/json');

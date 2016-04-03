@@ -181,14 +181,3 @@
 			});
 		}
 	}
-	
-	// function printReport()
-	// {
-	// 	var year = $("select[name=viewRatingYear]").val();
-	// 	var semester = $("select[name=viewRatingSemester]").val();
-	// 	var link = "/app/print_ratings_report/" + year + "/" + semester ;
-		
-	// 	$.get(link,{},function(response){
-			
-	// 	});
-	// }

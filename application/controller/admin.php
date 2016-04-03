@@ -124,11 +124,13 @@ class Admin extends Common
 	
 	function save_section()
 	{
-		if ( ! $this->logged_as_admin()) exit('Not authorized!');
-		
-		include BASEPATH.'process/save_section.php';
-		$save = new Save_section();
-		$save->save_section_entry($this->link);
+		if ($this->logged_as_admin() OR $this->logged_as_principal())
+		{
+			include BASEPATH.'process/save_section.php';
+			$save = new Save_section();
+			$save->save_section_entry($this->link);
+		}
+		else exit('Not authorized!');
 	}
 	
 	function open($type)

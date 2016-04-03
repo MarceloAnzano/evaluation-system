@@ -7,9 +7,10 @@
 		<div class="row">
 			<div class="right col l2 m3 hide-on-small-only " id="sidebar">
 				<ul class="section table-of-contents">
-					<li><a href="#create-eval">Create Evaluation</a></li>
 				<?php if (!($this->logged_as_principal())){
 					echo '
+					<li><a href="#create-eval">Create Evaluation</a></li>
+
 					<li><a href="#activate-eval">Evalution Control Panel</a></li>
 					<li><a href="#create-user">Create User</a></li>';
 				}?>
@@ -24,74 +25,59 @@
 				</ul>
 			</div>
 			<div class="col l10 m9 s12 offset-l2 offset-m3" id="maincontent">
+<?php if ( ! ($this->logged_as_principal())){
+			echo '
 				<div class="row eval-division section scrollspy" id="create-eval">
 					<div class="col l12 m12 s12">
 						<h3>Create Evaluation</h3>
 							<div class="row">
 								<div class="col l12 m12 s12">
-								<form id='semestral-create' onsubmit='return createEvaluations();'>							
+								<form id="semestral-create" onsubmit="return createEvaluations();">							
 									<div class="row">
 										<div class="col">
 											<h5>School Year:</h5>
 										</div>
 										<div class="col l2 m2 s3">				
 										<!-- <div class="input-field col l2 m2 s10 offset-l2"> -->
-											<select name='setting[]'>
-												<?php for ($i = 15; $i < 25; $i++) echo "<option value='20".$i."20".($i+1)."'>20$i-20".($i+1)."</option>"; ?>
-											</select>
-										</div>
-<!--
-										<div class="col">
-									 		<h6 style="font-size: 1.2em;">to</h6>
-									 	</div>
+											<select name="setting[]">';
+}
+?>
+												<?php if ( ! ($this->logged_as_principal())) for ($i = 15; $i < 25; $i++) echo "<option value='20".$i."20".($i+1)."'>20$i-20".($i+1)."</option>"; ?>
 
-									 	<div class="col l2 m2 s3">
-											<select name='setting[]'>
-												<?php for ($i = 16; $i < 26; $i++) echo "<option value=20$i>20$i</option>"; ?>
+<?php if ( ! ($this->logged_as_principal())){
+			echo '
 											</select>
 										</div>
--->
 									</div>
 									<div class="row">
 										<div class="col">
 											<h5>Semester:</h5>
 										</div>
 										<div class="col l2 m2 s10">
-											<select name='setting[]'>
+											<select name="setting[]">
 												<option value=1>1st Semester</option>
 												<option value=2>2nd Semester</option>
 											</select>
 										</div>
 									</div>
-<!--
 									<div class="row">
 										<div class="col">
-											<h5>Type:</h5>
-										</div>
-										<div class="col l4 m4 s8">
-											<select name='create-type'>
-												<option value='faculty'>Faculty</option>
-												<option value='student'>Student</option>
-											</select>
-										</div>
-									</div>
--->
-									<div class="row">
-										<div class="col">
-											<button name='submit' class="waves-effect waves-light btn" type='submit'>Submit</button>
+											<button name="submit" class="waves-effect waves-light btn" type="submit">Submit</button>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col">
-											<h6 class="error-message" id='status'></h6>
+											<h6 class="error-message" id="status"></h6>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
-				</div>
-<?php if (!($this->logged_as_principal())){
+				</div>';
+}
+?>
+<?php if ( ! ($this->logged_as_principal())){
 			echo '
 				<div class="row eval-division section scrollspy" id="activate-eval">
 					<div class="col l12 m12 s12">
@@ -151,7 +137,7 @@
 				</div>';
 	}
 ?>
-<?php if (!($this->logged_as_principal())){
+<?php if ( ! ($this->logged_as_principal())){
 			echo '
 				<div class="row eval-division section scrollspy" id="create-user">
 					<div class="col l12 m12 s12">
@@ -173,7 +159,7 @@
 									</div>
 									<div class="row">
 										<div class="input-field col l6 m6 s12">
-											<input id="eval-create-pass" name="createPassword" type="password" readonly onfocus="this.removeAttribute("readonly");">
+											<input id="eval-create-pass" name="createPassword" type="password" >
 											<label for="eval-create-pass">Password</label>
 										</div>
 									</div>
@@ -310,7 +296,8 @@
 															echo "<tr>";
 															echo "<td>$i.</td>";
 															echo "<td><input name='createSubjects[]'></td>";
-															echo "<td><select class='load-select' name='createAssignTeachers[]'></select></td>";
+															echo "<td><select class='load-select' name='createAssignTeachers[]'>";
+															echo "<option value='' selected>Select Teacher</option></select></td>";
 															echo "</tr>";
 														}
 													?>
@@ -359,23 +346,27 @@
 												<div class="col l12 m12 s12">
 													<div class="row">
 														<input type='radio' id='searchUsername' name='searchtype' value='username' checked>
-														<label for='searchUsername'>Name (Fullname)</label>
+														<label for='searchUsername'>by Name</label>
+													</div>
+													<div class="row">
+														<input type='radio' id='searchGradeLevel' name='searchtype' value='gradelevel'>
+														<label for='searchGradeLevel'>by Grade Level</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchSection' name='searchtype' value='section'>
-														<label for='searchSection'>Section name</label>
+														<label for='searchSection'>by Section</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchSat' name='searchtype' value='sat'>
-														<label for='searchSat'>Subject area</label>
+														<label for='searchSat'>by Subject Area</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchLevel' name='searchtype' value='level'>
-														<label for='searchLevel'>Teaching level (High School, Intermediate, Primary)</label>
+														<label for='searchLevel'>by Teaching level (High School, Intermediate, Primary)</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchCluster' name='searchtype' value='cluster'>
-														<label for='searchCluster'>Cluster number</label>
+														<label for='searchCluster'>by Cluster Number</label>
 													</div>
 												</div>
 											</div>
@@ -384,7 +375,7 @@
 												<div class="col l12 m12 s12">
 													<div class="row">
 														<input type='radio' id='searchStudents' name='searchtype' value='students'>
-														<label for='searchStudents'>All Student</label>
+														<label for='searchStudents'>All Students</label>
 													</div>
 													<div class="row">
 														<input type='radio' id='searchFaculty' name='searchtype' value='faculty'>
@@ -605,7 +596,7 @@
 				 * Upload Faculty Photo
 				 * **/
 				?>
-<?php if (!($this->logged_as_principal())){
+<?php if ( ! ($this->logged_as_principal())){
 			echo '
 				<div class="row eval-division section scrollspy" id="upload-photo">
 					<div class="col l12 m12 s12">

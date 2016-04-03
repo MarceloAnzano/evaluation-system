@@ -110,14 +110,15 @@ class Users_and_sections
 		switch ($modifier)
 		{
 			case 'username':
-				$statement = "AND uname='$search'";
+				$statement = "AND uname LIKE '%$search%'";
 				$type = 'all';
 				break;
+			case 'gradelevel':
+				$statement = "AND gradelevel LIKE '%$search%'";
+				$type = 'student';
+				break;
 			case 'section':
-				$section = explode(' ', $search);
-				$grade_level = $section[0].' '.$section[1];
-				$section_entry = $section[2].' '.$section[3];
-				$statement = "AND gradelevel='$grade_level' AND section='$section_entry'";
+				$statement = "AND section LIKE '%$search%'";
 				$type = 'student';
 				break;
 			case 'cluster':
@@ -125,11 +126,11 @@ class Users_and_sections
 				$type = 'faculty';
 				break;
 			case 'level':
-				$statement = "AND level='$search'";
+				$statement = "AND level LIKE '%$search%'";
 				$type = 'faculty';
 				break;
 			case 'sat':
-				$statement = "AND subject='$search'";
+				$statement = "AND subject LIKE '%$search%'";
 				$type = 'faculty';
 				break;
 			case 'faculty':
@@ -150,7 +151,7 @@ class Users_and_sections
 		$sql = "SELECT hashid, uname, gradelevel, section, subject, cluster, level, supervisor, utype
 				FROM users
 				WHERE utype != 'admin' AND is_deleted=0 ".$statement;
-		
+				
 		$query = mysqli_query($con, $sql);
 		$results = array();
 

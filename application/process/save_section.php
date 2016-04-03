@@ -49,7 +49,7 @@ class Save_section
 		{
 			$teachers[] = mysqli_real_escape_string($con, $teacher);
 		}
-		
+
 		// get rid of the previous entries
 		if ($is_uploaded)
 		{
@@ -62,7 +62,7 @@ class Save_section
 		}
 		
 		// set new entries
-		if ($subjects[0] != '')
+		if ($subjects[0] != '' && $teachers[0] != '')
 		{
 			$sql = "INSERT INTO subjects
 					(gradelevel, section, subject, teacherId)
@@ -72,11 +72,13 @@ class Save_section
 		// repeat queries
 		for ($a = 1; $a < 15; $a++)
 		{
-			if ($subjects[$a] != '')
+			if ($subjects[$a] != '' && $teachers[$a] != '')
 			{
 				$sql .= ", ('".$grade_level."','".$section_entry."','".$subjects[$a]."','".$teachers[$a]."')";
 			}
 		}
+				//~ var_dump($sql);
+		//~ exit();
 		$query = mysqli_query($con, $sql);
 		
 		exit ('Section Saved!');

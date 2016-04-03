@@ -8,7 +8,7 @@ class Evaluation_entries
 		$sql = "SELECT to_evaluate, users.uname, evtype, users.supervisor, results.open, tc, ea, ap, student, year, semester
 				FROM results
 				INNER JOIN users ON users.hashid =results.to_evaluate
-				WHERE evaluator='$userid';";
+				WHERE evaluator='$userid'";
 		$query = mysqli_query($con, $sql);
 		$numrows = mysqli_num_rows($query);
 		if ($numrows == 0)
@@ -105,11 +105,27 @@ class Evaluation_entries
 		}
 	}
 	
-	function get_all_quest_scores($con)
+	function get_all_quest_scores($con, $year, $semester)
 	{
+		$year = mysqli_real_escape_string($con, $year);
+		$semester = mysqli_real_escape_string($con, $semester);
+		
+		$sql = "SELECT DISTINCT year, semester 
+				FROM results 
+				WHERE year='$year' AND semester='$semester' LIMIT 2";
+				
+		$query = mysqli_query($con, $sql);
+		$numrows = mysqli_num_rows($query);
+		if ($numrows > 0)
+		{
+			$table = 'results';
+		}
+		else $table ='results_archive';
+		
 		$sql = "SELECT users.uname, tc, ea, ap, student, evtype
-				FROM results
-				JOIN users ON results.evaluator=users.hashid";
+				FROM ".$table."
+				JOIN users ON ".$table.".evaluator=users.hashid
+				WHERE year='$year' AND semester='$semester'";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_execute($stmt);
 		$query = mysqli_stmt_get_result($stmt);
@@ -119,10 +135,10 @@ class Evaluation_entries
 		{
 			$temp[] = $row;
 		}
-		
 		$sql = "SELECT users.uname
-				FROM results
-				JOIN users ON results.to_evaluate=users.hashid";
+				FROM ".$table."
+				JOIN users ON ".$table.".to_evaluate=users.hashid
+				WHERE year='$year' AND semester='$semester'";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_execute($stmt);
 		$query = mysqli_stmt_get_result($stmt);
