@@ -1,12 +1,12 @@
 
 <div class="nav-wrapper subNav">
 	<div class="row">
-		<div class="col s2 m2 l1">
+		<div class="col l1 s2 m2">
 			<div class="imgholder1x1">
 				<?php echo '<img src="'.$this->get_photo($data2['info']['userid']).'">'; ?>
 			</div>
 		</div>
-		<div class="col l9">
+		<div class="col l6 m6 s6">
 			<span class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
 			<span class="subBrand">
 				<?php 
@@ -18,6 +18,22 @@
 					echo 'semester';
 				?>
 			</span>
+		</div>
+		<div class="col l5 m4 s4 instruc">
+			<h6><span>The number rating stands for the following</span></h6>
+			<div class="row">
+				<div class="col">
+					<div class="row"><h6>4 = Excellent</h6></div>
+				</div>
+				<div class="col">
+					<div class="row"><h6>3 = Very Satisfactory</h6></div>
+					<div class="row"><h6>1 = Fair</h6></div>
+				</div>
+				<div class="col">
+					<div class="row"><h6>2 = Satisfactory</h6></div>
+					<div class="row"><h6>0 = Poor</h6></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

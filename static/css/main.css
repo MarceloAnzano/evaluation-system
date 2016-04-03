@@ -484,4 +484,16 @@ th.headerSortDown {
 	border-radius: 2px 2px 0px 0px;
     background-image: url(../images/desc.gif); 
     background-color: rgba(51,153,255,0.3);
-} 
+}
+.instruc h6{
+	margin: 0px !important;
+	font-weight: 300;
+}
+.instruc .col{
+	padding-bottom: 0px !important;
+}
+.instruc span{
+	font-size: 1.1rem !important;
+	font-weight: 500;
+	text-transform: uppercase;
+}
