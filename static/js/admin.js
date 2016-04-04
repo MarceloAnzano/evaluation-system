@@ -165,7 +165,7 @@
 			cache: false,
 			success: function(response)
 			{
-				console.log(response);
+				//console.log(response);
 				if (response.type === 'student')
 				{
 					$('#linkSpace thead').append("<tr><th>Name</th><th>Grade Level</th><th>Section</th></tr>");
@@ -278,7 +278,7 @@
 		var dataString = 'uname='+ uname + '&targetid='+ targetid + '&password='+ password
 			+ '&usertype=' + usertype + '&sat=' + sat + '&gradelevel=' + gradelevel + '&section=' + section + '&position=' + position
 			+ '&level=' + level + '&cluster=' + cluster;
-		console.log(dataString);
+		//console.log(dataString);
 		$.ajax({
 			type: "POST",
 			url: "/admin/edit_user",

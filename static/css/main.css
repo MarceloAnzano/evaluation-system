@@ -270,6 +270,9 @@ button.btn, button.btn-large, i.btn1{
 	top:50px;
 	z-index: 2;
 }
+.NavEval{
+	line-height: inherit;
+}
 .subNav .col{
 	padding: 0.75rem 0.75rem;
 }
@@ -309,7 +312,7 @@ button.btn, button.btn-large, i.btn1{
 	text-transform:capitalize;
 	font-size: 1.3rem;
 	font-weight: 200;
-	line-height: 0px;
+	/*line-height: 0px;*/
 }
 
 .waves-effect{
@@ -489,11 +492,14 @@ th.headerSortDown {
 	margin: 0px !important;
 	font-weight: 300;
 }
-.instruc .col{
+.instruc.hide-on-med-and-up .col{
 	padding-bottom: 0px !important;
+	float: left;
 }
-.instruc span{
-	font-size: 1.1rem !important;
-	font-weight: 500;
-	text-transform: uppercase;
-}
+.instruc.hide-on-small-only .col{padding-bottom: 0px !important;float: right;}
+.instruc span{ font-size: 1.1rem !important; font-weight: 500; text-transform: uppercase;}
+#user-dropdown li, #slide-out{background-color: #161616 !important;}
+#user-dropdown a, #slide-out a{color: #fff !important;}
+#navHolder .dropdown-button{text-transform: uppercase;}
+#navHolder .dropdown-button i{ margin-left: 0px; height: inherit;}
+.material-tooltip .backdrop{ background-color: #b71c1c !important;}

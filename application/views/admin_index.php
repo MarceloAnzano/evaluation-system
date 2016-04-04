@@ -90,7 +90,7 @@
 								<button id="" class="waves-effect waves-light btn" type="button" onclick="return openEvaluation(1)">Toggle</button>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="return deleteEvaluation(1)">Delete</button>
+								<button id="delete-eval-button1" class="waves-effect waves-light btn" type="button">Delete</button>
 							</div>
 						</div>
 						<div class="row">
@@ -101,7 +101,7 @@
 								<button id="" class="waves-effect waves-light btn" type="button" onclick="return openEvaluation(2)">Toggle</button>
 							</div>
 							<div class="col">
-								<button id="" class="waves-effect waves-light btn" type="button" onclick="return deleteEvaluation(2)">Delete</button>
+								<button id="delete-eval-button2" class="waves-effect waves-light btn" type="button" >Delete</button>
 							</div>
 						</div>
 <!--
@@ -122,14 +122,50 @@
 								<h5>Archive All Results</h5>
 							</div>
 							<div class="col">
-								<button id="" data-target="modal-archive-success" class="modal-trigger waves-effect waves-light btn" type="button" onclick="return archiveEvaluation()">Archive</button>
+								<button id="archive-button"class="waves-effect waves-light btn" type="button" >Archive</button>
 							</div>
-							<div id="modal-archive-success" class="modal col l4 m4 s8 offset-l2 offset-m2">
+							<div id="modal-archive-success" class="modal">
 								<center class="modal-content">
 									<h5>Evaluation Archived</h5>
 								</center>
 								<div class="modal-footer">
 									<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+								</div>
+							</div>
+							<div id="modal-archive-error" class="modal">
+								<center class="modal-content">
+									<h5>Evaluation has not been created yet</h5>
+								</center>
+								<div class="modal-footer">
+									<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+								</div>
+							</div>
+							<div id="modal-archive-confirm" class="modal">
+								<center class="modal-content">
+									<h5>Archive evaluation?</h5>
+									<h6>Once the evaluation is archived, users can not submit evaluation forms for this school year.</h6>
+								</center>
+								<div class="modal-footer">
+									<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+									<a onclick="return archiveEvaluation();" id="archive-ok" class="modal-action modal-close waves-effect waves-green btn-flat">YES</a>
+								</div>
+							</div>
+							<div id="modal-eval-delete-confirm1" class="modal">
+								<center class="modal-content">
+									<h5>Delete 1st semester evaluation?</h5>
+								</center>
+								<div class="modal-footer">
+									<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+									<a onclick="return deleteEvaluation(1)" id="archive-ok" class="modal-action modal-close waves-effect waves-green btn-flat">YES</a>
+								</div>
+							</div>
+							<div id="modal-eval-delete-confirm2" class="modal">
+								<center class="modal-content">
+									<h5>Delete 2nd semester evaluation?</h5>
+								</center>
+								<div class="modal-footer">
+									<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+									<a onclick="return deleteEvaluation(2)" id="archive-ok" class="modal-action modal-close waves-effect waves-green btn-flat">YES</a>
 								</div>
 							</div>
 						</div>
@@ -428,7 +464,7 @@
 							<div class="col l12 m12 s12">
 								<form id='percentageTable' onsubmit='return editPercentages();'>
 									<div class="row" style="margin-top: 20px;">
-										<h5 style="margin-bottom: 0px;">Teaching Competencies</h5>
+										<h5>Teaching Competencies</h5>
 									</div>
 									<div class="row">
 										<div class="input-field col l2 m2 s2">
@@ -453,7 +489,7 @@
 										</div>
 									</div>
 									<div class="row" style="margin-top: 20px;">
-										<h5 style="margin-bottom: 0px;">Efficiency and Attitude</h5>
+										<h5>Efficiency and Attitude</h5>
 									</div>
 									<div class="row">
 										<div class="input-field col l2 m2 s2">
@@ -478,7 +514,7 @@
 										</div>
 									</div>	
 									<div class="row" style="margin-top: 20px;">
-										<h5 style="margin-bottom: 0px;">Attendance and Punctuality</h5>
+										<h5>Attendance and Punctuality</h5>
 									</div>
 									<div class="row">
 										<div class="input-field col l2 m2 s2">
@@ -503,7 +539,7 @@
 										</div>
 									</div>
 									<div class="row" style="margin-top: 20px;">
-										<h5 style="margin-bottom: 0px;">Category Percentage</h5>
+										<h5>Category Percentage</h5>
 									</div>
 									<div class="row">
 										<div class="input-field col l4 m4 s4">
@@ -520,7 +556,7 @@
 										</div>
 									</div>
 									<div class="row" style="margin-top: 20px;">
-										<h5 style="margin-bottom: 0px;">Instrument Percentage</h5>
+										<h5>Instrument Percentage</h5>
 									</div>
 									<div class="row">
 										<div class="input-field col l4 m4 s4">
@@ -556,6 +592,7 @@
 				<div class="row eval-division section scrollspy" id="manage-questionnaire">
 					<div class="col l12 m12 s12">
 						<h3>Manage Questionnaire</h3>
+						<h6>The questionnaire should be a .csv file with atmost size of 50kb</h6>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id='questionnaireForm' enctype="multipart/form-data" action="/admin/process_csv" method="POST">
@@ -564,16 +601,16 @@
 										    <div class="waves-effect waves-light btn" style="padding-left: 1.2rem; padding-right: 1.2rem;">
 										    	<input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
 											    <span style="line-height: 100%">Choose File</span>
-											    <input name="questionFile" type="file" style="height: inherit;" accept=".csv">
+											    <input name="questionFile" type="file" style="height: inherit;" accept=".csv" >
 										    </div>
-										    <div class="file-path-wrapper  col l5 m5 s8">
-										    	<input class="file-path validate" type="text" >    	
+										    <div class="file-path-wrapper col l5 m5 s8" id="csv-file-tooltip" data-position="right" data-delay="50" data-tooltip="Choose csv file">
+										    	<input class="file-path validate" type="text" id="csv-file">    	
 										    </div>
 									    </div>
 								    </div>
 								    <div class="row">
-								    	<div class="col l7 m7 s12">
-										    <select name='questionnaire'>
+								    	<div class="col l7 m7 s12" id="csv-tooltip" data-position="right" data-delay="50" data-tooltip="Select questionnaire type">
+										    <select id="select-csv" name='questionnaire'>
 												<option value="" disabled selected>Questionnaire Type</option>
 												<option value='student_questionnaire'>Student Questionnaire</option>
 												<option value='teaching_competencies'>Teaching Competencies</option>
@@ -583,7 +620,7 @@
 									    </div>
 								    </div>
 								    <div class="row">
-								    	<button class="waves-effect waves-light btn" type="submit">Upload Questionnaire</button>
+								    	<button id="submit-csv-button" class="waves-effect waves-light btn">Upload Questionnaire</button>
 								    </div>
 								</form>
 							</div>
@@ -601,6 +638,7 @@
 				<div class="row eval-division section scrollspy" id="upload-photo">
 					<div class="col l12 m12 s12">
 						<h3>Upload Faculty Photo</h3>
+						<h6>The image should be in .jpg or .png, and atmost 100kb</h6>
 						<div class="row">
 							<div class="col l12 m12 s12">
 								<form id="facultyPhotoForm" enctype="multipart/form-data" action="/admin/upload_photo" method="POST">
@@ -611,32 +649,22 @@
 											    <span style="line-height: 100%">Choose File</span>
 											    <input name="facultyPhoto" type="file" accept=".jpg,.jpeg,.png"/>
 										    </div>
-										    <div class="file-path-wrapper  col l5 m5 s8">
-										    	<input class="file-path validate" type="text" >    	
+										    <div class="file-path-wrapper  col l5 m5 s8" id="img-file-tooltip" data-position="right" data-delay="50" data-tooltip="Choose photo">
+										    	<input class="file-path validate" type="text" id="img-file">    	
 										    </div>
 									    </div>
 								    </div>
 								    <div class="row">
-								    	<div class="col l7 m7 s12">
-										    <select name="userPhotoId">
+								    	<div class="col l7 m7 s12" id="img-tooltip" data-position="right" data-delay="50" data-tooltip="Select user">
+										    <select name="userPhotoId" id="select-img-user">
 												<option value="" disabled selected>Select User</option>
 										    </select>
 									    </div>
 								    </div>
 								    <div class="row">
-								    	<button class="waves-effect waves-light btn" type="submit">Upload Photo</button>
+								    	<button class="waves-effect waves-light btn" id="submit-img-button">Upload Photo</button>
 								    </div>
 								</form>
-								<div id="modal-invalid-photo" class="modal">
-									<center class="modal-content">
-										<h5>Invalid Image</h5>
-										<h6>The image should be in .jpg or png</h6>
-										<h6>and atmost 100kb</h6>
-									</center>
-									<div class="modal-footer">
-										<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
