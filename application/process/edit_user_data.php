@@ -23,7 +23,7 @@ class Edit_user_data
 			return true;
 	}
 	
-	function edit_user_method($con)
+	function edit_user_method($con, $session_usertype, $usertype = NULL, $position = NULL)
 	{
 		if ( ! isset($_POST['uname']) OR empty($_POST['uname']) 
 		OR ! isset($_POST['targetid']) OR empty($_POST['targetid'])
@@ -59,8 +59,17 @@ class Edit_user_data
 			$this->password = $crypt->hash($this->password);
 		}
 		
-		$usertype = strtolower(mysqli_real_escape_string($con, $_POST['usertype']));
-		$position = strtolower(mysqli_real_escape_string($con, $_POST['position']));
+		if (is_null($usertype))
+		{
+			$usertype = strtolower(mysqli_real_escape_string($con, $_POST['usertype']));
+		}
+		
+		if (is_null($position))
+		{
+			$position = strtolower(mysqli_real_escape_string($con, $_POST['position']));
+		}
+		
+		if ($session_usertype != 'admin' && ($position == 'principal' OR $position == 'api')) exit ('Not authorized!');
 		
 		// set sql query based on user types
 		switch ($usertype)

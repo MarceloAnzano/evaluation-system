@@ -35,6 +35,7 @@
 	</div>
 	</div>
 </main>
+<? include BASEPATH.'views/change_user_settings.php';?>
 
 
 <!-- 	<div class="nav-wrapper subNav">

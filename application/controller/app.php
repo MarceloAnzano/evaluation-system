@@ -14,10 +14,6 @@
 	
 class App extends Common
 {
-	function show_stuff()
-	{
-		var_dump($_SESSION['userid']);
-	}
 	// displays the main page
 	function index()
 	{
@@ -50,7 +46,7 @@ class App extends Common
 	{
 		if($this->check_user_login())
 		{
-			$this->this_view('views/user_settings.php');
+			$this->this_view('views/change_user_settings.php', $this->get_session_info('userid'), 'settings');
 		}
 		else header('Location: '.base_url);
 	}
@@ -288,6 +284,15 @@ class App extends Common
 		$data = $calculate->display_subordinate_ratings($this->link, $this->get_session_info('userid'), $this->get_session_info('supervisor'), $year, $semester);
 		var_dump($data);
 	}
+	
+	function edit_user()
+	{
+		if ( ! $this->check_user_login()) exit ('Not logged in');
+		
+		include BASEPATH.'process/edit_user_data.php';
+		$user = new Edit_user_data();
+		$user->edit_user_method($this->link);
+	}	
 	
 	// logout user
 	function logout()

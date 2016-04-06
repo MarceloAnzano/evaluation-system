@@ -15,12 +15,15 @@
 									<label for="editUname">Full Name</label>
 								</div>
 							</div>
-							<div class="row">
-								<div class="input-field col l12 m12 s12">
-									<input id='editPassword' name='editPassword' type='password' <?php if ( ! $this->logged_as_admin())echo "disabled"?>>
-									<label for="editPassword">Password</label>
-								</div>
-							</div>
+							<?php 
+							if ($data2 != 'settings') 
+								echo '<div class="row">
+									<div class="input-field col l12 m12 s12">
+										<input id="editPassword" name="editPassword" type="password" <?php if ( ! $this->logged_as_admin())echo "disabled"?>>
+										<label for="editPassword">Password</label>
+									</div>
+								</div>';
+							?>
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
 									<input id='editUsertype' name='editUsertype'<?php if ( ! $this->logged_as_admin())echo "disabled"?> type="text" placeholder=" " >
@@ -98,6 +101,35 @@
 					<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
 					<a href="" onclick="return deleteUser(this.href);" class="delete-ok1 modal-action modal-close waves-effect waves-green btn-flat">YES</a>
 				</div>
+			</div>
+			<div class="container-div" style="margin-top: 2em;">
+				<form class="card" onsubmit="return validChange();" style="width:400px">
+					<center class="card-content">
+						<center class="row">
+							<center class="input-field">
+								<input type="password" id="currpass" name="currpass" onfocus="emptyElement()" maxlength="88">
+								<label for="currpass">Old Password</label>
+							</center>
+						</center>
+						<center class="row">
+							<center class="input-field">
+								<input type="password" id="password" name="password" onfocus="emptyElement()" maxlength="100">
+								<label for="password">New Password</label>
+							</center>
+						</center>
+						<center class="row">
+							<center class="input-field">
+								<input type="password" id="repass" name="repass" onfocus="emptyElement()" maxlength="100">
+								<label for="repass">Confirm Password</label>
+							</center>
+						</center>
+						<center class="row">
+							<button class="btn waves-effect waves-light right"  id="loginbtn" type="submit">SET</button>
+						</center>
+						<center class="error-message-bottom" id="status">
+						</center>
+					</center>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -66,7 +66,9 @@ class Record_result
 		// because real_escape doesn't work on arrays
 		foreach ($_POST[$question] as $number)
 		{
-			$questions[] = mysqli_real_escape_string($con, $number);
+			if ($number >= 0 && $number <= 4)
+				$questions[] = mysqli_real_escape_string($con, $number);
+			else exit ('Invalid Input');
 		}
 		
 		$num_index = count($numquest);

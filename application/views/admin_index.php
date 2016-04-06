@@ -212,7 +212,7 @@
 									<div class="row">
 										<div class="input-field col l3 m3 s6">
 											<input id="eval-create-grade" name="createUserGradelevel" type="text" disabled>
-											<label for="eval-create-grade">Grade</label>
+											<label for="eval-create-grade">Grade Level</label>
 										</div>
 										<div class="input-field col l3 m3 s6">
 											<input id="eval-create-section" name="createUserSection" type="text" disabled>
@@ -244,7 +244,7 @@
 											<div class="row">
 												<div class="input-field col l3 m3 s6">
 													<input id="eval-create-level" name="createUserLevel" type="text" disabled>
-													<label for="eval-create-level">Level</label>
+													<label for="eval-create-level">Teaching Level</label>
 												</div>
 												<div class="input-field col l3 m3 s6">
 													<input id="eval-create-cluster" name="createUserCluster" type="text" disabled>

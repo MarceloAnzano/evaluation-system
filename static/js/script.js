@@ -189,3 +189,38 @@
 			});
 		}
 	}
+	
+	function editUser()
+	{
+		var uname = $('#manageUserForm [name=editUname]').val();
+		var password = $('#manageUserForm [name=editPassword]').val();
+		var usertype = $('#manageUserForm [name=editUsertype]').val();
+		var sat = $('#manageUserForm [name=editUserUserSubject]').val();
+		var gradelevel = $('#manageUserForm [name=editUserGradelevel]').val();
+		var section = $('#manageUserForm [name=editUserSection]').val();
+		var position = $('#manageUserForm [name=editPosition]').val();
+		var level = $('#manageUserForm [name=editUserLevel]').val();
+		var cluster = $('#manageUserForm [name=editUserCluster]').val();
+		var targetid = $('#manageUserForm [name=editTargetId]').val();
+				
+		var dataString = 'uname='+ uname + '&targetid='+ targetid + '&password='+ password
+			+ '&usertype=' + usertype + '&sat=' + sat + '&gradelevel=' + gradelevel + '&section=' + section + '&position=' + position
+			+ '&level=' + level + '&cluster=' + cluster;
+		//console.log(dataString);
+		$.ajax({
+			type: "POST",
+			url: "/app/edit_user",
+			data: dataString,
+			cache: false,
+			success: function(result)
+			{
+				var result=trim(result);
+				if(result=='correct')
+				{
+					location.reload();
+				}
+				else $("#status").html(result);
+			}
+		});
+		return false;
+	}

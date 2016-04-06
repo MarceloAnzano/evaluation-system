@@ -26,9 +26,9 @@
 				?>
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
 					<?php if ($this->check_user_login()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."'>HOME</a></li>";?>
-					<?php if ($this->logged_as_principal()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."admin'>PRINCIPAL</a></li>";?>
+					<?php if ($this->logged_as_principal()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."admin'>CONTROL PANEL</a></li>";?>
 					<?php if ($this->allow_supervisors()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."app/view_ratings'>RATINGS TALLY</a></li>";?>
-					<?php if ($this->check_user_login()) echo '<li><a class="custom-btn dropdown-button waves-effect waves-light" data-activates="user-dropdown">'.$this->get_session_info('uname').'<i class="material-icons right">arrow_drop_down</i></a></li>';?>
+					<?php if ($this->check_user_login()) echo '<li><a class="custom-btn dropdown-button waves-effect waves-light" data-activates="user-dropdown">'.$this->get_session_info('uname').'</a></li>'; /*<i class="material-icons right">arrow_drop_down</i> */?>
 				</ul>
 				<ul id="user-dropdown" class="dropdown-content">
 					<?php if ($this->check_user_login()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."app/user_settings'>SETTINGS</a></li>";?>

@@ -21,7 +21,7 @@ class Admin extends Common
 			$user = new Edit_user_data();
 			if ($user->does_user_exist($this->link, $id))
 			{
-				$this->this_view('views/change_user_settings.php', $id);
+				$this->this_view('views/change_user_settings.php', $id, 'manage');
 			}
 			else exit ('Invalid user!');
 		}
@@ -111,17 +111,6 @@ class Admin extends Common
 		$save->save_user_entry($this->link);
 	}
 	
-	function edit_user()
-	{
-		if ($this->logged_as_admin() OR $this->logged_as_principal())
-		{
-			include BASEPATH.'process/edit_user_data.php';
-			$user = new Edit_user_data();
-			$user->edit_user_method($this->link);
-		}
-		else exit('Not authorized!');
-	}
-	
 	function save_section()
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
@@ -198,7 +187,7 @@ class Admin extends Common
 		{
 			include BASEPATH.'process/users_and_sections.php';
 			$get_list = new Users_and_sections();
-			$data = $get_list->get_all_users($this->link);
+			$data = $get_list->get_all_users($this->link, $this->get_session_info('userid'));
 			$data['status'] = "OK";
 			
 			header('Content-Type: application/json');
@@ -280,6 +269,7 @@ class Admin extends Common
 		}
 		else exit('Not authorized!');
 	}
+	
 	
 	function get_percentages()
 	{

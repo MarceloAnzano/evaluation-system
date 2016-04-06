@@ -30,7 +30,7 @@
 							<center class="row">
 								<center class="input-field">
 									<input type="password" id="repass" name="repass" onfocus="emptyElement()" maxlength="100">
-									<label for="repass">New Password</label>
+									<label for="repass">Confirm Password</label>
 								</center>
 							</center>
 							<center class="row">

@@ -262,40 +262,7 @@
 		}
 	}
 	
-	function editUser()
-	{
-		var uname = $('#manageUserForm [name=editUname]').val();
-		var password = $('#manageUserForm [name=editPassword]').val();
-		var usertype = $('#manageUserForm [name=editUsertype]').val();
-		var sat = $('#manageUserForm [name=editUserUserSubject]').val();
-		var gradelevel = $('#manageUserForm [name=editUserGradelevel]').val();
-		var section = $('#manageUserForm [name=editUserSection]').val();
-		var position = $('#manageUserForm [name=editPosition]').val();
-		var level = $('#manageUserForm [name=editUserLevel]').val();
-		var cluster = $('#manageUserForm [name=editUserCluster]').val();
-		var targetid = $('#manageUserForm [name=editTargetId]').val();
-				
-		var dataString = 'uname='+ uname + '&targetid='+ targetid + '&password='+ password
-			+ '&usertype=' + usertype + '&sat=' + sat + '&gradelevel=' + gradelevel + '&section=' + section + '&position=' + position
-			+ '&level=' + level + '&cluster=' + cluster;
-		//console.log(dataString);
-		$.ajax({
-			type: "POST",
-			url: "/admin/edit_user",
-			data: dataString,
-			cache: false,
-			success: function(result)
-			{
-				var result=trim(result);
-				if(result=='correct')
-				{
-					location.reload();
-				}
-				else $("#status").html(result);
-			}
-		});
-		return false;
-	}
+
 	
 	function editPercentages()
 	{
@@ -349,8 +316,8 @@
 				{
 					$('#createSectionForm input[name=createSectionGradelevel]').val("");
 					$('#createSectionForm input[name=createSectionSection]').val("");
-					$('#createSectionForm input[name=createSectionGradelevel]').removeAttr('disabled');
-					$('#createSectionForm input[name=createSectionSection]').removeAttr('disabled');
+					$('#createSectionForm input[name=createSectionGradelevel]').removeAttr('readonly');
+					$('#createSectionForm input[name=createSectionSection]').removeAttr('readonly');
 					$('#createSectionForm input[name^=createSubjects]').each(function(){
 						$(this).val("");
 					});
@@ -363,8 +330,8 @@
 						{
 							$('#createSectionForm input[name=createSectionGradelevel]').val(section.gradelevel);
 							$('#createSectionForm input[name=createSectionSection]').val(section.section);
-							$('#createSectionForm input[name=createSectionGradelevel]').attr('disabled', 'disabled');
-							$('#createSectionForm input[name=createSectionSection]').attr('disabled','disabled');
+							$('#createSectionForm input[name=createSectionGradelevel]').attr('readonly', 'true');
+							$('#createSectionForm input[name=createSectionSection]').attr('readonly','true');
 							
 							var count = 0;
 							var limit = Object.keys(section.subjects).length;

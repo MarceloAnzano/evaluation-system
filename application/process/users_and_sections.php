@@ -8,10 +8,10 @@ class Users_and_sections
 		
 		// not actually deleted
 		$sql = "UPDATE users
-				SET is_deleted = 1
+				SET logid=?, is_deleted = 1
 				WHERE hashid=?";
 		$stmt = mysqli_prepare($con, $sql);
-		mysqli_stmt_bind_param($stmt, 's', $id);		
+		mysqli_stmt_bind_param($stmt, 'ss', $id, $id);		
 		mysqli_stmt_execute($stmt);
 		
 		//~ // delete photo too
@@ -101,7 +101,7 @@ class Users_and_sections
 		return $results;
 	}
 	
-	function get_all_users($con)
+	function get_all_users($con, $id)
 	{
 		$search = strtolower(mysqli_real_escape_string($con, $_POST['search']));
 		$modifier = strtolower(mysqli_real_escape_string($con, $_POST['modifier']));
@@ -150,7 +150,7 @@ class Users_and_sections
 		
 		$sql = "SELECT hashid, uname, gradelevel, section, subject, cluster, level, supervisor, utype
 				FROM users
-				WHERE utype != 'admin' AND is_deleted=0 ".$statement;
+				WHERE utype != 'admin' AND is_deleted=0 AND hashid !='$id'".$statement;
 				
 		$query = mysqli_query($con, $sql);
 		$results = array();
