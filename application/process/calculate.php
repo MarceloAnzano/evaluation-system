@@ -126,46 +126,99 @@ class Calculate
 		{
 			// get the ratings from each division
 			// get only non-supervisory faculty
-			$self = $this->get_self_rating($con, $teacher[0], $teacher[1], $teacher[2]);
-			$subject_area = $this->get_subject_rating($con, $teacher[0], $teacher[1], $teacher[2]);
-			$cluster = $this->get_cluster_rating($con, $teacher[0], $teacher[1], $teacher[2]);
-			$level = $this->get_level_rating($con, $teacher[0], $teacher[1], $teacher[2]);
-			$principal = $this->get_principal_rating($con, $teacher[0], $teacher[1], $teacher[2]);
-			$students = $this->get_student_rating($con, $teacher[0], $teacher[1]);
+			$self_scores = $this->get_self_rating($con, $teacher[0], $teacher[1], $teacher[2]);
+			$subject_area_scores = $this->get_subject_rating($con, $teacher[0], $teacher[1], $teacher[2]);
+			$cluster_scores = $this->get_cluster_rating($con, $teacher[0], $teacher[1], $teacher[2]);
+			$level_scores = $this->get_level_rating($con, $teacher[0], $teacher[1], $teacher[2]);
+			$principal_scores = $this->get_principal_rating($con, $teacher[0], $teacher[1], $teacher[2]);
+			$students_scores = $this->get_student_rating($con, $teacher[0], $teacher[1]);
 			
-			//~ echo 'self<br>';
-			//~ var_dump($self);
-			//~ echo '<br>subject area<br>';
-			//~ var_dump($subject_area);
-			//~ echo '<br>cluster<br>';
-			//~ var_dump($cluster);
-			//~ echo '<br>level<br>';
-			//~ var_dump($level);
-			//~ echo '<br>principal<br>';
-			//~ var_dump($principal);
-			//~ echo '<br>students<br>';
-			//~ var_dump($students);
-			//~ exit();
 			$identity = $this->who_is($con, $teacher[0]);
+			
+			// overall values 
 			$rating = 0;
 			$tc = 0;
 			$ea = 0;
 			$ap = 0;
 			$partial = 0;
-			switch ($identity[0])
+			
+			// partial values
+			$tc_subject_area = 0;
+			$tc_cluster = 0;
+			$ea_subject_area = 0;
+			$ea_level = 0;
+			$ap_subject_area = 0;
+			$ap_level = 0;
+			
+			switch ($identity)
 			{
+				// count principal self ratings
 				case 'api':
 				case 'principal':
-					$rating = ($self[0] * $this->tc_percentage) + ($self[1] * $this->ea_percentage) + ($self[2] * $this->ap_percentage);
+					$rating = ($self_scores[0] * $this->tc_percentage) + ($self_scores[1] * $this->ea_percentage) + ($self_scores[2] * $this->ap_percentage);
 					break;
+					
+				// compute normal teacher ratings
 				case 'none':
-					$tc = ($subject_area[0] * $this->tc_satl_per) + ($cluster[0] * $this->tc_cc_per) + ($principal[0][0] * $this->tc_api_per )
+					// get all subject area scores
+					if (count($subject_area_scores) > 1)
+					{
+						foreach ($subject_area_scores as $sa)
+						{
+							$tc_subject_area += $sa[0];
+							$ea_subject_area += $sa[1];
+							$ap_subject_area += $sa[2];
+						}
+						$tc_subject_area = $tc_subject_area / count($subject_area_scores);
+						$ea_subject_area = $ea_subject_area / count($subject_area_scores);
+						$ap_subject_area = $ap_subject_area / count($subject_area_scores);
+					}
+					else
+					{
+						$tc_subject_area = $subject_area_scores[0];
+						$ea_subject_area = $subject_area_scores[1];
+						$ap_subject_area = $subject_area_scores[2];
+					}
+					
+					// get all cluster scores
+					if (count($cluster_scores) > 1)
+					{
+						foreach ($cluster_scores as $cl)
+						{
+							$tc_cluster += $cl[0];
+						}
+						$tc_cluster = $tc_cluster / count($cluster_scores);
+					}
+					else
+					{
+						$tc_cluster = $cluster_scores[0];
+					}
+					
+					
+					// get all level scores
+					if (count($level_scores) > 1)
+					{
+						foreach ($level_scores as $lev)
+						{
+							$ea_level += $lev[1];
+							$ap_level += $lev[2];
+						}
+						$ea_level = $ea_level / count($level_scores);
+						$ap_level = $ap_level / count($level_scores);
+					}
+					else
+					{
+						$ea_level = $level_scores[1];
+						$ap_level = $level_scores[2];
+					}
+					
+					$tc = ($tc_subject_area * $this->tc_satl_per) + ($tc_cluster * $this->tc_cc_per) + ($principal[0][0] * $this->tc_api_per )
 						+ ($principal[1][0] * $this->tc_principal_per) + ($self[0] * $this->tc_self_per);
 						
-					$ea = ($subject_area[1] * $this->ea_satl_per) + ($level[1] * $this->ea_ll_per) + ($principal[0][1] * $this->ea_api_per )
+					$ea = ($ea_subject_area * $this->ea_satl_per) + ($ea_level * $this->ea_ll_per) + ($principal[0][1] * $this->ea_api_per )
 						+ ($principal[1][1] * $this->ea_principal_per) + ($self[1] * $this->ea_self_per);
 					
-					$ap = ($subject_area[2] * $this->ap_satl_per) + ($level[2] * $this->ap_ll_per) + ($principal[0][2] * $this->ap_api_per )
+					$ap = ($ap_subject_area * $this->ap_satl_per) + ($ap_level * $this->ap_ll_per) + ($principal[0][2] * $this->ap_api_per )
 						+ ($principal[1][2] * $this->ap_principal_per) + ($self[2] * $this->ap_self_per);
 					
 					$rating = ($tc * $this->tc_percentage) + ($ea * $this->ea_percentage) + ($ap * $this->ap_percentage);
@@ -176,7 +229,6 @@ class Calculate
 						foreach ($students as $student)
 						{
 							$partial += $student;
-							
 						}
 						
 						$partial = $partial / count($students);
@@ -268,7 +320,7 @@ class Calculate
 				WHERE hashid='$id' AND supervisor = 'none' AND is_deleted = 0";
 		$query = mysqli_query($con, $sql);
 		$row = mysqli_fetch_array($query);
-		return $row;
+		return $row[0];
 	}
 	
 	private function get_category_percentages($con)

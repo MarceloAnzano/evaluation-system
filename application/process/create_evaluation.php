@@ -71,7 +71,7 @@ class Create_evaluation
 	}
 	
 	// main creation method
-	function create_evaluation_entries($con, $evtype = NULL)
+	function create_evaluation_entries($con, $person_to_add = NULL)
 	{
 		$this->get_year_and_sem($con);
 		$this->check_for_duplicates($con);
@@ -83,8 +83,9 @@ class Create_evaluation
 		$this->create_ratings_container($con);
 	}
 	
-	// main method for creating student evaluation of faculty
-	function create_student_to_teacher($con)
+	/** PRIVATE FUNCTIONS **/
+	// method for creating student evaluation of faculty
+	private function create_student_to_teacher($con)
 	{
 		// select all students
 		$this->get_year_and_sem($con);
@@ -134,7 +135,7 @@ class Create_evaluation
 		// select all faculty
 		$sql = "SELECT hashid
 				FROM users
-				WHERE utype='faculty'  AND is_deleted=0 AND supervisor = 'none'";
+				WHERE utype='faculty' AND is_deleted=0";
 		$query = mysqli_query($con, $sql);
 		
 		// start new insert query		
@@ -160,10 +161,10 @@ class Create_evaluation
 	
 	private function create_principal_evaluation($con)
 	{
-		// get all non-supervisory faculty
+		// get all non-principal faculty
 		$sql = "SELECT hashid
 				FROM users
-				WHERE utype='faculty' AND supervisor = 'none' AND is_deleted=0";
+				WHERE utype='faculty' AND is_deleted=0";
 		$query_subordinates = mysqli_query($con, $sql);
 		
 		// select API and principal
@@ -207,7 +208,7 @@ class Create_evaluation
 		$this->level($con);
 	}
 	
-	/** PRIVATE FUNCTIONS **/
+	
 	private function subject_area($con)
 	{
 		// get SATLs
@@ -215,6 +216,12 @@ class Create_evaluation
 				FROM users
 				WHERE utype='faculty' AND supervisor='satl' AND is_deleted=0";
 		$query_satl = mysqli_query($con, $sql);
+		
+		if (mysqli_num_rows($query_satl) == 0)
+		{
+			echo 'No SATLs found!';
+			return;
+		}
 		
 		$satl = array();
 		while ($row = mysqli_fetch_array($query_satl))

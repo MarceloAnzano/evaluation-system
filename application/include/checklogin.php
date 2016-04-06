@@ -25,13 +25,15 @@ class Check_login
 			// set user's login status after authentication
 			$this->login_status = $this->auth_user($con, $userid, $logid, $password, $utype, $supervisor);
 		}
+
 	}
 	
 	function auth_user($con, $userid, $logid, $password, $utype, $supervisor)
 	{	
 		$sql = "SELECT * 
 				FROM users 
-				WHERE hashid=? AND logid =? AND password=? AND utype=? AND supervisor=? AND activation=1 AND is_deleted=0";
+				WHERE hashid COLLATE latin1_general_cs LIKE ? AND logid COLLATE latin1_general_cs LIKE ? 
+				AND password=? AND utype=? AND supervisor=? AND activation=1 AND is_deleted=0";
 		$stmt = mysqli_prepare($con, $sql);
 		mysqli_stmt_bind_param($stmt, 'sssss', $userid, $logid, $password, $utype, $supervisor);	
 			
