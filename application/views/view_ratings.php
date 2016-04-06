@@ -1,4 +1,4 @@
-<div class="nav-wrapper subNav">
+<div class="subNav line-height">
 	<span class="brand-logo" style="text-transform: none !important;">Evaluation Results</span>
 </div>
 <main>

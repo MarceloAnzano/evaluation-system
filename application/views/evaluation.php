@@ -1,5 +1,4 @@
-
-<div class="nav-wrapper subNav NavEval">
+<div class="subNav">
 	<div class="row">
 		<div class="col l2 m2 s4" style="width: 10%;">
 			<div class="imgholder1x1">

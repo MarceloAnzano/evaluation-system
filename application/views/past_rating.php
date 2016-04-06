@@ -1,6 +1,6 @@
-	<div class="nav-wrapper subNav">
+	<div class="subNav">
 		<div class="row">
-			<div class="col s2 m2 l1">
+			<div class="col s2 m2 l1" style="width: 10%;">
 				<div class="imgholder1x1">
 					<?php echo '<img src="'.$this->get_photo($data2).'">'; ?>
 				</div>
