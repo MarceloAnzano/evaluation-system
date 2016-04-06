@@ -2,7 +2,7 @@ body{overflow: auto !important;display: flex;min-height: 100vh;flex-direction: c
 main{height: auto;flex: 1 0 auto;display: flex;}
 .row{margin: 0px !important;width: 100% !important;}
 label{color: #7c7c7c !important;}
-label.active{color: #26a69a !important;padding-bottom: 5px;}
+label.active{color: #26a69a !important;padding-bottom: 0px;}
 li {list-style-type: none;}
 header{width:100%;height: 140px !important;background-color: #18487d;}
 #headImageHolder{height: 90px;}
@@ -41,13 +41,14 @@ td::first-letter {text-transform: capitalize;}
 #evalform thead{margin-left:-20px;}
 #evalform th{font-size: 1.4rem;;font-weight: bold !important;padding-top:2.75rem;}
 #evalform td {vertical-align:bottom;font-size: 1.2rem;}
-tbody input[type=number]::-webkit-inner-spin-button,tbody input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;margin: 0;}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;margin: 0;}
 input[type=number] {-moz-appearance:textfield;}
 .print-holder button{text-align: right;float: right;}
 .table-title-here{position: relative;margin-bottom: 10px !important;}
 .table-title-here > .print-holder{position: absolute;bottom: 0 !important;right: 0 !important;}
 .card-action a{color:#18487d !important;}
 footer.page-footer{margin-top: 0px !important;height: 30px;line-height: 30px;background-color: #161616 !important;}
+.name{text-align: left !important;margin-top: 0px;font-weight: 500;color: #000;text-transform:capitalize;}
 
 /*Admin Page*/
 .eval-division{margin-top: 20px;margin-bottom: 40px;}
@@ -80,7 +81,6 @@ footer.page-footer{margin-top: 0px !important;height: 30px;line-height: 30px;bac
 /*.pageContent{width: 100%;min-height: 400px;}*/
 /*a.card-content .row{width:100%;height:100%;*/
 /*.NavEval{line-height: inherit;}*/
-/*.name{text-align: left !important;margin-top: 0px;font-weight: 500;color: #000;text-transform:capitalize;}*/
 /*.avatar{padding-right: 0px !important;}*/
 /*.subNav div.row{margin: 0px;}*/
 
@@ -96,5 +96,6 @@ th.headerSortDown {border-radius: 2px 2px 0px 0px;background-image: url(../image
 #user-dropdown li, #slide-out{background-color: #161616 !important;}
 #user-dropdown a, #slide-out a{color: #fff !important;}
 #navHolder .dropdown-button{text-transform: uppercase;}
-#navHolder .dropdown-button i{ margin-left: 0px; height: inherit;}
+#navHolder .dropdown-button i{ margin-left: 0px; height: 100%; line-height: inherit;}
 .material-tooltip .backdrop{ background-color: #b71c1c !important;}
+
