@@ -21,54 +21,93 @@ class Validate
 		else $message[] = "Please enter password";
 		
 		// catch errors and report to front
-		$countError = count($message);
-		
-		if($countError > 0)
+		if(count($message) > 0)
 		{
-			$this->errorMessages($message, $countError);
+			$this->errorMessages($message);
 		}
 		else
 		{
-			$sql = "SELECT hashid, uname, password, utype, supervisor 
+			$sql = "SELECT  hashid, uname, password, utype, supervisor, timeout, login_times 
 					FROM users 
-					WHERE logid='$logid' AND activation=1 AND is_deleted=0";
+					WHERE logid COLLATE latin1_general_cs LIKE '$logid' AND activation=1 
+					AND is_deleted=0 AND (timeout < NOW() - INTERVAL 10 MINUTE OR timeout IS NULL)";
 			$query = mysqli_query($con, $sql);
-			$check_user = mysqli_num_rows($query);
+			$numrows = mysqli_num_rows($query);
 			
-			if($check_user > 0)
+			if($numrows > 0)
 			{
+				$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+
+				// include the bycrpt file if user login attempt was valid
 				include BASEPATH.'libraries/bcrypt.php';
-				$crypt = new Bcrypt();
-				while ($row = mysqli_fetch_row($query))
+				$cryptograph = new Bcrypt();
+				
+				if ($cryptograph->verify($password, $row['password']))
 				{
-					if ($crypt->verify($password, $row[2]))
+					$_SESSION['userid'] = $row['hashid'];
+					$_SESSION['logid'] = $logid;
+					$_SESSION['uname'] = $row['uname'];
+					$_SESSION['password'] = $row['password'];
+					$_SESSION['utype'] = $row['utype'];
+					$_SESSION['supervisor'] = $row['supervisor'];
+					
+					// reset incorrect login entries
+					$sql = "UPDATE users
+							SET login_times= 0, timeout = NULL 
+							WHERE logid COLLATE latin1_general_cs LIKE '$logid'";
+					mysqli_query($con, $sql);
+					
+					// log the login by the user
+					$sql = "INSERT INTO admin_log
+							(userId, event_type) 
+							VALUES ('".$row['hashid']."', 'User logged in')";
+					mysqli_query($con, $sql);
+					echo 'correct';
+					exit();
+					
+					// TO SEE THE ADMIN_LOG 
+					// SELECT event_date, users.uname, event_type FROM admin_log JOIN users ON userId=hashid
+				}
+				else
+				{
+					
+					if ($row['login_times'] >= 3)
 					{
-						$_SESSION['userid'] = $row[0];
-						$_SESSION['logid'] = $logid;
-						$_SESSION['uname'] = $row[1];
-						$_SESSION['password'] = $row[2];
-						$_SESSION['utype'] = $row[3];
-						$_SESSION['supervisor'] = $row[4];
-						echo 'correct';
-						exit();
+						// set the timeout time if incorrect logins exceed the limit
+						$sql = "UPDATE users
+								SET timeout=NOW()
+								WHERE logid COLLATE latin1_general_cs LIKE '$logid'";
+						mysqli_query($con, $sql);
+						$message[] = ucwords('Too many login attempts, account is disabled for 10 minutes.');
+						$sql = "INSERT INTO admin_log
+							(userId, event_type) 
+							VALUES ('".$row['hashid']."', 'User account was disabled')";
+						mysqli_query($con, $sql);
+						$this->errorMessages($message);
 					}
 					else
 					{
+						// increment the number of incorrect logins
 						$message[] = ucwords('Password is incorrect.');
-						$this->errorMessages($message, $countError + 1);
+						$sql = "UPDATE users
+								SET login_times=login_times+1
+								WHERE logid COLLATE latin1_general_cs LIKE '$logid'";
+						mysqli_query($con, $sql);
+						$this->errorMessages($message);
 					}
 				}
 			}
 			else
 			{
-				$message[] = ucwords('Incorrect username or password is not set.');
-				$this->errorMessages($message, $countError + 1);
+				$message[] = ucwords('Incorrect username or account was disabled.');
+				$this->errorMessages($message);
 			}
 		}
 	}
 	
-	function errorMessages($message, $countError)
+	function errorMessages($message)
 	{
+		$countError = count($message);
 		for($i = 0; $i < $countError; $i++)
 			echo '<br/>'.ucwords($message[$i]);
 	}

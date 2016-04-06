@@ -14,6 +14,11 @@
 	
 class App extends Common
 {
+	
+	function show_stuff()
+	{
+		var_dump($_SESSION);
+	}
 	// displays the main page
 	function index()
 	{
