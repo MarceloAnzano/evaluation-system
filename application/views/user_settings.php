@@ -1,10 +1,10 @@
 <main>
 	<div class="container" style="">
-	<div class="nav-wrapper subNav" style="">
-			
+		<div class="nav-wrapper subNav" style="">		
 			<span class="brand-logo" style="text-transform: none !important;">Settings</span>
 		</div>
 		<div class="container-div" style="margin-top: 2em;">
+		<? include BASEPATH.'views/change_user_settings.php';?>
 		<form class="card" onsubmit="return validChange();" style="width:400px">
 			<center class="card-content">
 				<center class="row">
@@ -35,7 +35,7 @@
 	</div>
 	</div>
 </main>
-<? include BASEPATH.'views/change_user_settings.php';?>
+
 
 
 <!-- 	<div class="nav-wrapper subNav">

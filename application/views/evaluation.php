@@ -1,14 +1,14 @@
 
 <div class="nav-wrapper subNav NavEval">
 	<div class="row">
-		<div class="col l1 m2 s4">
+		<div class="col l2 m2 s4" style="width: 10%;">
 			<div class="imgholder1x1">
 				<?php echo '<img src="'.$this->get_photo($data2['info']['userid']).'">'; ?>
 			</div>
 		</div>
-		<div class="col l5 m4 s6">
+		<div class="col l4 m4 s6">
 			<div class="row">
-				<span class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
+				<span  class="brand-logo"><?php $person = $data2; echo $person['info']['name']; ?></span>
 			</div>
 			<div class="row">
 				<span class="subBrand">
@@ -21,7 +21,7 @@
 		</div>
 		<div class="col l6 m6 s4 instruc hide-on-small-only">
 			<div class="row">
-				<div class="col">
+				<div class="col" style="padding: 0px;">
 					<h6><span>The number rating stands for the following</span></h6>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 </div>
 <main>
 <div class="row">
-	<div class="col s12 m10 l8 offset-m1 offset-l2">
+	<div class="col s12 m10 l10 offset-m1 offset-l1">
 		<div class="card">
 			<div class="card-content">
 				<form id="evalform" action='/app/post_result' method='post'>

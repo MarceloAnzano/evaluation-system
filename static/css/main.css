@@ -13,7 +13,7 @@ header{width:100%;height: 140px !important;background-color: #18487d;}
 #navHolder{position: static;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box; height: 50px;background-color: #161616 !important;line-height: 50px;}
 #navHolder li{padding-left: 0px;padding-right: 0px;}
 #navHolder i{font-size: 2.1rem;line-height: 150%;padding-right: 0.7rem;}
-.subNav{overflow: hidden;background-color: #009688 !important;color: #fff;font-weight: 400;line-height: 50px;font-size: 1.5rem;width: 100%;top:50px;z-index: 2;}
+.subNav{overflow: hidden;background-color: #009688 !important;color: #fff;font-weight: 400;/*line-height: 50px;*/font-size: 1.5rem;width: 100%;top:50px;z-index: 2;}
 .subNav .col{padding: 0.75rem;}
 .imgholder1x1{overflow: hidden;position: relative;width: 100%;}
 .imgholder1x1:before{content: "";display: block;padding-top: 100%;}
@@ -35,12 +35,13 @@ button.btn, button.btn-large, i.btn1{background-color: #18487d !important;font-w
 .bodyText{font-size: 1.15rem;color: #000 !important;}
 table{margin-bottom: 1.75rem;}
 td input{padding: 0px !important;margin: 0px !important;}
-td {padding-top: 0px !important;padding-bottom: 0px !important;padding-right: 10px;padding-left: 10px;}
+td {padding-top: 0px;padding-bottom: 0px;padding-right: 10px;padding-left: 10px;}
 td::first-letter {text-transform: capitalize;}
 #evalform{width: 95%;margin: auto;margin-bottom: 1.75rem;}
 #evalform thead{margin-left:-20px;}
-#evalform th{font-size: 1.4rem;;font-weight: bold !important;padding-top:2.75rem;}
-#evalform td {vertical-align:bottom;font-size: 1.2rem;}
+#evalform th{font-size: 1.4rem;;font-weight: bold !important;padding-top:2rem;}
+#evalform td {vertical-align:bottom;font-size: 1.2rem; padding-top: 1rem;}
+#evalform input {border-bottom-color: transparent;}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;margin: 0;}
 input[type=number] {-moz-appearance:textfield;}
 .print-holder button{text-align: right;float: right;}
@@ -49,7 +50,7 @@ input[type=number] {-moz-appearance:textfield;}
 .card-action a{color:#18487d !important;}
 footer.page-footer{margin-top: 0px !important;height: 30px;line-height: 30px;background-color: #161616 !important;}
 .name{text-align: left !important;margin-top: 0px;font-weight: 500;color: #000;text-transform:capitalize;}
-
+.rating{width: 20%;}
 /*Admin Page*/
 .eval-division{margin-top: 20px;margin-bottom: 40px;}
 .eval-division>.col.l12.m12.s12>h3, th>h4, .past-title, .rating-title{color: #EA4A4F;}
@@ -99,3 +100,4 @@ th.headerSortDown {border-radius: 2px 2px 0px 0px;background-image: url(../image
 #navHolder .dropdown-button i{ margin-left: 0px; height: 100%; line-height: inherit;}
 .material-tooltip .backdrop{ background-color: #b71c1c !important;}
 
+.col-centered{float: none;margin: 0 auto;}
