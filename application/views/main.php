@@ -1,6 +1,6 @@
 <main>
 	<div class="container">
-		<div class="nav-wrapper subNav">
+		<div class="subNav line-height">
 			<span class="brand-logo" style="text-transform: none !important;">List of Teachers</span>
 		</div>
 <?php // because i don't like working with javascript :(

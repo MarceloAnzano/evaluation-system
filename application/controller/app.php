@@ -51,7 +51,8 @@ class App extends Common
 	{
 		if($this->check_user_login())
 		{
-			$this->this_view('views/change_user_settings.php', $this->get_session_info('userid'), 'settings');
+			//$this->this_view('views/change_user_settings.php', $this->get_session_info('userid'), 'settings');
+			$this->this_view('views/user_settings.php', $this->get_session_info('userid'), 'settings');
 		}
 		else header('Location: '.base_url);
 	}
