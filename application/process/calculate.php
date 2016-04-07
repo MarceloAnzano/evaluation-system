@@ -112,8 +112,9 @@ class Calculate
 		$per = $this->get_category_percentages($con);
 		
 		// collect all persons evaluated
-		$sql = "SELECT DISTINCT to_evaluate, year, semester
-				FROM results";
+		$sql = "SELECT DISTINCT to_evaluate, year, semester, supervisor
+				FROM results
+				LEFT JOIN users ON users.hashid=to_evaluate";
 		$query = mysqli_query($con, $sql);
 		
 		$faculty = array();
@@ -133,7 +134,8 @@ class Calculate
 			$principal_scores = $this->get_principal_rating($con, $teacher[0], $teacher[1], $teacher[2]);
 			$students_scores = $this->get_student_rating($con, $teacher[0], $teacher[1]);
 			
-			$identity = $this->who_is($con, $teacher[0]);
+			//~ $identity = $this->who_is($con, $teacher[0]);
+			$identity = $teacher[2];
 			
 			// overall values 
 			$rating = 0;
@@ -160,6 +162,9 @@ class Calculate
 					
 				// compute normal teacher ratings
 				case 'none':
+				case 'satl':
+				case 'cc':
+				case 'll':
 					// get all subject area scores
 					if (count($subject_area_scores) > 1)
 					{

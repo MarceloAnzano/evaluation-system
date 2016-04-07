@@ -7,40 +7,98 @@
 			<div class="col s12 m10 l10 offset-l1 offset-m1">
 				<div class="card">
 					<div class="card-content" style="width: 80%">
-					<?php include BASEPATH.'views/change_user_settings_contents.php';?>
+						<form id='manageUserForm' onsubmit="return editUser();">
+							<h5>User Details:</h5>
+							<div class="row">
+								<div class="input-field col l12 m12 s12">
+									<input id='editUname' name='editUname' type='text' autofocus>
+									<label for="editUname">Full Name</label>
+								</div>
+							</div>
+								<div class="row">
+									<div class="input-field col l12 m12 s12">
+										<input id="editPassword" name="editPassword" type="password" <?php if ( ! $this->logged_as_admin())echo "disabled"?>>
+										<label for="editPassword">Password</label>
+									</div>
+								</div>
+							<div class="row">
+								<div class="input-field col l12 m12 s12">
+									<input id='editUsertype' name='editUsertype'<?php if ( ! $this->logged_as_admin())echo "disabled"?> type="text" placeholder=" " >
+									<label for="editUsertype">User Type</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col l12 m12 s12">
+									<input id='editUserUserSubject' name='editUserUserSubject' type='text'placeholder=" ">
+									<label for="editUserUserSubject">Subject</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col l12 m12 s12">
+									<input id='editUserGradelevel' name='editUserGradelevel' type='text'>
+									<label for="editUserGradelevel">Grade Level</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col l12 m12 s12">
+									<input id='editUserSection' name='editUserSection' type='text'>
+									<label for="editUserSection">Section</label>
+								</div>
+							</div>
+							<div class="row">
+								<h5>Position:</h5>
+								<div class="row">
+									<div class="col m8 l8 s12">
+										<select id='editPosition' name='editPosition' >
+											<option value='' disabled selected>Select position</option>
+											<option value='none'>None</option>
+											<option value='principal'>Principal</option>
+											<option value='api'>API</option>
+											<option value='cc'>CC</option>
+											<option value='ll'>LL</option>
+											<option value='satl'>SATL</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col l8 m18 s12">
+										<input id='editUserLevel' name='editUserLevel' type='text' placeholder=" ">
+										<label for="editUserLevel">Teaching Level</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col l8 m18 s12">
+										<input id='editUserCluster' name='editUserCluster' type='text' placeholder=" ">
+										<label for="editUserCluster">Cluster</label>
+									</div>
+								</div>
+							</div>
+							<input type='hidden' id='editTargetId' name='editTargetId' value='<?php echo $data; ?>'><br>
+							<div class="row">
+								<button class="waves-effect waves-light btn" type='submit' name='submit'>Submit</button>
+							</div>
+						</form>
+						<p class="error-message" id='status'></p>
 					</div>
 				</div>
 			</div>
-			
-			<!-- <div class="container-div" style="margin-top: 2em;">
-				<form class="card" onsubmit="return validChange();" style="width:400px">
-					<center class="card-content">
-						<center class="row">
-							<center class="input-field">
-								<input type="password" id="currpass" name="currpass" onfocus="emptyElement()" maxlength="88">
-								<label for="currpass">Old Password</label>
-							</center>
-						</center>
-						<center class="row">
-							<center class="input-field">
-								<input type="password" id="password" name="password" onfocus="emptyElement()" maxlength="100">
-								<label for="password">New Password</label>
-							</center>
-						</center>
-						<center class="row">
-							<center class="input-field">
-								<input type="password" id="repass" name="repass" onfocus="emptyElement()" maxlength="100">
-								<label for="repass">Confirm Password</label>
-							</center>
-						</center>
-						<center class="row">
-							<button class="btn waves-effect waves-light right"  id="loginbtn" type="submit">SET</button>
-						</center>
-						<center class="error-message-bottom" id="status">
-						</center>
-					</center>
-				</form>
-			</div> -->
+			<div id="modal-error-message" class="modal">
+				<center class="modal-content">
+					<h5></h5>
+				</center>
+				<div class="modal-footer">
+					<a class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+				</div>
+			</div>
+			<div id="modal-submit-useredit" class="modal">
+				<center class="modal-content">
+					<h5>Submit user edit?</h5>
+				</center>
+				<div class="modal-footer">
+					<a class="modal-action modal-close waves-effect waves-green btn-flat">NO</a>
+					<a href="" onclick="return deleteUser(this.href);" class="delete-ok1 modal-action modal-close waves-effect waves-green btn-flat">YES</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </main>

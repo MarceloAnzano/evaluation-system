@@ -47,7 +47,6 @@ class Validate
 					$_SESSION['userid'] = $row['hashid'];
 					$_SESSION['logid'] = $logid;
 					$_SESSION['uname'] = $row['uname'];
-					$_SESSION['password'] = $row['password'];
 					$_SESSION['utype'] = $row['utype'];
 					$_SESSION['supervisor'] = $row['supervisor'];
 					
@@ -71,7 +70,7 @@ class Validate
 				else
 				{
 					
-					if ($row['login_times'] >= 3)
+					if ($row['login_times'] >= 7)
 					{
 						// set the timeout time if incorrect logins exceed the limit
 						$sql = "UPDATE users

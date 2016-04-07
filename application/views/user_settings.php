@@ -1,6 +1,6 @@
 <main>
 	<div class="container" style="">
-		<div class="subNav line-height" style="">		
+		<div id= class="subNav line-height" style="">		
 			<span class="brand-logo" style="text-transform: none !important;">Settings</span>
 		</div>
 		<div class="container-div" style="margin-top: 2em;">
@@ -8,7 +8,7 @@
 				<div class="col s12 m10 l10 offset-l1 offset-m1">
 					<div class="card">
 						<div class="card-content" style="width: 90%">
-							<?php include BASEPATH.'views/change_user_settings_contents.php';?>
+							<?php include BASEPATH.'views/change_account_settings.php';?>
 							<form onsubmit="return validChange();">
 								<center class="row">
 									<center class="input-field">

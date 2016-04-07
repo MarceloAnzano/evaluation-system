@@ -190,17 +190,58 @@
 		}
 	}
 	
-	function editUser()
+	displayUserSettingsInfo();
+	function displayUserSettingsInfo() {
+		if ( !! document.getElementById('editAccountInfo'))
+		{
+			var link = "/app/user_settings_info/"+ $("#manageUserForm [name=editTargetId]").val();
+						
+			$.get(link,{},function(response){
+				$('#editUserProtectedInfo').append("<li>User Login ID: " + response.info.logid + "</a></li>");
+
+				$("#manageUserForm [name=editUsertype]").val(response.info.type);
+				$("#manageUserForm [name=editUname]").val(response.info.name);
+				
+				if (response.info.gradelevel !== '' && response.info.section !== '')
+				{
+					$('#manageUserForm [name=editUserGradelevel]').val(response.info.gradelevel);
+					$('#manageUserForm [name=editUserSection]').val(response.info.section);
+				}
+				
+				if (response.info.subject !== '' && response.info.cluster !== '' && response.info.level !== '' )
+				{
+					$('#manageUserForm [name=editUserUserSubject]').val(response.info.subject);
+					$('#manageUserForm [name=editUserCluster]').val(response.info.cluster);
+					$('#manageUserForm [name=editUserLevel]').val(response.info.level);
+				}
+				
+				if (response.info.position !== '')
+				{
+					$('#manageUserForm [name=editPosition]').val(response.info.position);
+				}
+			});
+		}
+	}
+	
+	function editAccountInfo()
 	{
-		var uname = $('#manageUserForm [name=editUname]').val();
-		var password = $('#manageUserForm [name=editPassword]').val();
+		var uname = null;
+		var sat = null;
+		var gradelevel = null;
+		var section = null;
+		var position = null;
+		var level = null;
+		var cluster = null;
+		
+		if ( !! document.getElementById('editUname')) uname = $('#manageUserForm [name=editUname]').val();
+		if ( !! document.getElementById('editUserUserSubject')) sat = $('#manageUserForm [name=editUserUserSubject]').val();
+		if ( !! document.getElementById('editUserGradelevel')) gradelevel = $('#manageUserForm [name=editUserGradelevel]').val();
+		if ( !! document.getElementById('editUserSection')) section = $('#manageUserForm [name=editUserSection]').val();
+		if ( !! document.getElementById('editPosition')) position = $('#manageUserForm [name=editPosition]').val();
+		if ( !! document.getElementById('editUserLevel')) level = $('#manageUserForm [name=editUserLevel]').val();
+		if ( !! document.getElementById('editUserCluster')) var cluster = $('#manageUserForm [name=editUserCluster]').val();
+		
 		var usertype = $('#manageUserForm [name=editUsertype]').val();
-		var sat = $('#manageUserForm [name=editUserUserSubject]').val();
-		var gradelevel = $('#manageUserForm [name=editUserGradelevel]').val();
-		var section = $('#manageUserForm [name=editUserSection]').val();
-		var position = $('#manageUserForm [name=editPosition]').val();
-		var level = $('#manageUserForm [name=editUserLevel]').val();
-		var cluster = $('#manageUserForm [name=editUserCluster]').val();
 		var targetid = $('#manageUserForm [name=editTargetId]').val();
 				
 		var dataString = 'uname='+ uname + '&targetid='+ targetid + '&password='+ password
@@ -209,7 +250,7 @@
 		//console.log(dataString);
 		$.ajax({
 			type: "POST",
-			url: "/app/edit_user",
+			url: "/app/edit_account",
 			data: dataString,
 			cache: false,
 			success: function(result)

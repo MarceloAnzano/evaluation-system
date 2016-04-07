@@ -272,13 +272,31 @@ class App extends Common
 		return $photo->get_image_reference($this->link, $id, $no_photo_ref);
 	}
 	
-	function get_user_details($id)
+	private function get_user_details($id)
 	{
 		if ( ! $this->check_user_login()) exit ('Not logged in');
 		
 		include_once BASEPATH.'process/users_and_sections.php';
 		$details = new Users_and_sections();
 		return $details->get_user_info($this->link, $id);
+	}
+	
+	function user_settings_info($id)
+	{
+		if ( ! $this->check_user_login()) exit ('Not logged in');
+		
+		if ($id == $this->get_session_info('userid'))
+		{
+			include_once BASEPATH.'process/users_and_sections.php';
+			$details = new Users_and_sections();
+			$data = $details->get_user_info($this->link, $id);
+			$data['status'] = "OK";
+			
+			header('Content-Type: application/json');
+			echo json_encode($data);
+			return;
+		}
+		else exit ('Invalid input');
 	}
 	
 	function print_ratings_report($year, $semester)
@@ -291,13 +309,13 @@ class App extends Common
 		var_dump($data);
 	}
 	
-	function edit_user()
+	function edit_account()
 	{
 		if ( ! $this->check_user_login()) exit ('Not logged in');
 		
 		include BASEPATH.'process/edit_user_data.php';
 		$user = new Edit_user_data();
-		$user->edit_user_method($this->link);
+		$user->edit_account_method($this->link);
 	}	
 	
 	// logout user

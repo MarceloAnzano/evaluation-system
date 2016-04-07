@@ -25,7 +25,8 @@ class Configuration_admin
 				$content = $data[1];	
 				mysqli_stmt_execute($stmt);
 			}
-		}	
+			fclose($handle);
+		}
 	}
 	
 	function view_questionnaire($con, $table_name)

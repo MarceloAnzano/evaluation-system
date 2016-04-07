@@ -12,7 +12,7 @@
 					<li><a href="#create-eval">Create Evaluation</a></li>
 
 					<li><a href="#activate-eval">Evalution Control Panel</a></li>
-					<li><a href="#create-user">Create User</a></li>';
+					<li><a href="#create-user">Create User Accounts</a></li>';
 				}?>
 					<li><a href="#create-sections">Create Section</a></li>
 					<li><a href="#search-users">Search Users</a></li>
@@ -177,9 +177,36 @@
 			echo '
 				<div class="row eval-division section scrollspy" id="create-user">
 					<div class="col l12 m12 s12">
-						<h3>Create a User Account</h3>
+						<h3>Create User Accounts</h3>
 						<div class="row">
 							<div class="col l12 m12 s12">
+							<h5>Upload user profiles in bulk:</h5>
+								<h6>The file should be in csv format</h6>
+								<form id="" enctype="multipart/form-data" action="/admin/batch_upload" method="POST">
+									<div class="row">
+									    <div class="file-field input-field">
+										    <div class="waves-effect waves-light btn" style="padding-left: 1.2rem; padding-right: 1.2rem;">
+										    	<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+											    <span style="line-height: 100%">Choose File</span>
+											    <input name="userbatchCSVFile" type="file" accept=".csv"/>
+										    </div>
+										    <div class="file-path-wrapper  col l5 m5 s8" id="img-file-tooltip" data-position="right" data-delay="50" data-tooltip="Choose photo">
+										    	<input class="file-path validate" type="text" id="img-file">    	
+										    </div>
+									    </div>
+								    </div>
+								    <div class="row">
+								    	<div class="col l7 m7 s12" id="" data-position="right" data-delay="50" data-tooltip="Select User Type">
+										    <select name="userBatchUploadType" id="">
+												<option value="" disabled selected>Select User Type</option>
+												<option value="student">Students</option>
+												<option value="faculty">Faculty</option>
+										    </select>
+									    </div>
+								    </div>
+									<button class="waves-effect waves-light btn" id="">Batch Upload</button>
+								</form>
+							<h5>Create individual users:</h5>
 								<form id="createUserForm" onsubmit="return saveUser();">
 									<div class="row">
 										<div class="input-field col l6 m6 s12">

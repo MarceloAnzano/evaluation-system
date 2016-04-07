@@ -290,6 +290,89 @@ class File_upload_parser
 		
 		return $data;
 	}
+	
+	
+	function user_batch_upload()
+	{		
+		// standard file input sanitation
+		try
+		{
+			// check if undefined or multiple or corruption attacj
+			// If this request falls under any of them, treat it invalid.
+			if ( ! isset($_FILES['userbatchCSVFile']['error']) OR is_array($_FILES['userbatchCSVFile']['error']))
+			{
+				throw new RuntimeException('Invalid parameters.');
+			}
+
+			// check $_FILES['name']['error'] value.
+			switch ($_FILES['userbatchCSVFile']['error'])
+			{
+				case UPLOAD_ERR_OK:
+					break;
+				case UPLOAD_ERR_NO_FILE:
+					throw new RuntimeException('No file sent.');
+				case UPLOAD_ERR_INI_SIZE:
+				case UPLOAD_ERR_FORM_SIZE:
+					throw new RuntimeException('Exceeded filesize limit.');
+				default:
+					throw new RuntimeException('Unknown errors.');
+			}
+
+			// check filesize here. allows only 100kB and below
+			if ($_FILES['userbatchCSVFile']['size'] > 100000) 
+			{
+				throw new RuntimeException('Exceeded filesize limit.');
+			}
+			
+			$csv_mimetypes = array(
+				'text/csv',
+				'text/plain',
+				'application/csv',
+				'text/comma-separated-values',
+				'application/excel',
+				'application/vnd.ms-excel',
+				'application/vnd.msexcel',
+				'text/anytext',
+				'application/octet-stream',
+				'application/txt',
+			);
+			
+			
+			// check MIME type.
+			$finfo = new finfo(FILEINFO_MIME_TYPE);
+			if (FALSE === $ext = array_search($finfo->file($_FILES['userbatchCSVFile']['tmp_name']), $csv_mimetypes, TRUE)) 
+			{
+				throw new RuntimeException('Invalid file format.');
+			}
+			
+			
+			// initialize upload path
+			$this->folder = 'files';
+			$this->upload_path = '';
+			$this->file_name = 'batch_upload';
+			
+			if (realpath($this->upload_path) !== FALSE)
+			{
+				$this->upload_path = realpath($this->upload_path).'/';
+			}
+			
+			$this->upload_path = rtrim($this->upload_path, '/').'/';
+			$this->folder = rtrim($this->folder, '/').'/';
+			
+			// move file from temporary location to desired path
+			if (move_uploaded_file($_FILES['userbatchCSVFile']['tmp_name'], $this->upload_path.$this->folder.$this->file_name.'.csv'))
+			{
+				return TRUE;
+			}
+			else throw new RuntimeException('Failed to move uploaded file.');
+			
+		}
+		catch (RuntimeException $e)
+		{
+			echo $e->getMessage();
+			return FALSE;
+		}
+	}
 }
 
 /* End of file */

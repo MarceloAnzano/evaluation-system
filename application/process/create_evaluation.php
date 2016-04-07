@@ -88,10 +88,9 @@ class Create_evaluation
 	private function create_student_to_teacher($con)
 	{
 		// select all students
-		$this->get_year_and_sem($con);
 		$sql = "SELECT hashid, gradelevel, section
 				FROM users
-				WHERE utype='student' AND supervisor NOT IN ('principal','api') AND is_deleted=0 ";
+				WHERE utype='student' AND is_deleted=0 ";
 		$query_students = mysqli_query($con, $sql);
 		
 		$students = array();
@@ -124,10 +123,10 @@ class Create_evaluation
 				}
 				$sql .= ", ('".$this->setting[0]."','".$this->setting[1]."','".$student[0]."','".$row[0]."','student-teacher')";
 			}
-			
 			$query = mysqli_query($con, $sql);
 		}
-		$this->messages[] = 'Student to teacher evaluations have been created.<br>';
+		
+		$this->messages[] ='Student to teacher evaluations have been created.<br>';
 	}
 	
 	private function create_self_evaluation($con)
@@ -231,10 +230,16 @@ class Create_evaluation
 		
 		foreach ($satl as $subject)
 		{
-			// get all non-principal faculty
-			$sql = "SELECT hashid, subject
-					FROM users
-					WHERE utype='faculty' AND subject='".$subject[1]."' AND hashid !='".$subject[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
+			// get all non-principal facultySELECT DISTINCT teacherId, subjects.subject FROM subjects JOIN subject_areas ON subjects.subject=subject_areas.subject WHERE subject_areas.subject='science'
+			//~ $sql = "SELECT hashid, subject
+					//~ FROM users
+					//~ WHERE utype='faculty' AND subject='".$subject[1]."' AND hashid !='".$subject[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
+			//~ $query_staff = mysqli_query($con, $sql);
+			
+			$sql = "SELECT DISTINCT teacherId, subject_areas.subject_area 
+					FROM subjects 
+					JOIN subject_areas ON subjects.subject=subject_areas.subject 
+					WHERE subject_areas.subject_area='".$subject[1]."'";
 			$query_staff = mysqli_query($con, $sql);
 			
 			// in case SATL has no staff in record
@@ -277,9 +282,39 @@ class Create_evaluation
 		foreach ($coordinators as $coordinator)
 		{
 			// get all non-principal faculty
-			$sql = "SELECT hashid
-					FROM users
-					WHERE cluster='".$coordinator[1]."' AND hashid != '".$coordinator[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
+			//~ $sql = "SELECT hashid
+					//~ FROM users
+					//~ WHERE cluster='".$coordinator[1]."' AND hashid != '".$coordinator[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
+			
+			switch ($coordinator[1])
+			{
+				case 2:
+				case '2':
+					$cluster_num = "('1', '2')";
+					break;
+				case 3:
+				case '3':
+					$cluster_num = "('3', '4')";
+					break;
+				case 4:
+				case '4':
+					$cluster_num = "('5', '6')";
+					break;
+				case 5:
+				case '5':
+					$cluster_num = "('7', '8')";
+					break;
+				case 6:
+				case '6':
+					$cluster_num = "('9', '10')";
+					break;
+				default:
+					exit ('Invalid Cluster!');
+			}
+			
+			$sql = "SELECT DISTINCT teacherId
+					FROM subjects
+					WHERE gradelevel IN $cluster_num ";
 			
 			$query_staff = mysqli_query($con, $sql);
 			
@@ -324,9 +359,31 @@ class Create_evaluation
 		foreach ($level_leaders as $level_leader)
 		{			
 			// get all non-principal faculty
-			$sql = "SELECT hashid
-					FROM users
-					WHERE level='".$level_leader[1]."' AND hashid != '".$level_leader[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
+			//~ $sql = "SELECT hashid
+					//~ FROM users
+					//~ WHERE level='".$level_leader[1]."' AND hashid != '".$level_leader[0]."' AND supervisor NOT IN ('principal','api','satl') AND is_deleted=0";
+					
+			switch ($level_leader[1])
+			{
+				case 'preschool':
+					$level_num = "( 'kinder', 'prep' )";
+					break;
+				case 'primary':
+					$level_num = "('1', '2', '3')";
+					break;
+				case 'intermediate':
+					$level_num = "('4', '5', '6')";
+					break;
+				case 'high school':
+					$level_num = "('7', '8', '9', '10')";
+					break;
+				default:
+					exit ('Invalid Cluster!');
+			}
+			$sql = "SELECT DISTINCT teacherId
+					FROM subjects
+					WHERE gradelevel IN $level_num ";
+			
 			$query_staff = mysqli_query($con, $sql);
 			
 			// in case CC has no staff on record; should never happen

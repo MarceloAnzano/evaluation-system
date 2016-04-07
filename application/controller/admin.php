@@ -111,6 +111,25 @@ class Admin extends Common
 		$save->save_user_entry($this->link);
 	}
 	
+	function batch_upload()
+	{
+		if ($this->logged_as_admin())
+		{
+			include BASEPATH.'process/file_upload_parser.php';
+			$file = new File_upload_parser();
+			if ($file->user_batch_upload())
+			{
+				include BASEPATH.'process/save_user.php';
+				$save = new Save_user();
+				$data = $file->csv_get_reference_path($this->link);
+				$type = strtolower(mysqli_real_escape_string($this->link, $_POST['userBatchUploadType']));
+				$save->save_batch_user_entries($this->link, $data['path'], $type);				
+			}
+			else exit(' Could not upload file');
+		}
+		else exit('Not authorized!');
+	}	
+	
 	function save_section()
 	{
 		if ($this->logged_as_admin() OR $this->logged_as_principal())
@@ -196,6 +215,15 @@ class Admin extends Common
 		}
 		else exit('Not authorized!');
 	}
+	
+	function edit_user()
+	{
+		if ( ! $this->check_user_login()) exit ('Not logged in');
+		
+		include BASEPATH.'process/edit_user_data.php';
+		$user = new Edit_user_data();
+		$user->edit_user_method($this->link);
+	}	
 	
 	function dump_user_info($id)
 	{

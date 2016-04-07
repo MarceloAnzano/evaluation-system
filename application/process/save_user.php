@@ -19,7 +19,7 @@ class Save_user
 		require_once BASEPATH.'libraries/bcrypt.php';
 		
 		// get post values
-		$crypt = new Bcrypt();
+		$cryptograph = new Bcrypt();
 		$this->uname = mysqli_real_escape_string($con, $_POST['uname']);
 		$this->uname = trim($this->uname);
 		$this->logid = mysqli_real_escape_string($con, $_POST['logid']);
@@ -35,10 +35,15 @@ class Save_user
 		
 		// reject password if too short
 		if (strlen($this->password) < 3) exit('Password is too short'); 
-		$this->password = $crypt->hash($this->password);
+		$this->password = $cryptograph->hash($this->password);
 		
 		$usertype = strtolower(mysqli_real_escape_string($con, $_POST['usertype']));
-		$position = strtolower(mysqli_real_escape_string($con, $_POST['position']));
+		
+		$position = 'none';
+		if (isset($_POST['position']))
+		{
+			$position = strtolower(mysqli_real_escape_string($con, $_POST['position']));
+		}
 		
 		// set sql query based on user types
 		switch ($usertype)
@@ -55,9 +60,12 @@ class Save_user
 				$level = strtolower(mysqli_real_escape_string($con, $_POST['level']));
 				$cluster = strtolower(mysqli_real_escape_string($con, $_POST['cluster']));
 				
-				$this->drop_if_missing($subject, 'Please provide the subject area');
-				$this->drop_if_missing($level, 'Please provide the assigned level');
-				$this->drop_if_missing($cluster, 'Please provide the assigned cluster');
+				if ($position != 'none')
+				{
+					$this->drop_if_missing($subject, 'Please provide the subject area');
+					$this->drop_if_missing($level, 'Please provide the assigned level');
+					$this->drop_if_missing($cluster, 'Please provide the assigned cluster');
+				}
 				
 				switch ($position)
 				{
@@ -85,7 +93,120 @@ class Save_user
 		}
 	}
 	
-	function check_for_duplicates($con)
+	function save_batch_user_entries($con, $file_path, $type)
+	{
+		$assoc_array = array();
+		$fields = array();
+		$i = 0;
+		switch ($type)
+		{
+			case 'faculty':
+				$check_headers = array('full name','position','level','cluster','subject' );
+				break;
+			case 'student':
+				$check_headers = array('full name','grade level','section' );
+				break;
+			default:
+				exit ('Invalid Input');
+		}
+		
+		if (($handle = fopen($file_path, "r")) !== FALSE)
+		{
+			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+			{
+				if (empty($fields))
+				{
+					$fields = $data;
+					continue;
+				}
+				
+				foreach ($data as $k=>$value)
+				{
+					$assoc_array[$i][strtolower($fields[$k])] = $value;
+				}
+				$i++;
+			}
+			fclose($handle);
+		}
+
+		
+		$sql = "INSERT INTO users
+				(hashid, logid, uname, password, utype, subject, gradelevel, section, level, cluster, supervisor) 
+				VALUES ";
+		$first = TRUE;
+		$temp_id = 0;
+		$id_array = array();
+		$password = $this->create_random_password();
+		foreach ($assoc_array as $user)
+		{
+			$logid = strtolower(str_replace(' ', '', $user['full name']));
+			$uname = trim($user['full name']);
+			
+			if ($type == 'student')
+			{	
+				$gradelevel = $user['grade level'];
+				$section = strtolower($user['section']);
+				if ($first)
+				{
+					$sql .= "('$temp_id', '$logid', '$uname', '$password', 'student', 'none', '$gradelevel', '$section', 'none', 'none', 'none')";
+					$first = FALSE;
+				}
+				else $sql .= ", ('$temp_id', '$logid', '$uname', '$password', 'student', 'none', '$gradelevel', '$section', 'none', 'none', 'none')";
+			}
+			elseif ($type == 'faculty')
+			{	
+				if ($user['position'] == '' OR $user['position'] == 'none')
+				{ 
+					if ($first)
+					{
+						$sql .= "('$temp_id', '$logid', '$uname', '$password', 'faculty', 'none', 'none', 'none', 'none', 'none', 'none')";
+						$first = FALSE;
+					}
+					else $sql .= ", ('$temp_id', '$logid', '$uname', '$password', 'faculty', 'none', 'none', 'none', 'none', 'none', 'none')";
+				}
+				else
+				{
+					$subject = $cluster = $level = 'none';
+					$position = strtolower($user['position']);
+					if ($user['subject'] != '')
+					{
+						$subject = strtolower($user['subject']);
+					}
+					if ($user['cluster'] != '')
+					{
+						$cluster = strtolower($user['cluster']);
+					}
+					if ($user['level'] != '')
+					{
+						$level = strtolower($user['level']);
+					}
+					
+					if ($first)
+					{
+						$sql .= "('$temp_id', '$logid', '$uname', '$password', 'faculty', '$subject', 'none', 'none', '$level', '$cluster', '$position')";
+						$first = FALSE;
+					}
+					else $sql .= ", ('$temp_id', '$logid', '$uname', '$password', 'faculty', '$subject', 'none', 'none', '$level', '$cluster', '$position')";
+					
+				}
+			}
+			$temp_id++;
+		}
+		var_dump($sql);
+		mysqli_query($con, $sql);
+		$this->create_hash_id($con, mysqli_insert_id($con), count($assoc_array));
+		var_dump(count($assoc_array));
+		exit();
+	}
+	
+	private function create_random_password()
+	{
+		include BASEPATH.'libraries/bcrypt.php';
+		$cryptograph = new Bcrypt();
+		return $cryptograph->hash('default');
+	}
+	
+	private function check_for_duplicates($con)
 	{
 		$sql = "SELECT *
 				FROM users
@@ -100,23 +221,22 @@ class Save_user
 		}
 	}
 	
-	function create_hash_id($con)
-	{
-		$sql = "SELECT users.id
-				FROM users
-				WHERE logid='".$this->logid."';";
-		$query = mysqli_query($con, $sql);
-		$row = mysqli_fetch_row($query);
-		
-		$hashid = hash('sha256',$row[0].openssl_random_pseudo_bytes(16));
-		$sql = "UPDATE users
-				SET users.hashid='".$hashid."' 
-				WHERE logid='".$this->logid."';";
-				
-		$query = mysqli_query($con, $sql);
+	private function create_hash_id($con, $id, $number_of_entries = 1)
+	{	
+		for ($a = 0; $a < $number_of_entries; $a++)
+		{
+			$hashid = hash('sha256', $id.openssl_random_pseudo_bytes(16));
+			$sql = "UPDATE users
+					SET users.hashid='".$hashid."' 
+					WHERE users.id='$id';";
+					
+			$query = mysqli_query($con, $sql);
+			var_dump($sql);
+			$id++;
+		}
 	}
 	
-	function save_student_item($con, $gradelevel, $section)
+	private function save_student_item($con, $gradelevel, $section)
 	{
 		// record into db
 		$sql = "INSERT INTO users 
@@ -129,12 +249,12 @@ class Save_user
 		
 		mysqli_stmt_execute($stmt);
 		
-		$this->create_hash_id($con);
+		$this->create_hash_id($con, mysqli_insert_id($con));
 		echo 'correct';
 		
 	}
 	
-	function save_faculty_item($con, $subject, $level = NULL, $cluster = NULL, $position = 'none')
+	private function save_faculty_item($con, $subject, $level = NULL, $cluster = NULL, $position = 'none')
 	{
 		// record into db
 		$sql = "INSERT INTO users 
@@ -147,11 +267,11 @@ class Save_user
 		
 		mysqli_stmt_execute($stmt);
 		
-		$this->create_hash_id($con);
+		$this->create_hash_id($con, mysqli_insert_id($con));
 		echo 'correct';
 	}
 	
-	function save_admin_item($con)
+	private function save_admin_item($con)
 	{
 		$sql = "INSERT INTO users 
 				(logid, uname, password, utype, supervisor) 
@@ -163,11 +283,11 @@ class Save_user
 		
 		mysqli_stmt_execute($stmt);
 		
-		$this->create_hash_id($con);
+		$this->create_hash_id($con, mysqli_insert_id($con));
 		echo 'correct';
 	}
 	
-	function drop_if_missing($input, $message)
+	private function drop_if_missing($input, $message)
 	{
 		if ($input == '' OR empty($input)) exit ($message);
 	}
