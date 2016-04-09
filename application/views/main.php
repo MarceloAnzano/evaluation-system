@@ -50,7 +50,7 @@
 					<a class=' card-content' href=".$link.">";
 			else
 				echo "
-					<div class='card waves-effect disabledCard'>
+					<div class='card disabledCard'>
 					<a class='card-content' href=".$link.">";
 					
 			// echo "

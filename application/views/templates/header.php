@@ -41,7 +41,7 @@
 					<?php if ($this->check_user_login()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."app/user_settings'>SETTINGS</a></li>";?>
 					<?php if ($this->check_user_login()) echo "<li><a class='custom-btn waves-effect waves-light' href='".base_url."app/logout'>LOGOUT</a></li>";?>
 				</ul>
-				<?php if ($this->check_user_login()) echo '<a href="#" data-activates="slide-out" class="button-collapse right"><i class="material-icons">>&#xe5d2</i></a>';?>
+				<?php if ($this->check_user_login()) echo '<a href="#" data-activates="slide-out" class="button-collapse right"><i class="material-icons">&#xe5d2</i></a>';?>
 			</nav>
 	</header>
 	<div>
