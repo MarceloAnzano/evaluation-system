@@ -315,7 +315,7 @@ class App extends Common
 		
 		include BASEPATH.'process/edit_user_data.php';
 		$user = new Edit_user_data();
-		$user->edit_account_method($this->link);
+		$user->edit_account_method($this->link, $this->get_session_info('utype'));
 	}	
 	
 	// logout user

@@ -17,7 +17,7 @@ class Check_login
 		&& isset($_SESSION['utype']) && isset($_SESSION['supervisor']))
 		{
 			$userid = mysqli_real_escape_string($con, $_SESSION['userid']);
-			$logid = preg_replace('#[^a-zA-Z0-9]#', '', $_SESSION['logid']);
+			$logid = preg_replace('#[^a-zA-Z0-9.]#', '', $_SESSION['logid']);
 			$utype = preg_replace('#[^a-z]#', '', $_SESSION['utype']);
 			$supervisor = preg_replace('#[^a-z]#', '', $_SESSION['supervisor']);
 			
@@ -63,6 +63,11 @@ class Check_login
 		elseif ($type == 'principal')
 		{
 			if (preg_replace('#[^a-z]#', '', $_SESSION['supervisor']) == 'principal')
+				return true;
+		}
+		elseif ($type == 'api')
+		{
+			if (preg_replace('#[^a-z]#', '', $_SESSION['supervisor']) == 'api')
 				return true;
 		}
 		else return false;

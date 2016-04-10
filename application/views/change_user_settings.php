@@ -49,14 +49,13 @@
 								<h5>Position:</h5>
 								<div class="row">
 									<div class="col m8 l8 s12">
-										<select id='editPosition' name='editPosition' >
-											<option value='' disabled selected>Select position</option>
-											<option value='none'>None</option>
-											<option value='principal'>Principal</option>
-											<option value='api'>API</option>
-											<option value='cc'>CC</option>
-											<option value='ll'>LL</option>
-											<option value='satl'>SATL</option>
+										<select id="editPosition" name="editPosition" >
+											<option value="none" selected>None</option>
+											<option value="principal">Principal</option>
+											<option value="api">API</option>
+											<option value="cc">CC</option>
+											<option value="ll">LL</option>
+											<option value="satl">SATL</option>
 										</select>
 									</div>
 								</div>

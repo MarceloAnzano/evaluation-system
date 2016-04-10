@@ -197,7 +197,7 @@
 			var link = "/app/user_settings_info/"+ $("#manageUserForm [name=editTargetId]").val();
 						
 			$.get(link,{},function(response){
-				$('#editUserProtectedInfo').append("<li>User Login ID: " + response.info.logid + "</a></li>");
+				$('#editAccountInfo').append("<li>User Login ID: " + response.info.logid + "</a></li>");
 
 				$("#manageUserForm [name=editUsertype]").val(response.info.type);
 				$("#manageUserForm [name=editUname]").val(response.info.name);

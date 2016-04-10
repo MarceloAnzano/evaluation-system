@@ -1,6 +1,4 @@
 					<form id='manageUserForm' onsubmit="return editAccountInfo();">
-						<input type="hidden" id="editAccountInfo">
-						<input type="hidden" id="editUsertype" name="editUsertype">
 							<h5>User Details:</h5>
 							<?php if ( $this->get_session_info('utype') != 'student')
 							echo '
@@ -27,6 +25,7 @@
 							</div>';
 							?>
 							<?php if ( $this->allow_supervisors())
+							{
 							echo '
 							<div class="row">
 								<div class="input-field col l12 m12 s12">
@@ -39,7 +38,10 @@
 								<div class="row">
 									<div class="col m8 l8 s12">
 										<select id="editPosition" name="editPosition" >
-											<option value="" disabled selected>Select position</option>
+											';
+							if ( $this->logged_as_principal('principal')) echo '<option value="principal" selected>Principal</option><option value="api">API</option>';
+							if ( $this->logged_as_principal('api')) echo '<option value="api" selected>API</option><option value="principal">Principal</option>';
+							echo '
 											<option value="none">None</option>
 											<option value="cc">CC</option>
 											<option value="ll">LL</option>
@@ -60,6 +62,7 @@
 									</div>
 								</div>
 							</div>';
+							}
 							?>
 							<input type='hidden' id='editTargetId' name='editTargetId' value='<?php echo $data; ?>'><br>
 							<div class="row">

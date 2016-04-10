@@ -159,13 +159,13 @@
 				//console.log(response);
 				if (response.type === 'student')
 				{
-					$('#linkSpace thead').append("<tr><th>Name</th><th>Grade Level</th><th>Section</th></tr>");
+					$('#linkSpace thead').append("<tr><th>Name</th><th>Username</th><th>Grade Level</th><th>Section</th></tr>");
 				}
 				else if (response.type === 'faculty')
 				{
-					$('#linkSpace thead').append("<tr><th>Name</th><th>Subject</th><th>Level</th><th>Cluster</th><th>Position</th></tr>");
+					$('#linkSpace thead').append("<tr><th>Name</th><th>Username</th><th>Subject</th><th>Level</th><th>Cluster</th><th>Position</th></tr>");
 				}
-				else $('#linksSace thead').append("<tr><th>Name</th></tr>");
+				else $('#linksSace thead').append("<tr><th>Name</th><th>Username</th></tr>");
 				
 				response.results.forEach(function(user)
 				{
@@ -185,17 +185,21 @@
 					// 	+ user.id + "' onclick='return deleteUser(this.href, this);'>Archive User</a></td>/tr>");
 					if (response.type === 'student')
 					{
-						$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+						$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + " </a></td>\
+						<td>"+ user.logid+ "</td>\
 						<td>" + user.gradelevel + "</td><td>" + user.section + "</td><td><a class='delete-user1' href='/admin/delete_user/" + user.id + "'\
 						>Archive User</a></td>/tr>");
 					}
 					else if (response.type === 'faculty')
 					{	
 						$('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+						<td>"+ user.logid+ "</td>\
 						<td>" + user.subject + "</td><td>" + user.level + "</td><td>" + user.cluster + "</td><td>"
 						 + user.supervisor + "</td><td><a class='delete-user1' href='/admin/delete_user/" + user.id + "'>Archive User</a></td>/tr>");
-					}
-					else $('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td><td><a class='delete-user2' href='/admin/delete_user/" 
+					}	
+					else $('#linkSpace tbody').append("<tr><td><a href='/admin/manage/" + user.id + "'>" + user.name + "</a></td>\
+					<td>"+ user.logid+ "</td>\
+					<td><a class='delete-user2' href='/admin/delete_user/" 
 						+ user.id + "'>Archive User</a></td>/tr>");
 				});
 				if(response.results.length == 0){

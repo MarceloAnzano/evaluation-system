@@ -1,5 +1,5 @@
 <div class="subNav line-height">
-		<span class="brand-logo" style="text-transform: none !important; margin: 0px;"id='editUserProtectedInfo'></span>
+		<span class="brand-logo" style="text-transform: none !important; margin: 0px;" id='editAccountInfo'></span>
 		</div>
 <main>
 <!-- 	<div class="container" style="">

@@ -1,19 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * ===========W A R N I N G ============
- * 
- * A LOT OF THINGS NEEDS TO BE DONE HERE
- * 
- * ===========W A R N I N G ============
- * **/
-
 class Edit_user_data
 {
 	var $uname = '';
 	var $logid = '';
 	var $password = '';
 	var $target_id = '';
+	var $edit_acct = FALSE;
 	
 	function does_user_exist($con, $id)
 	{
@@ -62,11 +55,7 @@ class Edit_user_data
 		
 		$usertype = strtolower(mysqli_real_escape_string($con, $_POST['usertype']));
 		
-		$position = 'none';
-		if (isset($_POST['position'])
-		{
-			$position = strtolower(mysqli_real_escape_string($con, $_POST['position']));
-		}
+		$position = strtolower(mysqli_real_escape_string($con, $_POST['position']));
 		
 		// set sql query based on user types
 		switch ($usertype)
@@ -115,10 +104,9 @@ class Edit_user_data
 		}
 	}
 	
-	function edit_account_method($con)
+	function edit_account_method($con, $usertype)
 	{
-		if (! isset($_POST['targetid']) OR empty($_POST['targetid'])
-		OR ! isset($_POST['usertype']) OR empty($_POST['usertype']))
+		if (! isset($_POST['targetid']) OR empty($_POST['targetid']))
 		{
 			exit('Invalid input');
 		}
@@ -127,33 +115,29 @@ class Edit_user_data
 		$this->target_id = mysqli_real_escape_string($con, $_POST['targetid']);
 		
 		// get post values
-		if ($this->get_session_info('utype') == '')
-		$this->uname = mysqli_real_escape_string($con, $_POST['uname']);
-		$this->uname = trim($this->uname);
-						
-		
-		// set password to the user's current if password textbox was left null
-		if ( ! empty($_POST['password']))
+		switch ($usertype)
 		{
-			require_once BASEPATH.'libraries/bcrypt.php';
-			$crypt = new Bcrypt();
-			
-			// hash password after this
-			$this->password = mysqli_real_escape_string($con, $_POST['password']);
-				
-			// reject password if too short
-			if (strlen($this->password) < 3) exit('Password is too short'); 
-			$this->password = $crypt->hash($this->password);
+			case 'student':
+			case 'faculty':
+				$this->uname = mysqli_real_escape_string($con, $_POST['uname']);
+				$this->uname = trim($this->uname);
+				break;
+			case 'admin':
+				$this->uname = mysqli_real_escape_string($con, $_POST['uname']);
+				$this->uname = trim($this->uname);
+				break;
+			default:
+				exit ('Invalid Input');
 		}
 		
-		$usertype = strtolower(mysqli_real_escape_string($con, $_POST['usertype']));
+		// to activate the reset session variable method
+		$this->edit_acct = TRUE;
 		
 		$position = 'none';
-		if (isset($_POST['position'])
+		if (isset($position) && empty($position))
 		{
 			$position = strtolower(mysqli_real_escape_string($con, $_POST['position']));
-		}
-		
+		}		
 		// set sql query based on user types
 		switch ($usertype)
 		{
@@ -189,7 +173,7 @@ class Edit_user_data
 						$this->save_faculty_item($con, $subject, $level, $cluster, $position);
 						break;
 					default:
-						exit ('Invalid input');
+						exit ('Invalid input1111');
 				}
 				
 				break;
@@ -227,11 +211,10 @@ class Edit_user_data
 		
 	}
 	
-	private function save_faculty_item($con, $subject, $level = NULL, $cluster = NULL, $position = 'none')
+	private function save_faculty_item($con, $subject, $level, $cluster, $position = 'none')
 	{
 		if ($this->password == '')
 		{
-		
 			$sql = "UPDATE users 
 					SET uname=?, utype='faculty', subject=?, level=?, cluster=?, supervisor=?
 					WHERE hashid=?";
@@ -250,6 +233,10 @@ class Edit_user_data
 		// record into db
 		mysqli_stmt_execute($stmt);
 		
+		if ($this->edit_acct)
+		{
+			$this->reset_user_session($position);
+		}
 		echo 'correct';
 	}
 	
@@ -275,14 +262,17 @@ class Edit_user_data
 		// record into db		
 		mysqli_stmt_execute($stmt);
 		
+		if ($this->edit_acct)
+		{
+			$this->reset_user_session($position = 'none');
+		}
 		echo 'correct';
 	}
 	
-	private function reset_user_session()
+	private function reset_user_session($position = 'none')
 	{
-		$_SESSION['uname'] = $row['uname'];
-		$_SESSION['utype'] = $row['utype'];
-		$_SESSION['supervisor'] = $row['supervisor'];
+		$_SESSION['uname'] = $this->uname;
+		$_SESSION['supervisor'] = $position;
 	}
 	
 	private function drop_if_missing($input, $message)

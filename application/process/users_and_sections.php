@@ -148,7 +148,7 @@ class Users_and_sections
 				exit ('Invalid input');
 		}
 		
-		$sql = "SELECT hashid, uname, gradelevel, section, subject, cluster, level, supervisor, utype
+		$sql = "SELECT hashid, uname, gradelevel, section, subject, cluster, level, supervisor, utype, logid
 				FROM users
 				WHERE utype != 'admin' AND is_deleted=0 AND hashid !='$id'".$statement;
 				
@@ -173,7 +173,8 @@ class Users_and_sections
 				'cluster' => $row[5],
 				'level' => ucwords($row[6]),
 				'supervisor' => $position,
-				'type' => $row[8]
+				'type' => $row[8],
+				'logid' => $row[9]
 			);
 		}
 		$data = array(
