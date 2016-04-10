@@ -43,7 +43,8 @@ td::first-letter {text-transform: capitalize;}
 #evalform th{font-size: 1.4rem;;font-weight: bold !important;padding-top:2rem;}
 #evalform td {vertical-align:bottom;font-size: 1.2rem; padding-top: 1rem;}
 #evalform input {border-bottom-color: transparent;}
-input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;margin: 0;}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;}
+input{margin-top: 5px !important;}
 input[type=number] {-moz-appearance:textfield;}
 .print-holder button{text-align: right;float: right;}
 .table-title-here{position: relative;margin-bottom: 10px !important;}

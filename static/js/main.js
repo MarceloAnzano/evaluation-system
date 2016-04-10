@@ -1,14 +1,26 @@
+// $(window).on('scroll',function(){
+//     if($("nav").is('.pinned')){
+//         $('#user-dropdown').css("top","0px");
+//     }else{
+//         $('#user-dropdown').css("top","90px");
+//     }
+// });
 $(document).ready(function(){
     //Activate all select
     $('select').not('#createSectionSelect').material_select();
     
     //Fixed divs
     $('nav').pushpin({ top: 88, offset: 0 });
+    
     //$('.subNav').pushpin({ top: 130, offset: 40 });
     $('#sidebar').pushpin({ top: 10, offset: -130 });
     
     $("#semestral-create select").change(function(event) {$("#semestral-create #status").text("");});
-    $(".dropdown-button").dropdown();
+    $(".dropdown-button").dropdown({
+        hover: true,
+        belowOrigin: true,
+        outDuration: 100,
+    });
     $('.scrollspy').scrollSpy();
     $('.button-collapse').sideNav({
       edge: 'right', // Choose the horizontal origin

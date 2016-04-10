@@ -1,8 +1,11 @@
+<div class="subNav line-height">
+		<span class="brand-logo" style="text-transform: none !important; margin: 0px;"id='editUserProtectedInfo'></span>
+		</div>
 <main>
-	<div class="container" style="">
+<!-- 	<div class="container" style="">
 		<div id= class="subNav line-height" style="">		
 			<span class="brand-logo" style="text-transform: none !important;">Settings</span>
-		</div>
+		</div> -->
 		<div class="container-div" style="margin-top: 2em;">
 			<div class="row">
 				<div class="col s12 m10 l10 offset-l1 offset-m1">
@@ -39,7 +42,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </main>
 
 
