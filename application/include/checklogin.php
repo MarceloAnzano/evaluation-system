@@ -13,8 +13,10 @@ class Check_login
 	
 	function check_user_session($con)
 	{
+		
 		if (isset($_SESSION['userid']) && isset($_SESSION['logid']) && isset($_SESSION['uname'])
-		&& isset($_SESSION['utype']) && isset($_SESSION['supervisor']))
+		&& isset($_SESSION['utype']) && isset($_SESSION['supervisor']) && isset($_SESSION['logged_in']) 
+		&& ! empty($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE)
 		{
 			$userid = mysqli_real_escape_string($con, $_SESSION['userid']);
 			$logid = preg_replace('#[^a-zA-Z0-9.]#', '', $_SESSION['logid']);

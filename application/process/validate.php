@@ -6,6 +6,11 @@ class Validate
 	{
 		$message = array();
 		$countError = 0;
+		
+		if (isset($_SESSION['logged_in']) && ! empty($_SESSION['logged_in']))
+		{
+			if ($_SESSION['logged_in'] == TRUE) exit ('Already logged in!');
+		}
 
 		// perform checks on username and password
 		if(isset($_POST['logid']) && ! empty($_POST['logid']))
@@ -49,6 +54,7 @@ class Validate
 					$_SESSION['uname'] = $row['uname'];
 					$_SESSION['utype'] = $row['utype'];
 					$_SESSION['supervisor'] = $row['supervisor'];
+					$_SESSION['logged_in'] = TRUE;
 					
 					// reset incorrect login entries
 					$sql = "UPDATE users

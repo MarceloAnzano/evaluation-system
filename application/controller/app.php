@@ -321,11 +321,7 @@ class App extends Common
 	// logout user
 	function logout()
 	{
-		if($this->check_user_login())
-		{
-			include BASEPATH.'process/logout.php';
-		}
-		else exit ('Error 404');
+		include BASEPATH.'process/logout.php';
 	}
 }
 	
