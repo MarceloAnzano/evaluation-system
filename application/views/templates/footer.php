@@ -3,6 +3,7 @@
 </body>
 <script type="text/javascript" src="<?php echo htmlspecialchars(STATICPATH."js/jquery-1.11.3.js");?>"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars(STATICPATH."js/jquery-ui.min.js");?>"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars(STATICPATH."js/bootstrap_popover.js");?>"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars(STATICPATH."js/materialize.js");?>"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script> -->
 <script type="text/javascript" src="<?php echo htmlspecialchars(STATICPATH."js/script.js");?>"></script>

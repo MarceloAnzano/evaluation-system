@@ -630,13 +630,13 @@
 											    <span style="line-height: 100%">Choose File</span>
 											    <input name="questionFile" type="file" style="height: inherit;" accept=".csv" >
 										    </div>
-										    <div class="file-path-wrapper col l5 m5 s8" id="csv-file-tooltip" data-position="right" data-delay="50" data-tooltip="Choose csv file">
+										    <div class="file-path-wrapper col l5 m5 s8" id="csv-file-tooltip" data-position="right" data-content="No file selected" data-toggle="popover" data-container="body">
 										    	<input class="file-path validate" type="text" id="csv-file">    	
 										    </div>
 									    </div>
 								    </div>
 								    <div class="row">
-								    	<div class="col l7 m7 s12" id="csv-tooltip" data-position="right" data-delay="50" data-tooltip="Select questionnaire type">
+								    	<div class="col l7 m7 s12" id="csv-tooltip" data-position="right" data-content="No questionnaire type selected" data-toggle="popover" data-container="body">
 										    <select id="select-csv" name='questionnaire'>
 												<option value="" disabled selected>Questionnaire Type</option>
 												<option value='student_questionnaire'>Student Questionnaire</option>
@@ -676,13 +676,13 @@
 											    <span style="line-height: 100%">Choose File</span>
 											    <input name="facultyPhoto" type="file" accept=".jpg,.jpeg,.png"/>
 										    </div>
-										    <div class="file-path-wrapper  col l5 m5 s8" id="img-file-tooltip" data-position="right" data-delay="50" data-tooltip="Choose photo">
+										    <div class="file-path-wrapper col l5 m5 s8" id="img-file-tooltip" data-position="right" data-content="No file selected" data-toggle="popover" data-container="body">
 										    	<input class="file-path validate" type="text" id="img-file">    	
 										    </div>
 									    </div>
 								    </div>
 								    <div class="row">
-								    	<div class="col l7 m7 s12" id="img-tooltip" data-position="right" data-delay="50" data-tooltip="Select user">
+								    	<div class="col l7 m7 s12" id="img-tooltip" data-position="right" data-content="No user selected" data-toggle="popover" data-container="body">
 										    <select name="userPhotoId" id="select-img-user">
 												<option value="" disabled selected>Select User</option>
 										    </select>
