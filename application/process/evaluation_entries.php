@@ -187,7 +187,7 @@ class Evaluation_entries
 	{
 		if ($string == NULL)
 			return '--';
-		else return $string;
+		else return round($string, 2);
 	}
 }
 
