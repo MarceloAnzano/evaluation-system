@@ -28,7 +28,7 @@
 	<div class="container-div">
 		<center class="card" style="width:400px">
 			<center class="card-content">
-				<div class="card-title"><h4 class="past-title">PAST SCORE</h4></div>
+				<div class="card-title"><h4 class="past-title"><?php echo $data5; ?></h4></div>
 				<center class="row">
 					<center class="input-field">
 						<?php

@@ -6,13 +6,13 @@
 				<center class="card-title loginTitle">FACULTY EVALUATION SYSTEM</center>
 					<center class="row">
 						<center class="input-field">
-							<input type="text" id="logid" name='logid' onfocus="emptyElement()" maxlength="88" autofocus>
+							<input type="text" id="logid" name='logid' maxlength="88" autofocus>
 							<label for="logid">Username</label>
 						</center>
 					</center>
 					<center class="row">
 						<center class="input-field">
-							<input id="password" name='password' type="password" onfocus="emptyElement()" maxlength="100">
+							<input id="password" name='password' type="password" maxlength="100">
 							<label for="password" id="password-label">Password</label>
 						</center>
 					</center>
