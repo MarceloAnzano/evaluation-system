@@ -108,7 +108,7 @@
 									
 									$num++;
 									echo "<tr><td>".$row[1]."</td>";
-									echo "<td><input class='center-align' type='number' name='".$question."[]' min='0' max='4' step='0.5' value=4 required><br></td></tr>";
+									echo "<td class='evalInputTd' data-position='right' data-content='Invalid rating' data-toggle='popover' data-container='body'><input class='center-align' type='number' name='".$question."[]' min='0' max='4' step='0.5' value=4 required></td></tr>";
 								}
 								
 								echo "<input name='".$question."Num[]' type='hidden' value='".$num."'/>";
@@ -120,7 +120,7 @@
 						?>
 					</table>
 					<div class="row">
-						<button  class="btn-large waves-effect waves-light right modal-trigger" data-target="modal-submit-eval">Submit</h5></button>
+						<button  class="btn-large waves-effect waves-light right"  id="evalSubmitBtn">Submit</h5></button>
 					</div>
 					<div id="modal-submit-eval" class="modal">
 						<center class="modal-content">

@@ -5,6 +5,16 @@
 //         $('#user-dropdown').css("top","90px");
 //     }
 // });
+$("input[name=logid]").on("change.autofill", function () {
+    $("[for=password]").addClass("active");
+}).click(function() {
+    $(this).unbind("change.autofill");
+});
+$("input[name=createLogid]").on("change.autofill", function () {
+    $("[for=eval-create-pass]").addClass("active");
+}).click(function() {
+    $(this).unbind("change.autofill");
+});
 $(document).ready(function(){
     //Activate all select
     $('select').not('#createSectionSelect').material_select();
@@ -29,6 +39,7 @@ $(document).ready(function(){
 
     //Modal Popups
     $('.modal-trigger').leanModal();
+    // $('[data-toggle="popover"]').popover();
     $('.error-message').bind("DOMSubtreeModified", function() {
         $status = $(this).html();
         if($status.length > 1){
@@ -60,32 +71,47 @@ $(document).ready(function(){
         else $('#modal-eval-delete-confirm2').openModal();
     });
 
+    //error check
+    $('.evalInputTd input').on('focusout',function(e){
+        if($(this).val() > 4 || $(this).val() < 0){ 
+            $(this).focus();
+            $(this).addClass('invalid');
+            $(this).closest('td').popover('show');
+        }else{
+            $(this).removeClass('invalid');
+            $(this).closest('td').popover('hide');
+            $(this).closest('td').popover('destroy');
+        }
+    });
+    $("#evalSubmitBtn").on('click',function(e){
+        e.stopImmediatePropagation();
+        errorCheckEval();
+        return false;
+    });
     //csv tooltip
     $("#submit-csv-button").on('click', function(e){
         e.stopImmediatePropagation();
         $CSVflag = true;
         if($('#select-csv').val() == null){
-            $('#csv-tooltip').addClass('tooltipped');
-            $('#csv-tooltip.tooltipped').tooltip({delay: 50});
-            $("#csv-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            $('#csv-tooltip').popover('show');
+            // $("#csv-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
             $CSVflag = false;
         }
         if($("#csv-file").val() == ""){
-            $('#csv-file-tooltip').addClass('tooltipped');
-            $('#csv-file-tooltip.tooltipped').tooltip({delay: 50});
-            $("#csv-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            $('#csv-file-tooltip').popover('show');
+            // $("#csv-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
             $CSVflag = false;
         }
         if($CSVflag == false) return false;
         else $('#questionnaireForm').submit();
     });
-    $('#csv-tooltip').on('mouseenter',function(e){
-        $('#csv-tooltip').removeClass('tooltipped');
-        $('#csv-tooltip').tooltip('remove');
+    $('form #csv-tooltip').on('mouseenter',function(e){
+        $('form #csv-tooltip').popover('hide');
+        $('form #csv-tooltip').popover('destroy');
     });
-    $('#csv-file-tooltip').on('mouseenter',function(e){
-        $('#csv-file-tooltip').removeClass('tooltipped');
-        $('#csv-file-tooltip').tooltip('remove');
+    $('form #csv-file-tooltip').on('mouseenter',function(e){
+        $('form #csv-file-tooltip').popover('hide');
+        $('form #csv-file-tooltip').popover('destroy');
     });
 
     //image tooltip
@@ -93,27 +119,26 @@ $(document).ready(function(){
         e.stopImmediatePropagation();
         $IMGFlag = true;
         if($('#select-img-user').val() == null){
-            $('#img-tooltip').addClass('tooltipped');
-            $('#img-tooltip.tooltipped').tooltip({delay: 50});
-            $("#img-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            $('form #img-tooltip').popover('show');
+            //$("#img-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
             $IMGFlag = false;
         }
         if($("#img-file").val() == ""){
-            $('#img-file-tooltip').addClass('tooltipped');
-            $('#img-file-tooltip.tooltipped').tooltip({delay: 50});
-            $("#img-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
+            console.log("HEY!");
+            $('form #img-file-tooltip').popover({show: function () {$(this).fadeIn('slow');}});
+            // $("#img-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
             $IMGFlag = false;
         }
         if($IMGFlag == false) return false;
         else $('#facultyPhotoForm').submit();
     });
-    $('#img-tooltip').on('mouseenter',function(e){
-        $('#img-tooltip').removeClass('tooltipped');
-        $('#img-tooltip').tooltip('remove');
+    $('form #img-tooltip').on('mouseenter',function(e){
+        $('form #img-tooltip').popover('hide');
+        $('form #img-tooltip').popover('destroy');
     });
-    $('#img-file-tooltip').on('mouseenter',function(e){
-        $('#img-file-tooltip').removeClass('tooltipped');
-        $('#img-file-tooltip').tooltip('remove');
+    $('form #img-file-tooltip').on('mouseenter',function(e){
+        $('form #img-file-tooltip').popover('hide');
+        $('form #img-file-tooltip').popover('destroy');
     });
 });
 $(document).on('change','#createSectionSelect', function(){
@@ -155,3 +180,19 @@ $(document).on('click','a.delete-user1', function(e){
     $('#modal-delete-confirm1').openModal();
     return false;
 });
+function errorCheckEval(){
+    var wrongInputFlag = false;
+    $('.evalInputTd input').each(function(e){
+        if($(this).val() > 4 || $(this).val() < 0){ 
+            $(this).focus();
+            $(this).addClass('invalid');
+            $(this).closest('td').popover('show');
+            wrongInputFlag = true;
+        }else{
+            $(this).removeClass('invalid');
+            $(this).closest('td').popover('hide');
+            $(this).closest('td').popover('destroy');
+        }
+    });
+    if(wrongInputFlag == false) $('#modal-submit-eval').openModal();
+};

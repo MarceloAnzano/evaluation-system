@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>IJA Evaluation</title>
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"> -->
+	<link rel="stylesheet" href="<?php echo htmlspecialchars(STATICPATH."css/bootstrap_popover.css");?>">
 	<link rel="stylesheet" href="<?php echo htmlspecialchars(STATICPATH."css/materialize.css");?>">
 	<link rel="stylesheet" href="<?php echo htmlspecialchars(STATICPATH."fonts/material-design-icons/material-design-icons.css");?>">
 	<link rel="stylesheet" href="<?php echo htmlspecialchars(STATICPATH."css/main.css");?>">

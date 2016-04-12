@@ -10,9 +10,10 @@ header{width:100%;height: 140px !important;background-color: #18487d;}
 .navImg > img{height: 90%;margin-top: 0.5em;}
 .navImgSmall{position: absolute;overflow: hidden;width: 100%;bottom: 50px;}
 .navImgSmall > img{width: 90%;margin: auto;}
-#navHolder{position: static;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box; height: 50px;background-color: #161616 !important;line-height: 50px;}
-#navHolder li{padding-left: 0px;padding-right: 0px;}
-#navHolder i{font-size: 2.1rem;line-height: 150%;padding-right: 0.7rem;}
+#navHolder{position: static;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box; height: 50px;background-color: #161616 !important;line-height: 50px; z-index: 1000;}
+#navHolder li{padding-left: 0px;padding-right: 0px;z-index: 1001;}
+#navHolder i{font-size: 2.1rem;line-height: 150%;padding-right: 0.7rem;z-index: 1000;}
+.popover{z-index: 900 !important;}
 .subNav{overflow: hidden;background-color: #009688 !important;color: #fff;font-weight: 400;font-size: 1.5rem;width: 100%;top:50px;z-index: 2;}
 .line-height{line-height: 50px;}
 .subNav .col{padding: 0.75rem;}
