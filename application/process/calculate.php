@@ -89,11 +89,11 @@ class Calculate
 		{	
 			$results[] = array(
 				'name' => ucwords($row[0]),
-				'rating' => $row[1],
-				'tc' => $row[2],
-				'ea' => $row[3],
-				'ap' => $row[4],
-				'student' => $row[5],
+				'rating' => round($row[1], 2),
+				'tc' => round($row[2], 2),
+				'ea' => round($row[3], 2),
+				'ap' => round($row[4], 2),
+				'student' => round($row[5], 2)
 			);
 			$rating = $row[1];
 			if ($row[1] == NULL)

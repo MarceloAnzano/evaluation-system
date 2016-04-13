@@ -94,9 +94,9 @@ class Evaluation_entries
 				else $name = ucwords($row[0]);
 				$rating['target'] = array(
 					'name' => $name,
-					'tc' => 'Teaching Competencies: '.$row[1],
-					'ea' => 'Efficiency and Attitude: '.$row[2],
-					'ap' => 'Attendance and Punctuality: '.$row[3]
+					'tc' => 'Teaching Competencies: '.round($row[1], 2),
+					'ea' => 'Efficiency and Attitude: '.round($row[2], 2),
+					'ap' => 'Attendance and Punctuality: '.round($row[3], 2)
 				);
 				
 				return $rating;
@@ -187,7 +187,7 @@ class Evaluation_entries
 	{
 		if ($string == NULL)
 			return '--';
-		else return $string;
+		else return round($string, 2);
 	}
 }
 
