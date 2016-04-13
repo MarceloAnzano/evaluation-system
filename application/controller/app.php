@@ -196,7 +196,7 @@ class App extends Common
 		$record = new Record_result();
 		$record->compute_score($this->link, $this->get_session_info('utype'), $this->get_session_info('userid'));
 		
-		header ('Location: '.base_url);
+		//~ header ('Location: '.base_url);
 	}
 	
 	function get_past_ratings($id, $semester)

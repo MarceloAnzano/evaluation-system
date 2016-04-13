@@ -1,12 +1,7 @@
-"Full Name",Position,Subject,Cluster,Level
-"Teacher 1",,,,
-"Teacher 2",,,,
-"Teacher III",,,,
-"High School LL",LL,,,"high school"
-"Cluster 4",CC,,4,
-"Cluster 5",CC,,5,
-"Intermediate LL",LL,,,intermediate
-"Science SATL",SATL,Science,,
-"Math SATL",SATL,Math,,
-Principal,Principal,,,
-"Asst. Principal",API,,,
+"Student Id","Full Name","Grade Level",Section
+20150310,"Student One",4,Masaya
+20150311,"Student 2",7,Matalino
+20150312,"Student III",10,Mabait
+20150313,"Student Four",4,Masaya
+20150314,"Student five",4,Masaya
+20150315,"Student SIX",4,Masaya

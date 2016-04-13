@@ -104,7 +104,7 @@ class Save_user
 				$check_headers = array('full name','position','level','cluster','subject' );
 				break;
 			case 'student':
-				$check_headers = array('full name','grade level','section' );
+				$check_headers = array('student id', 'full name','grade level','section' );
 				break;
 			default:
 				exit ('Invalid Input');
@@ -116,6 +116,10 @@ class Save_user
 			{
 				if (empty($fields))
 				{
+					for ($a = 0; $a < count($check_headers); $a++)
+					{
+						// do checking here
+					}
 					$fields = $data;
 					continue;
 				}
@@ -130,39 +134,41 @@ class Save_user
 		}
 
 		
-		$sql = "INSERT INTO users
-				(hashid, logid, uname, password, utype, subject, gradelevel, section, level, cluster, supervisor) 
-				VALUES ";
-		$first = TRUE;
+		
 		$temp_id = 0;
 		$id_array = array();
 		$password = $this->create_random_password();
 		foreach ($assoc_array as $user)
-		{
-			$logid = strtolower(str_replace(' ', '', $user['full name']));
-			$uname = trim($user['full name']);
-			
+		{	
+			$sql = "INSERT INTO users
+				(hashid, logid, uname, password, utype, subject, gradelevel, section, level, cluster, supervisor) 
+				VALUES ";
 			if ($type == 'student')
 			{	
+				$logid = strtolower(preg_replace('#[^a-zA-Z0-9]#', '', $user['student id']));
+				$uname = trim($user['full name']);
 				$gradelevel = $user['grade level'];
 				$section = strtolower($user['section']);
-				if ($first)
-				{
-					$sql .= "('$temp_id', '$logid', '$uname', '$password', 'student', 'none', '$gradelevel', '$section', 'none', 'none', 'none')";
-					$first = FALSE;
-				}
-				else $sql .= ", ('$temp_id', '$logid', '$uname', '$password', 'student', 'none', '$gradelevel', '$section', 'none', 'none', 'none')";
+				$sql .= "('$temp_id', '$logid', '$uname', '$password', 'student', 'none', '$gradelevel', '$section', 'none', 'none', 'none')";
 			}
 			elseif ($type == 'faculty')
 			{	
+				$logid = strtolower(preg_replace('#[^a-zA-Z0-9]#', '', $user['full name']));
+				$number = 1;
+				while ($this->check_for_duplicates_batch($con, $logid, $number) && $number < 200)
+				{
+					$number++;
+				}
+				
+				if ($number != 1)
+				{
+					$logid .= $number;
+				}
+				
+				$uname = trim($user['full name']);
 				if ($user['position'] == '' OR $user['position'] == 'none')
 				{ 
-					if ($first)
-					{
-						$sql .= "('$temp_id', '$logid', '$uname', '$password', 'faculty', 'none', 'none', 'none', 'none', 'none', 'none')";
-						$first = FALSE;
-					}
-					else $sql .= ", ('$temp_id', '$logid', '$uname', '$password', 'faculty', 'none', 'none', 'none', 'none', 'none', 'none')";
+					$sql .= "('$temp_id', '$logid', '$uname', '$password', 'faculty', 'none', 'none', 'none', 'none', 'none', 'none')";
 				}
 				else
 				{
@@ -180,23 +186,15 @@ class Save_user
 					{
 						$level = strtolower($user['level']);
 					}
-					
-					if ($first)
-					{
-						$sql .= "('$temp_id', '$logid', '$uname', '$password', 'faculty', '$subject', 'none', 'none', '$level', '$cluster', '$position')";
-						$first = FALSE;
-					}
-					else $sql .= ", ('$temp_id', '$logid', '$uname', '$password', 'faculty', '$subject', 'none', 'none', '$level', '$cluster', '$position')";
-					
+					$sql .= "('$temp_id', '$logid', '$uname', '$password', 'faculty', '$subject', 'none', 'none', '$level', '$cluster', '$position')";
 				}
 			}
+			mysqli_query($con, $sql);
+			$this->create_hash_id($con, mysqli_insert_id($con));
 			$temp_id++;
 		}
-		var_dump($sql);
-		mysqli_query($con, $sql);
-		$this->create_hash_id($con, mysqli_insert_id($con), count($assoc_array));
-		var_dump(count($assoc_array));
-		exit();
+		//~ var_dump($sql);
+		//~ var_dump(count($assoc_array));
 	}
 	
 	private function create_random_password()
@@ -219,6 +217,31 @@ class Save_user
 			echo "Duplicate Login ID  Detected";
 			exit();
 		}
+	}
+	
+	private function check_for_duplicates_batch($con, $logid, $number)
+	{
+		if ($number == 1 )
+		{
+			$sql = "SELECT *
+					FROM users
+					WHERE logid COLLATE latin1_general_cs LIKE '$logid' OR logid COLLATE latin1_general_cs LIKE '$logid$number' ;";
+		}
+		else 
+		{
+			$sql = "SELECT *
+					FROM users
+					WHERE logid COLLATE latin1_general_cs LIKE '$logid$number' ;";
+		}
+		
+		$query = mysqli_query($con, $sql);
+		$numrows = mysqli_num_rows($query);
+		
+		if ($numrows > 0)
+		{
+			return true;
+		}
+		else return false;
 	}
 	
 	private function create_hash_id($con, $id, $number_of_entries = 1)

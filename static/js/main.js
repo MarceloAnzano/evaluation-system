@@ -97,6 +97,7 @@ $(document).ready(function(){
             // $("#csv-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
             $CSVflag = false;
         }
+        // console.log($("#csv-file").val())
         if($("#csv-file").val() == ""){
             $('#csv-file-tooltip').popover('show');
             // $("#csv-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
@@ -123,9 +124,9 @@ $(document).ready(function(){
             //$("#img-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
             $IMGFlag = false;
         }
-        if($("#img-file").val() == ""){
-            console.log("HEY!");
-            $('form #img-file-tooltip').popover({show: function () {$(this).fadeIn('slow');}});
+        // console.log($("#facultyPhotoForm #img-file").val());
+        if($("#facultyPhotoForm #img-file").val() == ""){
+            $('form #img-file-tooltip').popover('show');
             // $("#img-file-tooltip.tooltipped").trigger("mouseenter.tooltip").delay(1500).queue(function(nxt){ $(this).trigger("mouseleave.tooltip"); nxt();});
             $IMGFlag = false;
         }

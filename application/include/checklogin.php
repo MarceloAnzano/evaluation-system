@@ -19,7 +19,7 @@ class Check_login
 		&& ! empty($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE)
 		{
 			$userid = mysqli_real_escape_string($con, $_SESSION['userid']);
-			$logid = preg_replace('#[^a-zA-Z0-9.]#', '', $_SESSION['logid']);
+			$logid = preg_replace('#[^a-zA-Z0-9]#', '', $_SESSION['logid']);
 			$utype = preg_replace('#[^a-z]#', '', $_SESSION['utype']);
 			$supervisor = preg_replace('#[^a-z]#', '', $_SESSION['supervisor']);
 			

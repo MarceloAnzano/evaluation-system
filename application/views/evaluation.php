@@ -63,7 +63,10 @@
 	<div class="col s12 m10 l10 offset-m1 offset-l1">
 		<div class="card">
 			<div class="card-content">
+<!--
 				<form id="evalform" action='/app/post_result' method='post'>
+-->
+				<form id="evalform" onsubmit='return postResult();'>
 					<table class="striped">
 						<?php
 							// target details

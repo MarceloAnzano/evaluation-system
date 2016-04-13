@@ -123,7 +123,9 @@ class Admin extends Common
 				$save = new Save_user();
 				$data = $file->csv_get_reference_path($this->link);
 				$type = strtolower(mysqli_real_escape_string($this->link, $_POST['userBatchUploadType']));
-				$save->save_batch_user_entries($this->link, $data['path'], $type);				
+				$save->save_batch_user_entries($this->link, $data['path'], $type);
+
+				header('Location: '.base_url.'admin');
 			}
 			else exit(' Could not upload file');
 		}

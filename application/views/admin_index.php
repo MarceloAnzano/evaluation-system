@@ -495,23 +495,23 @@
 									</div>
 									<div class="row">
 										<div class="input-field col l2 m2 s2">
-											<input id='tc_satl' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['tc-satl']; ?>'>
+											<input id='tc_satl' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['tc-satl'], 2); ?>'>
 											<label for="tc_satl">SATL %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='tc_cc' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['tc-cc']; ?>'>
+											<input id='tc_cc' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['tc-cc'], 2); ?>'>
 											<label for="tc_cc">CC %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='tc_api' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['tc-api']; ?>'>
+											<input id='tc_api' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['tc-api'], 2); ?>'>
 											<label for="tc_api">API %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='tc_principal' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['tc-principal']; ?>'>
+											<input id='tc_principal' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['tc-principal'], 2); ?>'>
 											<label for="tc_principal">Principal %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='tc_self' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['tc-self']; ?>'>
+											<input id='tc_self' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['tc-self'], 2); ?>'>
 											<label id='tc_self'>Self %</label>
 										</div>
 									</div>
@@ -520,23 +520,23 @@
 									</div>
 									<div class="row">
 										<div class="input-field col l2 m2 s2">
-											<input id='ea_satl' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ea-satl']; ?>'>
+											<input id='ea_satl' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ea-satl'], 2); ?>'>
 											<label for="ea_satl">SATL %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ea_cc' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ea-ll']; ?>'>
+											<input id='ea_cc' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ea-ll'], 2); ?>'>
 											<label for="ea_cc">LL %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ea_api' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ea-api']; ?>'>
+											<input id='ea_api' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ea-api'], 2); ?>'>
 											<label for="ea_api">API %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ea_principal' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ea-principal']; ?>'>
+											<input id='ea_principal' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ea-principal'], 2); ?>'>
 											<label for="ea_principal">Principal %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ea_self' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ea-self']; ?>'>
+											<input id='ea_self' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ea-self'], 2); ?>'>
 											<label id="ea_self">Self %</label>
 										</div>
 									</div>	
@@ -545,23 +545,23 @@
 									</div>
 									<div class="row">
 										<div class="input-field col l2 m2 s2">
-											<input id='ap_satl' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ap-satl']; ?>'>
+											<input id='ap_satl' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ap-satl'], 2); ?>'>
 											<label for="ap_satl">SATL %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ap_cc' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ap-ll']; ?>'>
+											<input id='ap_cc' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ap-ll'], 2); ?>'>
 											<label for="ap_cc">LL %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ap_api' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ap-api']; ?>'>
+											<input id='ap_api' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ap-api'], 2); ?>'>
 											<label for="ap_api">API %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ap_principal' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ap-principal']; ?>'>
+											<input id='ap_principal' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ap-principal'], 2); ?>'>
 											<label for="ap_principal">Principal %</label>
 										</div>
 										<div class="input-field col l2 m2 s2">
-											<input id='ap_self' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ap-self']; ?>'>
+											<input id='ap_self' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ap-self'], 2); ?>'>
 											<label id="ap_self">Self %</label>
 										</div>
 									</div>
@@ -570,15 +570,15 @@
 									</div>
 									<div class="row">
 										<div class="input-field col l4 m4 s4">
-											<input id='tc_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['tc']; ?>'>
+											<input id='tc_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['tc'], 2); ?>'>
 											<label for="tc_per">Teaching Competencies %</label>
 										</div>
 										<div class="input-field col l4 m4 s4">
-											<input id='ea_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ea']; ?>'>
+											<input id='ea_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ea'], 2); ?>'>
 											<label id="ea_per">Efficiency and Attitude %</label>
 										</div>
 										<div class="input-field col l4 m4 s4">
-											<input id='ap_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['ap']; ?>'>
+											<input id='ap_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['ap'], 2); ?>'>
 											<label for="ap_per">Attendance and Punctuality %</label>
 										</div>
 									</div>
@@ -587,11 +587,11 @@
 									</div>
 									<div class="row">
 										<div class="input-field col l4 m4 s4">
-											<input id='faculty_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['inst-faculty']; ?>'>
+											<input id='faculty_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['inst-faculty'], 2); ?>'>
 											<label for="faculty_per">Faculty %</label>
 										</div>
 										<div class="input-field col l4 m4 s4">
-											<input id='student_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo $data['inst-student']; ?>'>
+											<input id='student_per' name='percent[]' type='number' min='1' max='100' step='1' value='<?php echo round($data['inst-student'], 2); ?>'>
 											<label for="student_per">Student %</label>
 										</div>
 									</div>

@@ -265,3 +265,13 @@
 		});
 		return false;
 	}
+	
+	function postResult()
+	{
+		var link = '/app/post_result';
+		
+		$.post(link,$("#evalform").serialize() ,function(result){
+			$("#evalform").html(result);
+		});
+		return false;
+	}

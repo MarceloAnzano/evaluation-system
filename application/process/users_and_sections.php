@@ -106,6 +106,7 @@ class Users_and_sections
 		$search = strtolower(mysqli_real_escape_string($con, $_POST['search']));
 		$modifier = strtolower(mysqli_real_escape_string($con, $_POST['modifier']));
 		
+		
 		$statement = '';
 		switch ($modifier)
 		{

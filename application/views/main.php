@@ -169,15 +169,17 @@
 			<center>
 			<ul class="pagination">
 			<?php
-				if($pages > 1) echo '<li class="disabled" id="prev-page"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
-				else echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
-				for($k = 1; $k < $pages; $k++){  
-					if($k == 1) echo '<li class="waves-effect page-nav first-page" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
-					elseif ($k == $pages-1) echo '<li class="waves-effect page-nav last-page" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
-					else echo '<li class="waves-effect page-nav" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
+				if($pages > 1){
+					if($pages > 1) echo '<li class="disabled" id="prev-page"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
+					else echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
+					for($k = 1; $k < $pages; $k++){  
+						if($k == 1) echo '<li class="waves-effect page-nav first-page" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
+						elseif ($k == $pages-1) echo '<li class="waves-effect page-nav last-page" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
+						else echo '<li class="waves-effect page-nav" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
+					}
+					if($pages > 1) echo '<li class="waves-effect" id="next-page"><a href="#!"><i class="material-icons">chevron_right</i></a></li>';
+					else echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>';
 				}
-				if($pages > 1) echo '<li class="waves-effect" id="next-page"><a href="#!"><i class="material-icons">chevron_right</i></a></li>';
-				else echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>';
 		  	?>
 		  	</ul>
 		  	</center>
