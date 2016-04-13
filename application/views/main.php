@@ -3,7 +3,10 @@
 		<div class="subNav line-height">
 			<span class="brand-logo" style="text-transform: none !important;">List of Teachers</span>
 		</div>
+		<div class="row">
 <?php // because i don't like working with javascript :(
+	$perpage = 0;
+	$pages = 1;
 	$entries = $data;
 	$cardNum = 0;
 	if ($entries != NULL) 
@@ -11,6 +14,7 @@
 		foreach ($entries as &$entry)
 		{
 			if($cardNum > 3) $cardNum = 0;
+			if($perpage > 7) $perpage = 0;
 			// prepare for display
 			if ($entry['semester'] == 1)
 			{
@@ -40,6 +44,7 @@
 				$closed = '';
 			}
 			
+			if($perpage == 0) echo '<div class="section page-'.$pages.' ">';
 			if($cardNum == 0) echo '<div class="row">';
 			echo '
 				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
@@ -80,8 +85,10 @@
 				</a>
 				</div>
 			</div>";
+			if($perpage == 7){echo '</div>'; $pages++;}
 			if($cardNum == 3) echo '</div>';
 			$cardNum++;
+			$perpage++;
 			// if ($entry['type'] == 'self')
 			// {
 			// 	echo "<a href=".$link.">".$link_text." Self evaluation</a> ".$closed;
@@ -97,6 +104,7 @@
 		foreach ($archives as &$archive)
 		{
 			if($cardNum > 3) $cardNum = 0;
+			if($perpage > 7) $perpage = 0;
 			if ($archive['semester'] == 1)
 			{
 				$semester = '1st Semester';
@@ -118,6 +126,7 @@
 			// else echo "<a href=".$link.">".$link_text.' '.$archive['full_name']."</a> ";
 
 			if($cardNum == 0) echo '<div class="row">';
+			if($perpage == 0) echo '<div class="section page-'.$pages.' ">';
 			echo '
 				<div class="col l3 m6 s8 offset-s2" id="teacher1">';
 			echo "
@@ -144,13 +153,35 @@
 				</a>
 				</div>
 			</div>";
+			if($perpage == 7){echo '</div>'; $pages++;}
 			if($cardNum == 3)echo '</div>';
 			$cardNum++;
+			$perpage++;
 		}
 	}
+	if($perpage > 7) $perpage = 0;
+	if($perpage > 0) echo '</div>';
 	if($cardNum > 3) $cardNum = 0;
 	if($cardNum > 0) echo '</div>';
 ?>
+		</div>
+		<div class="row">
+			<center>
+			<ul class="pagination">
+			<?php
+				if($pages > 1) echo '<li class="disabled" id="prev-page"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
+				else echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>';
+				for($k = 1; $k < $pages; $k++){  
+					if($k == 1) echo '<li class="waves-effect page-nav first-page" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
+					elseif ($k == $pages-1) echo '<li class="waves-effect page-nav last-page" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
+					else echo '<li class="waves-effect page-nav" id="pagebutton'.$k.'"><a href="#!">'.$k.'</a></li>';
+				}
+				if($pages > 1) echo '<li class="waves-effect" id="next-page"><a href="#!"><i class="material-icons">chevron_right</i></a></li>';
+				else echo '<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>';
+		  	?>
+		  	</ul>
+		  	</center>
+		</div>
 	</div>
 
 </main>

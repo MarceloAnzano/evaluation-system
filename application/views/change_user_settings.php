@@ -74,7 +74,7 @@
 							</div>
 							<input type='hidden' id='editTargetId' name='editTargetId' value='<?php echo $data; ?>'><br>
 							<div class="row">
-								<button class="waves-effect waves-light btn" type='submit' name='submit'>Submit</button>
+								<button class="waves-effect waves-light btn right" type='submit' name='submit'>Submit</button>
 							</div>
 						</form>
 						<p class="error-message" id='status'></p>
