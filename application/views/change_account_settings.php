@@ -1,4 +1,5 @@
-					<form id='manageUserForm' onsubmit="return editAccountInfo();">
+					<form id='manageUserForm' onsubmit="return editAccountInfo();"  style="margin-left: -1%;">
+							<div class="row" style="margin-left: 3.5% !important;">
 							<h5>User Details:</h5>
 							<?php if ( $this->get_session_info('utype') != 'student')
 							echo '
@@ -66,9 +67,10 @@
 							?>
 							<input type='hidden' id='editTargetId' name='editTargetId' value='<?php echo $data; ?>'><br>
 							<div class="row">
-								<button class="waves-effect waves-light btn" type='submit' name='submit'>Submit</button>
+								<button class="waves-effect waves-light btn right" type='submit' name='submit'>Submit</button>
 							</div>
-						</form>
+						</div>
+					</form>
 						<div id="modal-error-message" class="modal">
 							<center class="modal-content">
 								<h5></h5>

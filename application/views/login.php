@@ -3,7 +3,7 @@
 	<div class="container-div">
 		<form id="login" method="post" class="card" onsubmit="return validLogin();">
 			<center class="card-content">
-				<center class="card-title loginTitle">FACULTY EVALUATION SYSTEM</center>
+				<center class="card-title loginTitle">FACULTY EVALUATION<br>SYSTEM</center>
 					<center class="row">
 						<center class="input-field">
 							<input type="text" id="logid" name='logid' maxlength="88" autofocus>

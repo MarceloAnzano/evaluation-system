@@ -140,6 +140,12 @@ $(document).ready(function(){
         $('form #img-file-tooltip').popover('hide');
         $('form #img-file-tooltip').popover('destroy');
     });
+
+    //PAGINATION
+    $("div[class*='page-']").not('.page-1').each(function(e){
+        $(this).addClass('hidden-page');
+    });
+    $('#pagebutton1').addClass('active').removeClass('waves-effect');
 });
 $(document).on('change','#createSectionSelect', function(){
     if($('#createSectionSelect').val() != ""){
@@ -147,6 +153,69 @@ $(document).on('change','#createSectionSelect', function(){
     }else{
         $('label[for="createSectionGradelevel"], label[for="createSectionSection"]').removeClass('active');
     }
+});
+
+$(document).on('click','.page-nav',function(e){
+    $pageNum = ".page-"+$(this).text();
+    $("div[class*='page-']").each(function(e){
+        $(this).addClass('hidden-page');
+    });
+    $($pageNum).removeClass('hidden-page');
+    $('.page-nav.active').removeClass('active').addClass('waves-effect');
+    $(this).addClass('active').removeClass('waves-effect');
+    if($(this).is('.last-page')){
+        $('#next-page').addClass('disabled').removeClass('waves-effect');
+        $('#prev-page').removeClass('disabled').addClass('waves-effect');
+    }else if($(this).is('.first-page')){
+        $('#prev-page').addClass('disabled').removeClass('waves-effect');
+        $('#next-page').removeClass('disabled').addClass('waves-effect');
+    }else{
+        $('#prev-page').removeClass('disabled').addClass('waves-effect');
+        $('#next-page').removeClass('disabled').addClass('waves-effect');
+    }
+});
+
+$(document).on('click','#next-page.waves-effect',function(e){
+    $pageNum = ".page-"+(parseInt($('.page-nav.active').text())+1);
+    $pageButton = "#pagebutton"+(parseInt($('.page-nav.active').text())+1);
+    //$pageButtonPrev = "#pagebutton"+(parseInt($('.page-nav.active').text())-1);
+    $("div[class*='page-']").each(function(e){
+        $(this).addClass('hidden-page');
+    });
+    $($pageNum).removeClass('hidden-page');
+    $('.page-nav.active').removeClass('active').addClass('waves-effect');
+    $($pageButton).addClass('active').removeClass('waves-effect');
+    if($($pageButton).is('.last-page')){
+        $('#next-page').addClass('disabled').removeClass('waves-effect');
+        $('#prev-page').removeClass('disabled').addClass('waves-effect');
+    }else if($($pageButton).is('.first-page')){
+        $('#prev-page').addClass('disabled').removeClass('waves-effect');
+        $('#next-page').removeClass('disabled').addClass('waves-effect');
+    }else{
+        $('#prev-page').removeClass('disabled').addClass('waves-effect');
+        $('#next-page').removeClass('disabled').addClass('waves-effect');
+    }    
+});
+$(document).on('click','#prev-page.waves-effect',function(e){
+    $pageNum = ".page-"+(parseInt($('.page-nav.active').text())-1);
+    $pageButton = "#pagebutton"+(parseInt($('.page-nav.active').text())-1);
+    //$pageButtonPrev = "#pagebutton"+(parseInt($('.page-nav.active').text())-1);
+    $("div[class*='page-']").each(function(e){
+        $(this).addClass('hidden-page');
+    });
+    $($pageNum).removeClass('hidden-page');
+    $('.page-nav.active').removeClass('active').addClass('waves-effect');
+    $($pageButton).addClass('active').removeClass('waves-effect');
+    if($($pageButton).is('.last-page')){
+        $('#next-page').addClass('disabled').removeClass('waves-effect');
+        $('#prev-page').removeClass('disabled').addClass('waves-effect');
+    }else if($($pageButton).is('.first-page')){
+        $('#prev-page').addClass('disabled').removeClass('waves-effect');
+        $('#next-page').removeClass('disabled').addClass('waves-effect');
+    }else{
+        $('#prev-page').removeClass('disabled').addClass('waves-effect');
+        $('#next-page').removeClass('disabled').addClass('waves-effect');
+    }    
 });
 
 $(document).on('click','#exportThisRatings', function(e){
