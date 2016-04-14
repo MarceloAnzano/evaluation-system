@@ -133,6 +133,8 @@ class Record_result
 		else exit ('Invalid session');
 		
 		mysqli_stmt_execute($stmt);
+		
+		echo 'correct';
 	}
 	
 	function is_evaluation_open($con, $type)

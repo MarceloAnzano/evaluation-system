@@ -270,8 +270,16 @@
 	{
 		var link = '/app/post_result';
 		
-		$.post(link,$("#evalform").serialize() ,function(result){
-			$("#evalform").html(result);
+		$.post(link,$("#evalform").serialize() ,function(response){
+			if (response == 'correct')
+			{
+				window.location = "/app/score/"+ $('#evalform input[name=person]').val()+ "/" + $('#evalform input[name=semester]').val();
+			}
+			else 
+			{	
+				$('#status').html(response);
+			}
 		});
+		
 		return false;
 	}

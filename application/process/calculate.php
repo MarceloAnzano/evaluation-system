@@ -30,6 +30,10 @@ class Calculate
 	var $inst_faculty = 0;
 	var $inst_student = 0;
 	
+	var $num_subject_area_scores = 0;
+	var $num_level_scores = 0;
+	var $num_cluster_scores = 0;
+	
 	function display_subordinate_ratings($con, $id, $position, $year, $semester)
 	{
 		$year = mysqli_real_escape_string($con, $year);
@@ -145,10 +149,8 @@ class Calculate
 			$level_scores = $this->get_level_rating($con, $teacher[0], $teacher[1], $teacher[2]);
 			$principal_scores = $this->get_principal_rating($con, $teacher[0], $teacher[1], $teacher[2]);
 			$students_scores = $this->get_student_rating($con, $teacher[0], $teacher[1]);
-			
-			//~ $identity = $this->who_is($con, $teacher[0]);
-			$identity = $teacher[2];
-			
+			$identity = $teacher[3];
+
 			// overall values 
 			$rating = 0;
 			$tc = 0;
@@ -164,6 +166,10 @@ class Calculate
 			$ap_subject_area = 0;
 			$ap_level = 0;
 			
+			$this->num_subject_area_scores = 0;
+			$this->num_level_scores = 0;
+			$this->num_cluster_scores = 0;
+			
 			switch ($identity)
 			{
 				// count principal self ratings
@@ -178,77 +184,76 @@ class Calculate
 				case 'cc':
 				case 'll':
 					// get all subject area scores
-					if (count($subject_area_scores) > 1)
+					if ($this->num_subject_area_scores > 1)
 					{
 						foreach ($subject_area_scores as $sa)
 						{
-							$tc_subject_area += $sa[0];
-							$ea_subject_area += $sa[1];
-							$ap_subject_area += $sa[2];
+							$tc_subject_area += $sa['tc'];
+							$ea_subject_area += $sa['ea'];
+							$ap_subject_area += $sa['ap'];
 						}
-						$tc_subject_area = $tc_subject_area / count($subject_area_scores);
-						$ea_subject_area = $ea_subject_area / count($subject_area_scores);
-						$ap_subject_area = $ap_subject_area / count($subject_area_scores);
+						$tc_subject_area = $tc_subject_area / $this->num_subject_area_scores;
+						$ea_subject_area = $ea_subject_area / $this->num_subject_area_scores;
+						$ap_subject_area = $ap_subject_area / $this->num_subject_area_scores;
 					}
 					else
 					{
-						$tc_subject_area = $subject_area_scores[0];
-						$ea_subject_area = $subject_area_scores[1];
-						$ap_subject_area = $subject_area_scores[2];
+						$tc_subject_area = $subject_area_scores['tc'];
+						$ea_subject_area = $subject_area_scores['ea'];
+						$ap_subject_area = $subject_area_scores['ap'];
 					}
-					
+
 					// get all cluster scores
-					if (count($cluster_scores) > 1)
+					if ($this->num_cluster_scores > 1)
 					{
 						foreach ($cluster_scores as $cl)
 						{
-							$tc_cluster += $cl[0];
+							$tc_cluster += $cl['tc'];
 						}
-						$tc_cluster = $tc_cluster / count($cluster_scores);
+						$tc_cluster = $tc_cluster / $this->num_cluster_scores;
 					}
 					else
 					{
-						$tc_cluster = $cluster_scores[0];
+						$tc_cluster = $cluster_scores['tc'];
 					}
 					
 					
 					// get all level scores
-					if (count($level_scores) > 1)
+					if ($this->num_level_scores > 1)
 					{
 						foreach ($level_scores as $lev)
 						{
-							$ea_level += $lev[1];
-							$ap_level += $lev[2];
+							$ea_level += $lev['ea'];
+							$ap_level += $lev['ap'];
 						}
-						$ea_level = $ea_level / count($level_scores);
-						$ap_level = $ap_level / count($level_scores);
+						$ea_level = $ea_level / $this->num_level_scores;
+						$ap_level = $ap_level / $this->num_level_scores;
 					}
 					else
 					{
-						$ea_level = $level_scores[1];
-						$ap_level = $level_scores[2];
+						$ea_level = $level_scores['ea'];
+						$ap_level = $level_scores['ap'];
 					}
-					
-					$tc = ($tc_subject_area * $this->tc_satl_per) + ($tc_cluster * $this->tc_cc_per) + ($principal[0][0] * $this->tc_api_per )
-						+ ($principal[1][0] * $this->tc_principal_per) + ($self[0] * $this->tc_self_per);
+
+					$tc = ($tc_subject_area * $this->tc_satl_per) + ($tc_cluster * $this->tc_cc_per) + ($principal_scores[0][0] * $this->tc_api_per )
+						+ ($principal_scores[1][0] * $this->tc_principal_per) + ($self_scores[0] * $this->tc_self_per);
 						
-					$ea = ($ea_subject_area * $this->ea_satl_per) + ($ea_level * $this->ea_ll_per) + ($principal[0][1] * $this->ea_api_per )
-						+ ($principal[1][1] * $this->ea_principal_per) + ($self[1] * $this->ea_self_per);
+					$ea = ($ea_subject_area * $this->ea_satl_per) + ($ea_level * $this->ea_ll_per) + ($principal_scores[0][1] * $this->ea_api_per )
+						+ ($principal_scores[1][1] * $this->ea_principal_per) + ($self_scores[1] * $this->ea_self_per);
 					
-					$ap = ($ap_subject_area * $this->ap_satl_per) + ($ap_level * $this->ap_ll_per) + ($principal[0][2] * $this->ap_api_per )
-						+ ($principal[1][2] * $this->ap_principal_per) + ($self[2] * $this->ap_self_per);
+					$ap = ($ap_subject_area * $this->ap_satl_per) + ($ap_level * $this->ap_ll_per) + ($principal_scores[0][2] * $this->ap_api_per )
+						+ ($principal_scores[1][2] * $this->ap_principal_per) + ($self_scores[2] * $this->ap_self_per);
 					
 					$rating = ($tc * $this->tc_percentage) + ($ea * $this->ea_percentage) + ($ap * $this->ap_percentage);
 					
-					
-					if (count($students) > 0)
+					if (count($students_scores) > 0)
 					{
-						foreach ($students as $student)
+						foreach ($students_scores as $student)
 						{
 							$partial += $student;
 						}
 						
-						$partial = $partial / count($students);
+						$partial = $partial / count($students_scores);
 						$rating = ($rating * $this->inst_faculty) + ($partial * $this->inst_student);
 					}
 					break;
@@ -285,7 +290,8 @@ class Calculate
 				FROM results
 				WHERE to_evaluate='$id' AND evtype='satl-teacher' AND year='$year' AND semester='$semester'";
 		$query = mysqli_query($con, $sql);
-		$row = mysqli_fetch_array($query);
+		$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		$this->num_subject_area_scores = mysqli_num_rows($query);
 		return $row;	
 	}
 	
@@ -295,7 +301,8 @@ class Calculate
 				FROM results
 				WHERE to_evaluate='$id' AND evtype='cc-teacher' AND year='$year' AND semester='$semester'";
 		$query = mysqli_query($con, $sql);	
-		$row = mysqli_fetch_array($query);
+		$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		$this->num_cluster_scores = mysqli_num_rows($query);
 		return $row;
 	}
 	
@@ -316,7 +323,8 @@ class Calculate
 				FROM results
 				WHERE to_evaluate='$id' AND evtype='ll-teacher' AND year='$year' AND semester='$semester'";
 		$query = mysqli_query($con, $sql);
-		$row = mysqli_fetch_array($query);
+		$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+		$this->num_level_scores = mysqli_num_rows($query);
 		return $row;
 	}
 	

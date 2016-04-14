@@ -98,6 +98,8 @@ class Save_user
 		$assoc_array = array();
 		$fields = array();
 		$i = 0;
+		
+		// for format checking
 		switch ($type)
 		{
 			case 'faculty':
@@ -114,11 +116,13 @@ class Save_user
 		{
 			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
 			{
+				// fill in the header array
 				if (empty($fields))
 				{
-					for ($a = 0; $a < count($check_headers); $a++)
+					$data = array_map('strtolower', $data);
+					foreach ($check_headers as $header)
 					{
-						// do checking here
+						if ( ! in_array($header, $data)) exit ('CSV format incorrect! '.$header.' was not found.');
 					}
 					$fields = $data;
 					continue;
@@ -132,8 +136,6 @@ class Save_user
 			}
 			fclose($handle);
 		}
-
-		
 		
 		$temp_id = 0;
 		$id_array = array();
@@ -193,8 +195,6 @@ class Save_user
 			$this->create_hash_id($con, mysqli_insert_id($con));
 			$temp_id++;
 		}
-		//~ var_dump($sql);
-		//~ var_dump(count($assoc_array));
 	}
 	
 	private function create_random_password()
