@@ -49,24 +49,36 @@ class Calculate
 		switch ($position)
 		{
 			case 'satl':
+				//~ $sql = "SELECT users.uname, rating, tc, ea, ap, student
+						//~ FROM ".$table."
+						//~ LEFT JOIN users ON ".$table.".teacherId=users.hashid
+						//~ WHERE users.subject= ( SELECT subject FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
 				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
-						WHERE users.subject= ( SELECT subject FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
+						WHERE users.hashid IN ( SELECT DISTINCT to_evaluate FROM results WHERE (evtype='satl-teacher' AND evaluator='".$id."')) AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'll':
-				$sql = "SELECT users.uname, rating, tc, ea, ap, student
+				//~ $sql = "SELECT users.uname, rating, tc, ea, ap, student
+						//~ FROM ".$table."
+						//~ LEFT JOIN users ON ".$table.".teacherId=users.hashid
+						//~ WHERE users.level=( SELECT level FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
+						$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
-						WHERE users.level=( SELECT level FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
+						WHERE users.hashid IN ( SELECT DISTINCT to_evaluate FROM results WHERE (evtype='ll-teacher' AND evaluator='".$id."')) AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'cc':
+				//~ $sql = "SELECT users.uname, rating, tc, ea, ap, student
+						//~ FROM ".$table."
+						//~ LEFT JOIN users ON ".$table.".teacherId=users.hashid
+						//~ WHERE users.cluster=( SELECT cluster FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
 				$sql = "SELECT users.uname, rating, tc, ea, ap, student
 						FROM ".$table."
 						LEFT JOIN users ON ".$table.".teacherId=users.hashid
-						WHERE users.cluster=( SELECT cluster FROM users WHERE hashid='".$id."' ) AND year='$year' AND semester='$semester'";
+						WHERE users.hashid IN ( SELECT DISTINCT to_evaluate FROM results WHERE (evtype='cc-teacher' AND evaluator='".$id."')) AND year='$year' AND semester='$semester'";
 				$query = mysqli_query($con, $sql);
 				return $this->prepare_data_for_json($query);
 			case 'api':
