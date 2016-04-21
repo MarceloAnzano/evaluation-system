@@ -104,9 +104,11 @@ class Save_user
 		{
 			case 'faculty':
 				$check_headers = array('full name','position','level','cluster','subject' );
+				$password = $this->create_random_password('ijafaculty');
 				break;
 			case 'student':
 				$check_headers = array('student id', 'full name','grade level','section' );
+				$password = $this->create_random_password('default');
 				break;
 			default:
 				exit ('Invalid Input');
@@ -139,7 +141,6 @@ class Save_user
 		
 		$temp_id = 0;
 		$id_array = array();
-		$password = $this->create_random_password();
 		foreach ($assoc_array as $user)
 		{	
 			$sql = "INSERT INTO users
@@ -155,6 +156,8 @@ class Save_user
 			}
 			elseif ($type == 'faculty')
 			{	
+				// put some code here to abbreviate first names for login ID
+				// should work for format example: "LAST, FIRST1 FIRST2 SUFFIX MIDDLE"
 				$logid = strtolower(preg_replace('#[^a-zA-Z0-9]#', '', $user['full name']));
 				$number = 1;
 				while ($this->check_for_duplicates_batch($con, $logid, $number) && $number < 200)
@@ -197,11 +200,11 @@ class Save_user
 		}
 	}
 	
-	private function create_random_password()
+	private function create_random_password($phrase)
 	{
 		include BASEPATH.'libraries/bcrypt.php';
 		$cryptograph = new Bcrypt();
-		return $cryptograph->hash('default');
+		return $cryptograph->hash($phrase);
 	}
 	
 	private function check_for_duplicates($con)
